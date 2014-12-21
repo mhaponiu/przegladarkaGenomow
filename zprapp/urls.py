@@ -3,6 +3,7 @@ from zprapp import views
 
 urlpatterns = patterns('',
     url(r'^$', views.index),
+    url(r'organizm/3/zprapp/ajax/$', views.odpowiedz),
     url(r'organizm/(?P<org_id>\d+)/$', views.organizm),
-    url(r'ajax/(?P<org_id>\d+)/$', views.odpowiedz),
+    url(r'ajax/$', views.odpowiedz),
 )
