@@ -1,21 +1,33 @@
 <!DOCTYPE html>
 <html ng-app="ZprAppModule">
 <head lang="en">
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js">
-    </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
     <script src="/static/zprapp/controllers.js"></script>
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body>
-
-SZABLON DIANGO:
-{{ organizm }}
-    <div ng-controller="Kontroler">
-    startowa: <input ng-model="wartosc.startowa" ng-change="pomnoz()">
-    pomnozona * 10 : {[ wartosc.pomnozona ]}
-    <button ng-click="dawajgeta()">GET ORGANIZM</button>
-        {[ slownik ]}
-    </div>
+<body ng-controller="OrganizmKontroler">
+<table>
+    <tr>
+        <td>
+            <h2>organizmKontroler:</h2>
+            {[ testowy ]}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <h2>factory Items.cos:</h2>
+            {[ dane ]}
+        </td>
+    </tr>
+    <tr>
+        <td>
+             <h2>factory items organizmy() http.get:</h2>
+             <input ng-model="id_organizmu" ng-change="fun()">
+             {[ reqget.organizm ]}
+              o id = {[ id_organizmu ]}
+        </td>
+    </tr>
+</table>
 </body>
 </html>

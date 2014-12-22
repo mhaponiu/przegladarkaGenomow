@@ -4,8 +4,17 @@ from zprapp.models import Organizm, Chromosom
 import json
 
 def index(request):
-    return HttpResponse("Hello word")
+    return render(request, 'zprapp/index.html')
 
+def ajaxOrganizm(request):
+    o = Organizm.objects.get( id = request.REQUEST['id']);
+    print "ajaxOrganizm:",o;
+    #response = JsonResponse(json.dumps(o));
+    response = JsonResponse({'organizm': o.nazwa});
+    return response;
+
+
+#pierwsza proba wymiany danych pomiedzy django a angularem przez get
 def organizm(request, org_id):
     response = "Organizm o id: %s"
     #o = Organizm.objects.get(id = org_id)
@@ -13,11 +22,11 @@ def organizm(request, org_id):
     #return HttpResponse(o)
     organizm = Organizm.objects.get(id = org_id)
     context = {'organizm': organizm}
-    return render(request, 'zprapp/index.html', context)
+    return render(request, 'zprapp/index2.html', context)
 
-#todo odbierz request jako json i odeslij response
+#pierwsza proba wymiany danych pomiedzy django a angularem przez get (udana)
 def odpowiedz(request):
-    liczba = 2
+    liczba = request.REQUEST['id']
     #req = request.POST['id']
     if request.method == 'POST':
         print "JEST POSTEM"

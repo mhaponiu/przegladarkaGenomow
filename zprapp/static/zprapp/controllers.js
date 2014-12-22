@@ -1,6 +1,68 @@
 /**
  * Created by mhaponiu on 20.12.14.
  */
+
+function OrganizmKontroler($scope, Items){
+    $scope.id_ogranizmu = 1;
+    $scope.testowy = "na sztywno dodany tekst w OrganizmKontroler";
+    $scope.dane = Items.cos;
+    $scope.reqget = Items.organizmy($scope.id_ogranizmu);
+    $scope.fun = function(){
+        $scope.reqget = Items.organizmy($scope.id_ogranizmu);
+    };
+    //$scope.reqget = 234;
+}
+
+var zprModule = angular.module('ZprAppModule',[]);
+
+zprModule.config(function($interpolateProvider){
+    $interpolateProvider.startSymbol('{[');
+    $interpolateProvider.endSymbol(']}');
+});
+
+//ZprAppModule.factory('Items', function(){
+//    var items = {};
+//    items.organizmy = function(){
+//        var request = {
+//            method: 'GET',
+//            url: 'zprapp/ajax_organizm'
+//        };
+//        $http(request).
+//            success(function(data){
+//                return data['organizm'];
+//        });
+//    };
+//    items.data = "data";
+//    return items;
+//});
+
+zprModule.factory('Items',function($http, $q) {
+        var items = {};
+        items.cos = 'tekst z factory items.cos';
+        items.organizmy = function(numer) {
+            var obiekt = {tekst: "get z factory", id: numer};
+            var request = {
+                method: 'GET',
+                url: 'ajax_organizm',
+                params: obiekt};
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                })
+            var odp = obietnica.promise;
+            return  odp;
+        };
+        return items;
+      });
+
+//do pierwszych prob z wymiana danych
 function Kontroler($scope, $http){
             $scope.wartosc = { startowa : 5};
             $scope.wartosc.pomnozona = 50;
@@ -32,10 +94,3 @@ function Kontroler($scope, $http){
                 });
             };
         }
-
-var zprModule = angular.module('ZprAppModule',[]);
-
-zprModule.config(function($interpolateProvider){
-    $interpolateProvider.startSymbol('{[');
-    $interpolateProvider.endSymbol(']}');
-});
