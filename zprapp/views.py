@@ -1,16 +1,24 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
 from zprapp.models import Organizm, Chromosom
+from django.http import QueryDict
+from django.core import serializers
 import json
 
 def index(request):
     return render(request, 'zprapp/index.html')
 
 def ajaxOrganizm(request):
-    o = Organizm.objects.get( id = request.REQUEST['id']);
-    print "ajaxOrganizm:",o;
-    #response = JsonResponse(json.dumps(o));
-    response = JsonResponse({'organizm': o.nazwa});
+    oall = Organizm.objects.all();
+    print "Organizm.objects.all(): ", oall;
+    datajson = serializers.serialize("json", oall);
+    print "serialize JSON Organizm.objects.all():", datajson;
+    o1 = Organizm.objects.get( id = request.REQUEST['id']);
+    o2 = Organizm.objects.get( id = 2);
+    print "ajaxOrganizm:",o1, o2;
+
+    response = JsonResponse({'nazwa': o1.nazwa});
+    #response = JsonResponse(datajson);
     return response;
 
 

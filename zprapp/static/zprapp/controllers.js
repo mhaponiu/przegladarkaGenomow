@@ -7,10 +7,9 @@ function OrganizmKontroler($scope, Items){
     $scope.testowy = "na sztywno dodany tekst w OrganizmKontroler";
     $scope.dane = Items.cos;
     $scope.reqget = Items.organizmy($scope.id_ogranizmu);
-    $scope.fun = function(){
-        $scope.reqget = Items.organizmy($scope.id_ogranizmu);
+    $scope.fun = function(numer){
+        $scope.reqget = Items.organizmy(numer);
     };
-    //$scope.reqget = 234;
 }
 
 var zprModule = angular.module('ZprAppModule',[]);
@@ -56,9 +55,27 @@ zprModule.factory('Items',function($http, $q) {
                 .error(function(data){
 
                 })
+            //slownik do przetestowania ng-repeat
+           var slownik =  [
+                {nazwa: 'org slownikowy1', ident: 1},
+                {nazwa: 'org slownikowy2', ident: 2},
+                {nazwa: 'org slownikowy3', ident: 3}
+            ];
+            //return slownik;
+            //alert(slownik[0].nazwa);
             var odp = obietnica.promise;
+            var odpjson = angular.fromJson(odp);
+            //alert(odpjson.nazwa);
+
+            var kseroJsonaOdDjango = [
+                {"fields": {"nazwa": "pomidor"}, "model": "zprapp.organizm", "pk": 1},
+                {"fields": {"nazwa": "cebula"}, "model": "zprapp.organizm", "pk": 2},
+                {"fields": {"nazwa": "jablko"}, "model": "zprapp.organizm", "pk": 3}
+            ];
+            var json_kseroJsonaOdDjango = angular.toJson(kseroJsonaOdDjango);
+            var deserialized_json_kseroJsonaOdDjango = angular.fromJson(json_kseroJsonaOdDjango);
             return  odp;
-        };
+        }
         return items;
       });
 

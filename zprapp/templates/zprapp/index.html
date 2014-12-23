@@ -23,10 +23,17 @@
     <tr>
         <td>
              <h2>factory items organizmy() http.get:</h2>
-             <input ng-model="id_organizmu" ng-change="fun()">
-             {[ reqget.organizm ]}
+             <input ng-model="id_organizmu" ng-change="fun(id_organizmu)">
+             {[ reqget.nazwa ]}
               o id = {[ id_organizmu ]}
         </td>
+    </tr>
+
+    <tr>
+        <td><hr><h2>factory items organizmy() http.get przez ng-repeat:</h2></td>
+    </tr>
+    <tr ng-repeat="org in reqget">
+        <td>{[ org.nazwa ]}</td>
     </tr>
 </table>
 </body>
