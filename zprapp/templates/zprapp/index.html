@@ -32,8 +32,14 @@
     <tr>
         <td><hr><h2>factory items organizmy() http.get przez ng-repeat:</h2></td>
     </tr>
+    <tr>
+        <td>reqget surowy: {[ reqget ]}</td>
+    </tr>
+    <tr>
+        <td><h4>pętla ng-repeat:</h4></td>
+    </tr>
     <tr ng-repeat="org in reqget">
-        <td>{[ org.nazwa ]}</td>
+        <td>{[ org.fields.nazwa ]}</td>
     </tr>
 </table>
 </body>

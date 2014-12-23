@@ -2,16 +2,6 @@
  * Created by mhaponiu on 20.12.14.
  */
 
-function OrganizmKontroler($scope, Items){
-    $scope.id_ogranizmu = 1;
-    $scope.testowy = "na sztywno dodany tekst w OrganizmKontroler";
-    $scope.dane = Items.cos;
-    $scope.reqget = Items.organizmy($scope.id_ogranizmu);
-    $scope.fun = function(numer){
-        $scope.reqget = Items.organizmy(numer);
-    };
-}
-
 var zprModule = angular.module('ZprAppModule',[]);
 
 zprModule.config(function($interpolateProvider){
@@ -39,7 +29,7 @@ zprModule.factory('Items',function($http, $q) {
         var items = {};
         items.cos = 'tekst z factory items.cos';
         items.organizmy = function(numer) {
-            var obiekt = {tekst: "get z factory", id: numer};
+            var obiekt = {id: numer};
             var request = {
                 method: 'GET',
                 url: 'ajax_organizm',
@@ -74,10 +64,21 @@ zprModule.factory('Items',function($http, $q) {
             ];
             var json_kseroJsonaOdDjango = angular.toJson(kseroJsonaOdDjango);
             var deserialized_json_kseroJsonaOdDjango = angular.fromJson(json_kseroJsonaOdDjango);
+            //alert(kseroJsonaOdDjango);
             return  odp;
         }
         return items;
       });
+
+function OrganizmKontroler($scope, Items){
+    $scope.id_ogranizmu = 1;
+    $scope.testowy = "na sztywno dodany tekst w OrganizmKontroler";
+    $scope.dane = Items.cos;
+    $scope.reqget = Items.organizmy($scope.id_ogranizmu);
+    $scope.fun = function(numer){
+        $scope.reqget = Items.organizmy(numer);
+    };
+}
 
 //do pierwszych prob z wymiana danych
 function Kontroler($scope, $http){

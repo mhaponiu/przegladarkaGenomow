@@ -11,14 +11,16 @@ def index(request):
 def ajaxOrganizm(request):
     oall = Organizm.objects.all();
     print "Organizm.objects.all(): ", oall;
-    datajson = serializers.serialize("json", oall);
-    print "serialize JSON Organizm.objects.all():", datajson;
-    o1 = Organizm.objects.get( id = request.REQUEST['id']);
+    oall_json = serializers.serialize("json", oall);
+    print "serialize JSON Organizm.objects.all():", oall_json;
+    #o1 = Organizm.objects.get( id = request.REQUEST['id']);
+    #o1_json = serializers.serialize("json", o1);
     o2 = Organizm.objects.get( id = 2);
-    print "ajaxOrganizm:",o1, o2;
-
-    response = JsonResponse({'nazwa': o1.nazwa});
-    #response = JsonResponse(datajson);
+    #print "ajaxOrganizm:",o1, o2;
+    #o2_json = serializers.serialize("json", o2);
+    #print "serialize JSON o2:", o2_json;
+    #response = JsonResponse({'nazwa': o1.nazwa});
+    response = HttpResponse(oall_json, content_type="application/json");
     return response;
 
 
