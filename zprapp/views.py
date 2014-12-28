@@ -10,8 +10,8 @@ def index(request):
 
 def ajaxOrganizm(request):
     oall = Organizm.objects.all();
-    print "Organizm.objects.all(): ", oall;
     oall_json = serializers.serialize("json", oall);
+    print "JSON Organizm.objects.all(): ", oall_json;
     #print "ajaxOrganizm: serialize JSON Organizm.objects.all():", oall_json;
     #o1 = Organizm.objects.get( id = request.REQUEST['id']);
     #o1_json = serializers.serialize("json", o1);

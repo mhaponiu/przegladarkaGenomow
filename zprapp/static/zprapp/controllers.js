@@ -97,13 +97,13 @@ zprModule.factory('Items',function($http, $q) {
       });
 
 function OrganizmKontroler($scope, Items){
-    $scope.id_ogranizmu = 1;
-    $scope.testowy = "na sztywno dodany tekst w OrganizmKontroler";
-    $scope.dane = Items.cos;
+    //$scope.id_ogranizmu = 1;
+    //$scope.testowy = "na sztywno dodany tekst w OrganizmKontroler";
+    //$scope.dane = Items.cos;
     $scope.reqget = Items.organizmy($scope.id_ogranizmu);
-    $scope.fun = function(numer){
-        $scope.reqget = Items.organizmy(numer);
-    };
+    //$scope.fun = function(numer){
+    //    $scope.reqget = Items.organizmy(numer);
+    //};
     $scope.wybierzOrganizm = function(numer_wiersza){
         $scope.wybranyOrganizm = numer_wiersza;
     }
@@ -127,6 +127,8 @@ function OrganizmKontroler($scope, Items){
         //aktualizacja listy organizmow
         $scope.reqget = Items.usunOrganizm(nazwa);
     };
+
+    //edycja organizmu
 }
 
 
