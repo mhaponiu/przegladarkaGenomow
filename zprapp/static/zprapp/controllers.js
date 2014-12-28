@@ -33,7 +33,8 @@ zprModule.factory('Items',function($http, $q) {
             var request = {
                 method: 'GET',
                 url: 'ajax_organizm',
-                params: obiekt};
+                params: obiekt
+            };
             var obietnica = $q.defer();
             $http(request)
                 .success(function(data){
@@ -45,28 +46,53 @@ zprModule.factory('Items',function($http, $q) {
                 .error(function(data){
 
                 })
-            //slownik do przetestowania ng-repeat
-           var slownik =  [
-                {nazwa: 'org slownikowy1', ident: 1},
-                {nazwa: 'org slownikowy2', ident: 2},
-                {nazwa: 'org slownikowy3', ident: 3}
-            ];
-            //return slownik;
-            //alert(slownik[0].nazwa);
             var odp = obietnica.promise;
-            var odpjson = angular.fromJson(odp);
-            //alert(odpjson.nazwa);
-
-            var kseroJsonaOdDjango = [
-                {"fields": {"nazwa": "pomidor"}, "model": "zprapp.organizm", "pk": 1},
-                {"fields": {"nazwa": "cebula"}, "model": "zprapp.organizm", "pk": 2},
-                {"fields": {"nazwa": "jablko"}, "model": "zprapp.organizm", "pk": 3}
-            ];
-            var json_kseroJsonaOdDjango = angular.toJson(kseroJsonaOdDjango);
-            var deserialized_json_kseroJsonaOdDjango = angular.fromJson(json_kseroJsonaOdDjango);
-            //alert(kseroJsonaOdDjango);
             return  odp;
         }
+        items.nowyOrganizm = function (nazwaOrg) {
+            var obiekt = {nazwa: nazwaOrg };
+            var request = {
+                method: 'GET',
+                url: 'ajax_nowyOrganizm',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                })
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
+        items.usunOrganizm = function (nazwaOrg) {
+            var obiekt = {nazwa: nazwaOrg };
+            var request = {
+                method: 'GET',
+                url: 'ajax_usunOrganizm',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                })
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         return items;
       });
 
@@ -78,7 +104,32 @@ function OrganizmKontroler($scope, Items){
     $scope.fun = function(numer){
         $scope.reqget = Items.organizmy(numer);
     };
+    $scope.wybierzOrganizm = function(numer_wiersza){
+        $scope.wybranyOrganizm = numer_wiersza;
+    }
+
+    //formularz Nowy Organizm
+    $scope.showNowyOrganizm = false;
+    $scope.toggleNowyOrganizm = function(){
+        $scope.showNowyOrganizm = !$scope.showNowyOrganizm;
+        $scope.nowyOrganizm = "";
+    };
+    $scope.dodano = function(napis){
+        $scope.showNowyOrganizm = false;
+        alert("Dodano nowy organizm:\n\n" + napis);
+        //aktualizacja listy organizmow
+        $scope.reqget = Items.nowyOrganizm($scope.nowyOrganizm);
+    };
+
+    //usuniecie organizmu
+    $scope.usunOrganizm = function(nazwa){
+        alert("Usunięto organizm:\n\n" + nazwa);
+        //aktualizacja listy organizmow
+        $scope.reqget = Items.usunOrganizm(nazwa);
+    };
 }
+
+
 
 //do pierwszych prob z wymiana danych
 function Kontroler($scope, $http){

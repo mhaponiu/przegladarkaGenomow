@@ -3,6 +3,11 @@
 <head lang="en">
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
     <script src="/static/zprapp/controllers.js"></script>
+    <style type="text/css">
+      .selected {
+        background-color: lightgreen;
+      }
+    </style>
     <meta charset="UTF-8">
     <title></title>
 </head>
@@ -29,17 +34,41 @@
         </td>
     </tr>
 
+
     <tr>
-        <td><hr><h2>factory items organizmy() http.get przez ng-repeat:</h2></td>
+        <td><hr><h2>Dodawanie nowego organizmu</h2></td>
     </tr>
     <tr>
-        <td>reqget surowy: {[ reqget ]}</td>
+        <td>
+            <button ng-click="toggleNowyOrganizm()"> Nowy Organizm</button>
+            <div ng-show="showNowyOrganizm">
+                <form name="NowyOrganizmForm">
+                    <div>
+                        Nazwa ogranizmu: <input ng-model="nowyOrganizm" required>
+                    </div>
+                    <div>
+                        <button ng-click="dodano(nowyOrganizm)" ng-disabled="!NowyOrganizmForm.$valid">Zapisz</button>
+                    </div>
+                </form>
+            </div>
+        </td>
     </tr>
+{#    <tr>#}
+{#        <td><hr><h2>factory items organizmy() http.get przez ng-repeat:</h2></td>#}
+{#    </tr>#}
+{#    <tr>#}
+{#        <td>reqget surowy: {[ reqget ]}</td>#}
+{#    </tr>#}
     <tr>
         <td><h4>pętla ng-repeat:</h4></td>
     </tr>
-    <tr ng-repeat="org in reqget">
+{#    TODO dodac guziki do edycji po najechaniu myszką#}
+    <tr ng-repeat="org in reqget" ng-mouseenter="wybierzOrganizm($index)"
+        ng-class='{selected: $index==wybranyOrganizm}'>
         <td>{[ org.fields.nazwa ]}</td>
+{#        TODO akcja po naciscieciu edytuj#}
+        <td><button ng-show=$index==wybranyOrganizm>Edytuj</button></td>
+        <td><button ng-show=$index==wybranyOrganizm ng-click="usunOrganizm(org.fields.nazwa)">Usuń</button></td>
     </tr>
 </table>
 </body>
