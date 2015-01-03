@@ -5,7 +5,7 @@
     <script src="/static/zprapp/controllers.js"></script>
     <style type="text/css">
       .selected {
-        background-color: lightgreen;
+        background-color: #c9eee8;
       }
     </style>
     <meta charset="UTF-8">
@@ -62,15 +62,33 @@
 {#        <td>reqget surowy: {[ reqget ]}</td>#}
 {#    </tr>#}
     <tr>
-        <td><h2>Organizmy :</h2></td>
+        <td><h2 ng-mouseenter="wybranyOrganizm=-1">Organizmy :</h2></td>
     </tr>
-{#    TODO dodac guziki do edycji po najechaniu myszką#}
-    <tr ng-repeat="org in reqget | orderBy:'fields.nazwa'" ng-mouseenter="wybierzOrganizm($index)"
+    <tr ng-repeat="org in reqget | orderBy:'fields.nazwa'" ng-mousemove="wybierzOrganizm($index, org.fields.nazwa, org.pk)"
         ng-class='{selected: $index==wybranyOrganizm}'>
-        <td>{[ org.fields.nazwa ]}</td>
+        <td ng-hide=($index==wybranyOrganizm)&&showEdytujOrganizm>
+            {[ org.fields.nazwa ]}
+        </td>
 {#        TODO akcja po naciscieciu edytuj#}
-        <td><button ng-show=$index==wybranyOrganizm>Edytuj</button></td>
-        <td><button ng-show=$index==wybranyOrganizm ng-click="usunOrganizm(org.fields.nazwa)">Usuń</button></td>
+        <td ng-show=($index==wybranyOrganizm)&&showEdytujOrganizm>
+            <form name="EdytujOrganizmForm">
+                <input autofocus ng-model="organizmEdytowany" required>
+            </form>
+        </td>
+        <td><button ng-show=($index==wybranyOrganizm)&&showEdytujOrganizm ng-click="edytujOrganizm(org.pk, org.fields.nazwa, organizmEdytowany)">
+            Zapisz
+        </button></td>
+        <td><button ng-show=($index==wybranyOrganizm) ng-click="toggleEdytujOrganizm(org.fields.nazwa)">
+            Edytuj
+        </button></td>
+        <td><button ng-show=$index==wybranyOrganizm ng-click="usunOrganizm(org.pk, org.fields.nazwa)">
+            Usuń
+        </button></td>
+    </tr>
+    <tr>
+        <td>
+            <hr ng-mouseenter="wybranyOrganizm=-1">
+        </td>
     </tr>
 </table>
 </body>

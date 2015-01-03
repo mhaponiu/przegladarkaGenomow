@@ -71,8 +71,8 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
-        items.usunOrganizm = function (nazwaOrg) {
-            var obiekt = {nazwa: nazwaOrg };
+        items.usunOrganizm = function (pk) {
+            var obiekt = {id: pk };
             var request = {
                 method: 'GET',
                 url: 'ajax_usunOrganizm',
@@ -93,8 +93,31 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
+        items.edytujOrganizm = function(pk, nowaNazwa) {
+            var obiekt = {id: pk, nazwa: nowaNazwa };
+            var request = {
+                method: 'GET',
+                url: 'ajax_edytujOrganizm',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                })
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         return items;
       });
+
 
 function OrganizmKontroler($scope, Items){
     //$scope.id_ogranizmu = 1;
@@ -104,8 +127,11 @@ function OrganizmKontroler($scope, Items){
     //$scope.fun = function(numer){
     //    $scope.reqget = Items.organizmy(numer);
     //};
-    $scope.wybierzOrganizm = function(numer_wiersza){
-        $scope.wybranyOrganizm = numer_wiersza;
+    $scope.wybierzOrganizm = function(numerWiersza, nazwa, kluczGlowny){
+        $scope.wybranyOrganizm = numerWiersza;
+        $scope.organizmEdytowany = nazwa;
+        $scope.kluczOrganizmu = kluczGlowny;
+        //$scope.showEdytujOrganizm = false
     }
 
     //formularz Nowy Organizm
@@ -122,13 +148,23 @@ function OrganizmKontroler($scope, Items){
     };
 
     //usuniecie organizmu
-    $scope.usunOrganizm = function(nazwa){
-        alert("Usunięto organizm:\n\n" + nazwa);
+    $scope.usunOrganizm = function(pk, nazwa){
+        alert("Usunięto organizm   " + nazwa);
         //aktualizacja listy organizmow
-        $scope.reqget = Items.usunOrganizm(nazwa);
+        $scope.reqget = Items.usunOrganizm(pk);
     };
 
     //edycja organizmu
+    $scope.showEdytujOrganizm = false;
+    $scope.toggleEdytujOrganizm = function (nazwaOrganizmu){
+        $scope.showEdytujOrganizm = !$scope.showEdytujOrganizm;
+        $scope.organizmEdytowany = nazwaOrganizmu;
+    };
+    $scope.edytujOrganizm = function (pk, staraNazwa, nowaNazwa){
+        alert("ZMIENIONO NAZWĘ ORGANIZMU\n\nStara nazwa:     " + staraNazwa + "\n\nNowa nazwa:    " + nowaNazwa);
+        $scope.showEdytujOrganizm = !$scope.showEdytujOrganizm;
+        $scope.reqget = Items.edytujOrganizm(pk, nowaNazwa);
+    }
 }
 
 

@@ -7,6 +7,7 @@ urlpatterns = patterns('',
     url(r'ajax_organizm', views.ajaxOrganizm),
     url(r'ajax_nowyOrganizm', views.ajaxNowyOrganizm),
     url(r'ajax_usunOrganizm', views.ajaxUsunOrganizm),
+    url(r'ajax_edytujOrganizm', views.ajaxEdytujOrganizm),
 
     #nizej do pierwszych prob
     url(r'organizm/(?P<org_id>\d+)/$', views.organizm),

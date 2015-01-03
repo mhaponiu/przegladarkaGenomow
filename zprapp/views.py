@@ -35,14 +35,25 @@ def ajaxNowyOrganizm(request):
     return response;
 
 def ajaxUsunOrganizm(request):
-    print "usuwam organizm: ", request.REQUEST['nazwa'];
-    # TODO usunac z bazy organizm o nazwie request.REQUEST['nazwa']
-    o = Organizm.objects.get(nazwa = request.REQUEST['nazwa']);
+    print "usuwam organizm o id: ", request.REQUEST['id'];
+    o = Organizm.objects.get(id = request.REQUEST['id']);
     o.delete();
     #zwracam wszystkie organizmy zeby zaktualizowac liste wszystkich
     oall = Organizm.objects.all();
     oall_json = serializers.serialize("json", oall);
     #print "ajaxNowyOrganizm JSON Organizm.all():", oall_json;
+    response = HttpResponse(oall_json, content_type="application/json");
+    return response;
+
+def ajaxEdytujOrganizm(request):
+    print "edytuje organizm o id: ", request.REQUEST['id'], " i nadaje mu nazwe ", request.REQUEST['nazwa'];
+    o = Organizm.objects.get(id = request.REQUEST['id']);
+    o.nazwa = request.REQUEST['nazwa'];
+    o.save();
+    #zwracam wszystkie organizmy zeby zaktualizowac liste wszystkich
+    oall = Organizm.objects.all();
+    oall_json = serializers.serialize("json", oall);
+    #print "ajaxEdytujOrganizm JSON Organizm.all():", oall_json;
     response = HttpResponse(oall_json, content_type="application/json");
     return response;
 
