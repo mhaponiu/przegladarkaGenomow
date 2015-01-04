@@ -167,7 +167,19 @@ function OrganizmKontroler($scope, Items){
     }
 }
 
+function chromosomRouteConfig($routeProvider){
+    $routeProvider.
+        when('/organizm/:id/chromosom', {
+            controller: ChromosomKontroler,
+            templateUrl: 'organizm/chromosomy'
+        });
+}
 
+zprModule.config(chromosomRouteConfig);
+
+function ChromosomKontroler($scope, $routeParams){
+    $scope.chrom = $routeParams.id;
+}
 
 //do pierwszych prob z wymiana danych
 function Kontroler($scope, $http){

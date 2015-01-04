@@ -8,6 +8,9 @@ import json
 def index(request):
     return render(request, 'zprapp/index.html')
 
+def chromosomy(request):
+    return render(request, 'zprapp/chromosomy.html')
+
 def ajaxOrganizm(request):
     oall = Organizm.objects.all();
     oall_json = serializers.serialize("json", oall);

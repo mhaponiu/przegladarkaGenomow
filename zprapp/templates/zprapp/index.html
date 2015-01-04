@@ -62,12 +62,13 @@
 {#        <td>reqget surowy: {[ reqget ]}</td>#}
 {#    </tr>#}
     <tr>
-        <td><h2 ng-mouseenter="wybranyOrganizm=-1">Organizmy :</h2></td>
+        <td><h2 ng-mouseenter="(wybranyOrganizm=-1)&&(showEdytujOrganizm = false)">Organizmy :</h2></td>
     </tr>
     <tr ng-repeat="org in reqget | orderBy:'fields.nazwa'" ng-mousemove="wybierzOrganizm($index, org.fields.nazwa, org.pk)"
         ng-class='{selected: $index==wybranyOrganizm}'>
         <td ng-hide=($index==wybranyOrganizm)&&showEdytujOrganizm>
-            {[ org.fields.nazwa ]}
+            <a ng-href="#/organizm/{[org.pk]}/chromosom">{[ org.fields.nazwa ]}</a>
+{#            {[ org.fields.nazwa ]}#}
         </td>
 {#        TODO akcja po naciscieciu edytuj#}
         <td ng-show=($index==wybranyOrganizm)&&showEdytujOrganizm>
@@ -87,9 +88,13 @@
     </tr>
     <tr>
         <td>
-            <hr ng-mouseenter="wybranyOrganizm=-1">
+            <hr ng-mouseenter="(wybranyOrganizm=-1)&&(showEdytujOrganizm = false)">
         </td>
     </tr>
 </table>
+
+{#Chromosomy#}
+<div ng-view></div>
+
 </body>
 </html>
