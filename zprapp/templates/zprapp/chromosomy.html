@@ -1,22 +1,38 @@
+<a ng-href="#/organizmy">powrót do Organizmów</a>
 <h3>CHROMOSOMY {[ chrom ]}</h3>
-wybrany organizm z OrganizmKontroler {[ wybranyOrganizm ]}
+{#wybrany organizm z OrganizmKontroler {[ wybranyOrganizm ]}#}
+
 <div>
-    chromosomy: {[ chromosomy | json ]}
-</div>
-<div>
-    id organizmu: {[ idOrg ]}
+    chromosomy organizmu: <strong>{[ org.nazwa ]}</strong>
 </div>
 
+{#<div>chromosomy: {[ chromosomy | json ]}</div>#}
+
+<table>
+    <tr>
+        <td><strong>Nazwa:</strong></td>
+        <td><strong>Długość:</strong></td>
+    </tr>
+    <tr ng-repeat="chr in chromosomy | orderBy:'fields.nazwa' ">
+        <td>
+            {[ chr.fields.nazwa ]}
+        </td>
+        <td>
+            {[ chr.fields.dlugosc ]}
+        </td>
+    </tr>
+</table>
 
 
 
 
-<div ng-controller="MarkerKontroler">
-    <div>
-        url dla markera: <code> {[ dlaMarkera.url ]} </code>
-    </div>
-    <div>
-        numer dla markera: <code> {[ dlaMarkera.numer ]} </code>
-    </div>
-    <div ng-include="dlaMarkera.url"></div>
-</div>
+
+{#<div ng-controller="MarkerKontroler">#}
+{#    <div>#}
+{#        url dla markera: <code> {[ dlaMarkera.url ]} </code>#}
+{#    </div>#}
+{#    <div>#}
+{#        numer dla markera: <code> {[ dlaMarkera.numer ]} </code>#}
+{#    </div>#}
+{#    <div ng-include="dlaMarkera.url"></div>#}
+{#</div>#}

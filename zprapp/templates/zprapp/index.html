@@ -11,96 +11,12 @@
     <meta charset="UTF-8">
     <title></title>
 </head>
-<body ng-controller="OrganizmKontroler">
-<table>
-{#    jakis poczatkowy shit#}
-{#    <tr>#}
-{#        <td>#}
-{#            <h2>organizmKontroler:</h2>#}
-{#            {[ testowy ]}#}
-{#        </td>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <td>#}
-{#            <h2>factory Items.cos:</h2>#}
-{#            {[ dane ]}#}
-{#        </td>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <td>#}
-{#             <h2>factory items organizmy() http.get:</h2>#}
-{#             <input ng-model="id_organizmu" ng-change="fun(id_organizmu)">#}
-{#             {[ reqget.nazwa ]}#}
-{#              o id = {[ id_organizmu ]}#}
-{#        </td>#}
-{#    </tr>#}
+{#<body ng-controller="OrganizmKontroler">#}
+<body>
+<h2> PROJEKT ZPR </h2>
 
+<div ng-view></div>
 
-{#    <tr>#}
-{#        <td><h2>Dodawanie nowego organizmu</h2></td>#}
-{#    </tr>#}
-    <tr>
-        <td>
-            <button ng-click="toggleNowyOrganizm()"> Nowy Organizm</button>
-            <div ng-show="showNowyOrganizm">
-                <form name="NowyOrganizmForm">
-                    <div>
-                        Nazwa ogranizmu: <input ng-model="nowyOrganizm" required>
-                    </div>
-                    <div>
-                        <button ng-click="dodano(nowyOrganizm)" ng-disabled="!NowyOrganizmForm.$valid">Zapisz</button>
-                    </div>
-                </form>
-            </div>
-            <hr>
-        </td>
-    </tr>
-{#    <tr>#}
-{#        <td><hr><h2>factory items organizmy() http.get przez ng-repeat:</h2></td>#}
-{#    </tr>#}
-{#    <tr>#}
-{#        <td>reqget surowy: {[ reqget ]}</td>#}
-{#    </tr>#}
-    <tr>
-        <td><h2 ng-mouseenter="(wybranyOrganizm=-1)&&(showEdytujOrganizm = false)">Organizmy :</h2></td>
-    </tr>
-    <tr ng-repeat="org in reqget | orderBy:'fields.nazwa'" ng-mousemove="wybierzOrganizm($index, org.fields.nazwa, org.pk)"
-        ng-class='{selected: $index==wybranyOrganizm}'>
-        <td ng-hide=($index==wybranyOrganizm)&&showEdytujOrganizm>
-            <a ng-href="#/organizm/{[org.pk]}/chromosom">{[ org.fields.nazwa ]}</a>
-{#            {[ org.fields.nazwa ]}#}
-        </td>
-{#        TODO akcja po naciscieciu edytuj#}
-        <td ng-show=($index==wybranyOrganizm)&&showEdytujOrganizm>
-            <form name="EdytujOrganizmForm">
-                <input autofocus ng-model="organizmEdytowany" required>
-            </form>
-        </td>
-        <td><button ng-show=($index==wybranyOrganizm)&&showEdytujOrganizm ng-click="edytujOrganizm(org.pk, org.fields.nazwa, organizmEdytowany)">
-            Zapisz
-        </button></td>
-        <td><button ng-show=($index==wybranyOrganizm) ng-click="toggleEdytujOrganizm(org.fields.nazwa)">
-            Edytuj
-        </button></td>
-        <td><button ng-show=$index==wybranyOrganizm ng-click="usunOrganizm(org.pk, org.fields.nazwa)">
-            Usuń
-        </button></td>
-    </tr>
-    <tr>
-        <td>
-            <hr ng-mouseenter="(wybranyOrganizm=-1)&&(showEdytujOrganizm = false)">
-        </td>
-    </tr>
-</table>
-
-{#<div ng-controller="MarkerKontroler">#}
-{#    {[ url ]}#}
-{#    <div ng-include="url"></div>#}
-{#</div>#}
-{#Chromosomy#}
-<div ng-controller="ChromosomKontroler">
-    <div ng-view></div>
-</div>
 
 </body>
 </html>

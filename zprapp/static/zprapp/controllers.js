@@ -28,7 +28,26 @@ zprModule.config(function($interpolateProvider){
 zprModule.factory('Items',function($http, $q) {
         var items = {};
         items.cos = 'tekst z factory items.cos';
-        items.organizmy = function(numer) {
+        items.organizmy = function() {
+            var request = {
+                method: 'GET',
+                url: 'ajax_wszystkieOrganizmy'
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+        items.organizm = function(numer) {
             var obiekt = {id: numer};
             var request = {
                 method: 'GET',
@@ -45,10 +64,10 @@ zprModule.factory('Items',function($http, $q) {
                 })
                 .error(function(data){
 
-                })
+                });
             var odp = obietnica.promise;
             return  odp;
-        }
+        };
         items.nowyOrganizm = function (nazwaOrg) {
             var obiekt = {nazwa: nazwaOrg };
             var request = {
@@ -66,7 +85,7 @@ zprModule.factory('Items',function($http, $q) {
                 })
                 .error(function(data){
 
-                })
+                });
             var odp = obietnica.promise;
             return  odp;
         };
@@ -88,7 +107,7 @@ zprModule.factory('Items',function($http, $q) {
                 })
                 .error(function(data){
 
-                })
+                });
             var odp = obietnica.promise;
             return  odp;
         };
@@ -110,7 +129,7 @@ zprModule.factory('Items',function($http, $q) {
                 })
                 .error(function(data){
 
-                })
+                });
             var odp = obietnica.promise;
             return  odp;
         };
@@ -119,7 +138,7 @@ zprModule.factory('Items',function($http, $q) {
             var obiekt = {id_org: id_organizmu};
             var request = {
                 method: 'GET',
-                url: 'ajax_chromosom',
+                url: 'ajax_chromosomy',
                 params: obiekt
             };
             var obietnica = $q.defer();
@@ -132,7 +151,7 @@ zprModule.factory('Items',function($http, $q) {
                 })
                 .error(function(data){
 
-                })
+                });
             var odp = obietnica.promise;
             return  odp;
         };
@@ -145,16 +164,13 @@ function OrganizmKontroler($scope, Items){
     //$scope.id_ogranizmu = 1;
     //$scope.testowy = "na sztywno dodany tekst w OrganizmKontroler";
     //$scope.dane = Items.cos;
-    $scope.reqget = Items.organizmy($scope.id_ogranizmu);
-    //$scope.fun = function(numer){
-    //    $scope.reqget = Items.organizmy(numer);
-    //};
+    $scope.reqget = Items.organizmy();
     $scope.wybierzOrganizm = function(numerWiersza, nazwa, kluczGlowny){
         $scope.wybranyOrganizm = numerWiersza;
         $scope.organizmEdytowany = nazwa;
         $scope.kluczOrganizmu = kluczGlowny;
         //$scope.showEdytujOrganizm = false
-    }
+    };
 
     //formularz Nowy Organizm
     $scope.showNowyOrganizm = false;
@@ -189,20 +205,31 @@ function OrganizmKontroler($scope, Items){
     }
 }
 
-function chromosomRouteConfig($routeProvider){
+function zprRouteConfig($routeProvider){
     $routeProvider.
-        when('/organizm/:id/chromosom', {
+        when('/organizmy', {
+            controller: OrganizmKontroler,
+            templateUrl: 'organizmy'
+        }).
+        when('/organizm/:id/chromosomy', {
             controller: ChromosomKontroler,
             templateUrl: 'organizm/chromosomy'
+        }).
+        when('/organizm/:id/chromosom/:cos/markery', {
+            controller: MarkerKontroler,
+            templateUrl: 'markery'
+        }).
+        otherwise({
+            redirectTo:'/organizmy'
         });
 }
 
-zprModule.config(chromosomRouteConfig);
+zprModule.config(zprRouteConfig);
 
-function ChromosomKontroler($scope, $routeParams){
-    $scope.idOrg = $routeParams.id;
+function ChromosomKontroler($scope, $routeParams, Items){
+    $scope.org = Items.organizm($routeParams.id);
     //alert($routeParams.id);
-    $scope.chromosomy = $scope.reqget;
+    $scope.chromosomy = Items.chromosomy($routeParams.id);
 
 
     //przekazuje url do MarkerKontroler w celu nadaniu ngInclude odpowiedniego adresu
