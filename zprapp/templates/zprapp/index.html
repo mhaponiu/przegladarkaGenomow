@@ -93,8 +93,14 @@
     </tr>
 </table>
 
+{#<div ng-controller="MarkerKontroler">#}
+{#    {[ url ]}#}
+{#    <div ng-include="url"></div>#}
+{#</div>#}
 {#Chromosomy#}
-<div ng-view></div>
+<div ng-controller="ChromosomKontroler">
+    <div ng-view></div>
+</div>
 
 </body>
 </html>

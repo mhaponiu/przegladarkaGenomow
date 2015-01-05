@@ -11,6 +11,9 @@ def index(request):
 def chromosomy(request):
     return render(request, 'zprapp/chromosomy.html')
 
+def markery(request):
+    return render(request, 'zprapp/markery.html')
+
 def ajaxOrganizm(request):
     oall = Organizm.objects.all();
     oall_json = serializers.serialize("json", oall);
@@ -60,6 +63,9 @@ def ajaxEdytujOrganizm(request):
     response = HttpResponse(oall_json, content_type="application/json");
     return response;
 
+def ajaxChromosom(request):
+    print "wypluje chromosomy organizmu", request.REQUEST['id_org'];
+    return HttpResponse("dupa");
 
 #pierwsza proba wymiany danych pomiedzy django a angularem przez get
 def organizm(request, org_id):

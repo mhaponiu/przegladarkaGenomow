@@ -1,3 +1,22 @@
 <h3>CHROMOSOMY {[ chrom ]}</h3>
+wybrany organizm z OrganizmKontroler {[ wybranyOrganizm ]}
+<div>
+    chromosomy: {[ chromosomy | json ]}
+</div>
+<div>
+    id organizmu: {[ idOrg ]}
+</div>
 
-{#<div ng-view></div>#}
+
+
+
+
+<div ng-controller="MarkerKontroler">
+    <div>
+        url dla markera: <code> {[ dlaMarkera.url ]} </code>
+    </div>
+    <div>
+        numer dla markera: <code> {[ dlaMarkera.numer ]} </code>
+    </div>
+    <div ng-include="dlaMarkera.url"></div>
+</div>

@@ -115,6 +115,28 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
+        items.chromosomy = function(id_organizmu){
+            var obiekt = {id_org: id_organizmu};
+            var request = {
+                method: 'GET',
+                url: 'ajax_chromosom',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                })
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         return items;
       });
 
@@ -178,7 +200,21 @@ function chromosomRouteConfig($routeProvider){
 zprModule.config(chromosomRouteConfig);
 
 function ChromosomKontroler($scope, $routeParams){
-    $scope.chrom = $routeParams.id;
+    $scope.idOrg = $routeParams.id;
+    //alert($routeParams.id);
+    $scope.chromosomy = $scope.reqget;
+
+
+    //przekazuje url do MarkerKontroler w celu nadaniu ngInclude odpowiedniego adresu
+    $scope.dlaMarkera = {};
+    $scope.dlaMarkera.url = 'markery';
+    //gdy linijka nizej odkomentowana, nie załącza markery.html
+    //$scope.dlaMarkera.url = '';
+    $scope.dlaMarkera.numer = 88888;
+}
+
+function MarkerKontroler($scope, $routeParams){
+    $scope.marker = "markerXXX";
 }
 
 //do pierwszych prob z wymiana danych
