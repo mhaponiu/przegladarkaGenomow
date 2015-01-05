@@ -1,24 +1,79 @@
+<div>
 <a ng-href="#/organizmy">powrót do Organizmów</a>
-<h3>CHROMOSOMY {[ chrom ]}</h3>
+    </div>
+<hr>
+
+<tr>
+    <td>
+        <button ng-click="toggleNowyChromosom()"> Nowy Chromosom</button>
+            <div ng-show="showNowyChromosom">
+                <form name="NowyChromosomForm">
+                    <div>
+                        Nazwa chromosomu: <input type="text" ng-model="nowyChromosom.nazwa" required>
+                    </div>
+                    <div>
+                        Długość chromosomu: <input type="number" min="2" ng-model="nowyChromosom.dlugosc" required>
+                    </div>
+                    <div>
+                        <button ng-click="zapiszNowyChromosom(nowyChromosom)" ng-disabled="!NowyChromosomForm.$valid">Zapisz</button>
+                    </div>
+                </form>
+            </div>
+        <hr>
+    </td>
+</tr>
+
+<h3>CHROMOSOMY ORGANIZMU <code>{[ org.nazwa ]}</code></h3>
 {#wybrany organizm z OrganizmKontroler {[ wybranyOrganizm ]}#}
 
-<div>
-    chromosomy organizmu: <strong>{[ org.nazwa ]}</strong>
-</div>
+{#<div>#}
+{#    chromosomy organizmu: <strong>{[ org.nazwa ]}</strong> o id: <strong> {[ org.id ]}</strong>#}
+{#</div>#}
 
 {#<div>chromosomy: {[ chromosomy | json ]}</div>#}
 
 <table>
     <tr>
+        <td>Wskazywany chromosom: </td>
+        <td>{[ chromosomEdytowany ]} {[ dlugoscEdytowana ]}</td>
+    </tr>
+
+    <tr ng-mouseenter="(wybranyChromosom=-1)&&(showEdytujChromosom = false)">
         <td><strong>Nazwa:</strong></td>
         <td><strong>Długość:</strong></td>
     </tr>
-    <tr ng-repeat="chr in chromosomy | orderBy:'fields.nazwa' ">
-        <td>
-            {[ chr.fields.nazwa ]}
+
+    <tr ng-repeat="chr in chromosomy | orderBy:'fields.nazwa' " ng-mousemove="wybierzChromosom($index, chr.fields.nazwa, chr.fields.dlugosc)"
+        ng-class='{selected: $index==wybranyChromosom}'>
+{#        <td ng-hide=($index==wybranyChromosom)&&showEdytujChromosom>#}
+{#            dsadasdfas#}
+{#        </td>#}
+        <td ng-hide=($index==wybranyChromosom)&&showEdytujChromosom>
+            <a ng-href="#/organizm/{[ org.id ]}/chromosom/{[ chr.pk ]}/markery">{[ chr.fields.nazwa ]}</a>
+{#            {[ chr.fields.nazwa ]}#}
         </td>
-        <td>
+        <td ng-hide=($index==wybranyChromosom)&&showEdytujChromosom>
             {[ chr.fields.dlugosc ]}
+        </td>
+        <td ng-show=($index==wybranyChromosom)&&showEdytujChromosom>
+            <input ng-model="chromosomEdytowany">
+        </td>
+        <td ng-show=($index==wybranyChromosom)&&showEdytujChromosom>
+            <input ng-model="dlugoscEdytowana">
+        </td>
+        <td><button ng-click="edytujChromosom(chr.pk, chr.fields.nazwa, chr.fields.dlugosc, chromosomEdytowany, dlugoscEdytowana)" ng-show=($index==wybranyChromosom)&&showEdytujChromosom>
+            Zapisz
+        </button></td>
+        <td><button ng-show=($index==wybranyChromosom) ng-click="toggleEdytujChromosom(chr.fields.nazwa)">
+            Edytuj
+        </button></td>
+        <td><button ng-click="usunChromosom(chr.pk, chr.fields.nazwa)" ng-show=$index==wybranyChromosom>
+            Usuń
+        </button></td>
+    </tr>
+    <tr>
+        <td>
+            <hr ng-mouseenter="(wybranyChromosom=-1)&&(showEdytujChromosom = false)">
         </td>
     </tr>
 </table>
