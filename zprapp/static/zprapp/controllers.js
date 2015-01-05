@@ -168,6 +168,7 @@ function OrganizmKontroler($scope, Items){
     $scope.wybierzOrganizm = function(numerWiersza, nazwa, kluczGlowny){
         $scope.wybranyOrganizm = numerWiersza;
         $scope.organizmEdytowany = nazwa;
+        //kluczOrganizmu chyba niepotrzebny - nigdzie nie uzywany
         $scope.kluczOrganizmu = kluczGlowny;
         //$scope.showEdytujOrganizm = false
     };
@@ -228,8 +229,43 @@ zprModule.config(zprRouteConfig);
 
 function ChromosomKontroler($scope, $routeParams, Items){
     $scope.org = Items.organizm($routeParams.id);
-    //alert($routeParams.id);
     $scope.chromosomy = Items.chromosomy($routeParams.id);
+    $scope.wybierzChromosom = function(numerWiersza, nazwa, dlugosc){
+        $scope.wybranyChromosom = numerWiersza;
+        $scope.chromosomEdytowany = nazwa;
+        $scope.dlugoscEdytowana = dlugosc;
+    }
+    //formularz Chromosom
+    $scope.showNowyChromosom = false;
+    $scope.nowyChromosom = {};
+    $scope.toggleNowyChromosom = function(){
+        $scope.showNowyChromosom = !$scope.showNowyChromosom;
+        $scope.nowyChromosom.nazwa = "";
+        $scope.nowyChromosom.dlugosc = 0;
+    };
+
+    //edycja chromosomu
+    $scope.showEdytujChromosom = false;
+    $scope.toggleEdytujChromosom = function(nazwaChromosomu){
+        $scope.showEdytujChromosom = !$scope.showEdytujChromosom;
+        $scope.chromosomEdytowany = nazwaChromosomu;
+    }
+    $scope.edytujChromosom = function(pk, staraNazwa, staraDlugosc, nowaNazwa, nowaDlugosc){
+        alert("Edycja chromosomu:\n\n" + staraNazwa + "   o długości " + staraDlugosc + "\n\nna\n\n" + nowaNazwa + "   o długości " + nowaDlugosc);
+        //TODO żądanie do django o edycje chromosomu
+    }
+
+    //utworzenie nowego chromosomu
+    $scope.zapiszNowyChromosom = function (nowyChr){
+        alert("Dodano nowy chromosom:\n\nnazwa:     " + nowyChr.nazwa + "\ndługość:  " + nowyChr.dlugosc);
+        //TODO wysłanie do django żądania o zapisanie nowego chromosomu
+    }
+
+    //usunięcie chromosomu
+    $scope.usunChromosom = function(pk, nazwa){
+        alert("Usuwam chromosom:\n\n" + nazwa + " o pk= "+ pk);
+        //TODO usunięcie przez żądanie do django chromosomu
+    }
 
 
     //przekazuje url do MarkerKontroler w celu nadaniu ngInclude odpowiedniego adresu

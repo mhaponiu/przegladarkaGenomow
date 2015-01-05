@@ -36,7 +36,7 @@ def ajaxOrganizmy(request):
 def ajaxOrganizm(request):
     #print "jestem w ajaxOrganizm o org_id =  ", request.REQUEST['id'];
     o = Organizm.objects.get(id = request.REQUEST['id']);
-    return JsonResponse({'nazwa': o.nazwa});
+    return JsonResponse({'nazwa': o.nazwa, 'id': o.id});
 
 def ajaxNowyOrganizm(request):
     print "zapisuje nowy organizm: ", request.REQUEST['nazwa'];
