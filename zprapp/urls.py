@@ -14,6 +14,8 @@ urlpatterns = patterns('',
     url(r'ajax_edytujOrganizm', views.ajaxEdytujOrganizm),
 
     url(r'ajax_chromosomy', views.ajaxChromosomy),
+    url(r'ajax_usunChromosom', views.ajaxUsunChromosom),
+    url(r'ajax_nowyChromosom', views.ajaxNowyChromosom),
 
     #nizej do pierwszych prob
     url(r'organizm/(?P<org_id>\d+)/$', views.organizm),

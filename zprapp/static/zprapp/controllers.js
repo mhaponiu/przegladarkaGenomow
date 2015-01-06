@@ -156,6 +156,50 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
+        items.usunChromosom = function(id_org, id_chr){
+            var obiekt = {id_org: id_org, id_chr: id_chr};
+            var request = {
+                method: 'GET',
+                url: 'ajax_usunChromosom',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
+        items.nowyChromosom = function(id_org, nazwa, dlugosc){
+            var obiekt = {id_org: id_org, nazwa: nazwa, dlugosc: dlugosc};
+            var request = {
+                method: 'GET',
+                url: 'ajax_nowyChromosom',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         return items;
       });
 
@@ -258,13 +302,13 @@ function ChromosomKontroler($scope, $routeParams, Items){
     //utworzenie nowego chromosomu
     $scope.zapiszNowyChromosom = function (nowyChr){
         alert("Dodano nowy chromosom:\n\nnazwa:     " + nowyChr.nazwa + "\ndługość:  " + nowyChr.dlugosc);
-        //TODO wysłanie do django żądania o zapisanie nowego chromosomu
+        $scope.chromosomy = Items.nowyChromosom($scope.org.$$v.id, nowyChr.nazwa, nowyChr.dlugosc);
     }
 
     //usunięcie chromosomu
     $scope.usunChromosom = function(pk, nazwa){
-        alert("Usuwam chromosom:\n\n" + nazwa + " o pk= "+ pk);
-        //TODO usunięcie przez żądanie do django chromosomu
+        alert("Usuwam chromosom:\n\n" + nazwa + " o pk= "+ pk + "id_org:" + $scope.org.$$v.id);
+        $scope.chromosomy = Items.usunChromosom($scope.org.$$v.id, pk);
     }
 
 

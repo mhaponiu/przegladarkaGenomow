@@ -81,6 +81,26 @@ def ajaxChromosomy(request):
     response = HttpResponse(chrall_json, content_type="application/json");
     return response;
 
+def ajaxUsunChromosom(request):
+    print "usuwam chromosom", request.REQUEST['id_org'], request.REQUEST['id_chr'];
+    o = Organizm.objects.get(id = request.REQUEST['id_org']);
+    chr = o.chromosom_set.get(id = request.REQUEST['id_chr']);
+    chr.delete();
+    print chr;
+    chrall = o.chromosom_set.all();
+    chrall_json = serializers.serialize("json", chrall);
+    response = HttpResponse(chrall_json, content_type="application/json");
+    return response;
+
+def ajaxNowyChromosom(request):
+    print "nowy chromosom w org ", request.REQUEST['id_org'], request.REQUEST['nazwa'], request.REQUEST['dlugosc'];
+    o = Organizm.objects.get(id = request.REQUEST['id_org']);
+    o.chromosom_set.create(nazwa = request.REQUEST['nazwa'], dlugosc = request.REQUEST['dlugosc']);
+    chrall = o.chromosom_set.all();
+    chrall_json = serializers.serialize("json", chrall);
+    response = HttpResponse(chrall_json, content_type="application/json");
+    return response;
+
 #pierwsza proba wymiany danych pomiedzy django a angularem przez get
 def organizm(request, org_id):
     response = "Organizm o id: %s"
