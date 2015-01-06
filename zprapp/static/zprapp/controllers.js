@@ -200,6 +200,33 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
+        items.edytujChromosom = function(id_org, id_chr, nazwa, dlugosc){
+            var obiekt = {
+                id_org: id_org,
+                id_chr: id_chr,
+                nazwa: nazwa,
+                dlugosc: dlugosc
+            };
+            var request = {
+                method: 'GET',
+                url: 'ajax_edytujChromosom',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         return items;
       });
 
@@ -296,7 +323,7 @@ function ChromosomKontroler($scope, $routeParams, Items){
     }
     $scope.edytujChromosom = function(pk, staraNazwa, staraDlugosc, nowaNazwa, nowaDlugosc){
         alert("Edycja chromosomu:\n\n" + staraNazwa + "   o długości " + staraDlugosc + "\n\nna\n\n" + nowaNazwa + "   o długości " + nowaDlugosc);
-        //TODO żądanie do django o edycje chromosomu
+        $scope.chromosomy = Items.edytujChromosom($scope.org.$$v.id, pk, nowaNazwa, nowaDlugosc);
     }
 
     //utworzenie nowego chromosomu
@@ -310,18 +337,12 @@ function ChromosomKontroler($scope, $routeParams, Items){
         alert("Usuwam chromosom:\n\n" + nazwa + " o pk= "+ pk + "id_org:" + $scope.org.$$v.id);
         $scope.chromosomy = Items.usunChromosom($scope.org.$$v.id, pk);
     }
-
-
-    //przekazuje url do MarkerKontroler w celu nadaniu ngInclude odpowiedniego adresu
-    $scope.dlaMarkera = {};
-    $scope.dlaMarkera.url = 'markery';
-    //gdy linijka nizej odkomentowana, nie załącza markery.html
-    //$scope.dlaMarkera.url = '';
-    $scope.dlaMarkera.numer = 88888;
 }
 
-function MarkerKontroler($scope, $routeParams){
+function MarkerKontroler($scope, $routeParams, Items){
     $scope.marker = "markerXXX";
+    $scope.superDane = {};
+    //$scope.superDane.organizm = Items.
 }
 
 //do pierwszych prob z wymiana danych
