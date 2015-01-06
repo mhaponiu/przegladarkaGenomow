@@ -156,6 +156,28 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
+        items.chromosom = function(id_org, id_chr){
+            var obiekt = {id_org: id_org, id_chr: id_chr};
+            var request = {
+                method: 'GET',
+                url: 'ajax_jedenchromosom',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         items.usunChromosom = function(id_org, id_chr){
             var obiekt = {id_org: id_org, id_chr: id_chr};
             var request = {
@@ -287,7 +309,7 @@ function zprRouteConfig($routeProvider){
             controller: ChromosomKontroler,
             templateUrl: 'organizm/chromosomy'
         }).
-        when('/organizm/:id/chromosom/:cos/markery', {
+        when('/organizm/:id_org/chromosom/:id_chr/markery', {
             controller: MarkerKontroler,
             templateUrl: 'markery'
         }).
@@ -340,9 +362,11 @@ function ChromosomKontroler($scope, $routeParams, Items){
 }
 
 function MarkerKontroler($scope, $routeParams, Items){
-    $scope.marker = "markerXXX";
-    $scope.superDane = {};
-    //$scope.superDane.organizm = Items.
+    $scope.jakistamtext = "jakis tam markerowy text";
+    $scope.superDane = {}; //dane nadrzędne dotyczące organizmu i chromosomu
+    //w funkcji zrobic $scope.superDane.organizm.$$v.nazwa
+    $scope.superDane.organizm = Items.organizm($routeParams.id_org);
+    $scope.superDane.chromosom = Items.chromosom($routeParams.id_org, $routeParams.id_chr);
 }
 
 //do pierwszych prob z wymiana danych

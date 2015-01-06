@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'ajax_edytujOrganizm', views.ajaxEdytujOrganizm),
 
     url(r'ajax_chromosomy', views.ajaxChromosomy),
+    url(r'ajax_jedenchromosom', views.ajaxChromosom),
     url(r'ajax_usunChromosom', views.ajaxUsunChromosom),
     url(r'ajax_nowyChromosom', views.ajaxNowyChromosom),
     url(r'ajax_edytujChromosom', views.ajaxEdytujChromosom),

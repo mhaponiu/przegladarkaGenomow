@@ -81,6 +81,12 @@ def ajaxChromosomy(request):
     response = HttpResponse(chrall_json, content_type="application/json");
     return response;
 
+def ajaxChromosom(request):
+    #print "jestem w ajaxOrganizm o org_id =  ", request.REQUEST['id'];
+    o = Organizm.objects.get(id = request.REQUEST['id_org']);
+    chr = o.chromosom_set.get(id = request.REQUEST['id_chr']);
+    return JsonResponse({'nazwa': chr.nazwa, 'dlugosc': chr.dlugosc});
+
 def ajaxUsunChromosom(request):
     print "usuwam chromosom", request.REQUEST['id_org'], request.REQUEST['id_chr'];
     o = Organizm.objects.get(id = request.REQUEST['id_org']);
