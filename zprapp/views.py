@@ -118,6 +118,17 @@ def ajaxEdytujChromosom(request):
     chrall_json = serializers.serialize("json", chrall);
     response = HttpResponse(chrall_json, content_type="application/json");
     return response;
+
+def ajaxMarkery(request):
+    print "daje markery", request.REQUEST['id_org'], request.REQUEST['id_chr'];
+    o = Organizm.objects.get(id = request.REQUEST['id_org']);
+    ch = o.chromosom_set.get(id = request.REQUEST['id_chr']);
+    markall = ch.marker_set.all();
+    markall_json = serializers.serialize("json", markall);
+    response = HttpResponse(markall_json, content_type="application/json");
+    return response;
+
+
 #pierwsza proba wymiany danych pomiedzy django a angularem przez get
 def organizm(request, org_id):
     response = "Organizm o id: %s"

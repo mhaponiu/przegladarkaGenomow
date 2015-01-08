@@ -249,6 +249,28 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
+        items.markery = function(id_organizmu, id_chr){
+            var obiekt = {id_org: id_organizmu, id_chr: id_chr};
+            var request = {
+                method: 'GET',
+                url: 'ajax_wszystkieMarkery',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         return items;
       });
 
@@ -367,6 +389,74 @@ function MarkerKontroler($scope, $routeParams, Items){
     //w funkcji zrobic $scope.superDane.organizm.$$v.nazwa
     $scope.superDane.organizm = Items.organizm($routeParams.id_org);
     $scope.superDane.chromosom = Items.chromosom($routeParams.id_org, $routeParams.id_chr);
+    //$scope.superDane.markery = Items.markery($routeParams.id_org, $routeParams.id_chr);
+    $scope.superDane.markery = Items.markery($routeParams.id_org, $routeParams.id_chr);
+}
+
+function CanvasCtrl($scope,$routeParams, Items){
+    //$scope.canvasText = "canvasowy text";
+    //$scope.canvasText = $scope.jakistamtext;
+    //$scope.canvasText = $scope.superDane.chromosom;
+    $scope.guzik = function(){
+        //alert("guzik");
+        //alert($scope.canvasText.$$v.dlugosc);
+        $scope.canvasText = $scope.superDane.markery;
+        //$scope.canvasText = $scope.superDane.markery.$$v[0].fields.sekwencja;
+    }
+
+    var init = function(){
+        $scope.canvasText = $scope.superDane.chromosom.$$v.dlugosc;
+        drawCanvas();
+        //alert("INIT sie wykonał");
+    }
+    //$scope.$watch('superDane.chromosom', init);
+    $scope.$watch('superDane.chromosom', init);
+    $scope.$watch('superDane.organizm', init);
+    $scope.$watch('superDane.markery', init);
+
+
+    var drawCanvas = function() {
+        var canvas = document.getElementById('canvasMarker');
+        canvas.width = 800;
+        canvas.height = 80;
+        var context = canvas.getContext('2d');
+        //context.lineJoin = "round";
+
+        //tło
+        context.fillStyle = "rgba(0,100,255,0.2)";
+        context.fillRect(0, 20, 800, 40);
+
+        function drawMarker(odkad, dokad) {
+            //var odkad = 800 * pozycja_od / $scope.superDane.chromosom.$$v.dlugosc;
+            //var dokad = 800 * pozycja_do / $scope.superDane.chromosom.$$v.dlugosc;
+            context.fillRect(odkad, 0, dokad - odkad, 80);
+        }
+
+        //narysuj wszystkie markery
+        context.fillStyle = "rgba(255,0,0,0.5)";
+        //drawMarker(900, 5000);
+        //drawMarker(5300, 5800);
+        //drawMarker(50000, 52000);
+
+        for(var i=0; i< $scope.superDane.markery.$$v.length; i++){
+            var odkad = 800 * $scope.superDane.markery.$$v[i].fields.pozycja_od / $scope.superDane.chromosom.$$v.dlugosc;
+            var dokad = 800 * $scope.superDane.markery.$$v[i].fields.pozycja_do / $scope.superDane.chromosom.$$v.dlugosc;
+            //zeby namalować chociaż cienki pasek jak bedzie bardzo mały
+            if(dokad - odkad < 3){
+                dokad = odkad + 3;
+            }
+            drawMarker(odkad, dokad);
+        }
+
+        context.font = "18pt Calibri";
+        context.fillStyle = "black";
+        context.fillText($scope.superDane.markery.$$v[0].fields.sekwencja, 120, 43);
+        //context.fillText($scope.superDane.markery.$$v.length, 120, 43);
+
+
+    }
+
+
 }
 
 //do pierwszych prob z wymiana danych

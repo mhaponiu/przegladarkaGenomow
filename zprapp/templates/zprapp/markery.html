@@ -1,3 +1,4 @@
+
 <div>
     <a ng-href="#/organizm/{[ superDane.organizm.id ]}/chromosomy">powrót do Chromosomów</a>
 </div>
@@ -10,8 +11,14 @@
     o długości: <strong><code>{[ superDane.chromosom.dlugosc ]}</code></strong>
 </div>
 
-<div>
+<div ng-controller="CanvasCtrl">
     <hr>
-    RYSUNEK
+    <div>
+        RYSUNEK {[ canvasText ]}
+        <button ng-click="guzik()">guzik</button>
+    </div>
+
+    <canvas id="canvasMarker"></canvas>
+
     <hr>
 </div>
