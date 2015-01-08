@@ -2,9 +2,28 @@
 <div>
     <a ng-href="#/organizm/{[ superDane.organizm.id ]}/chromosomy">powrót do Chromosomów</a>
 </div>
+
 <hr>
+
+<button ng-click="toggleNowyMarker()"> Nowy Marker</button>
+<div ng-show="showNowyMarker">
+    <form name="NowyMarkerForm">
+        <div>
+            Pozycja od: <input type="number" ng-model="nowyMarker.pozycja_od" required>
+            Pozycja do: <input type="number" ng-model="nowyMarker.pozycja_do" required>
+        </div>
+        <div>
+            Sekwencja: <input size="60" type="text" min="2" ng-model="nowyMarker.sekwencja" required>
+        </div>
+        <div>
+            <button ng-click="zapiszNowyMarker(nowyMarker)" ng-disabled="!NowyMarkerForm.$valid">Zapisz</button>
+        </div>
+    </form>
+</div>
+
+<hr>
+
 <h3>MARKERY </h3>
-{[ jakistamtext ]}
 <div>organizm: <strong><code> {[ superDane.organizm.nazwa ]} </code></strong></div>
 <div>
     chromosom: <strong><code>{[ superDane.chromosom.nazwa ]}</code></strong>
@@ -13,12 +32,64 @@
 
 <div ng-controller="CanvasCtrl">
     <hr>
-    <div>
-        RYSUNEK {[ canvasText ]}
-        <button ng-click="guzik()">guzik</button>
-    </div>
+{#    <div>#}
+{#        RYSUNEK {[ canvasText ]}#}
+{#        <button ng-click="guzik()">guzik</button>#}
+{#    </div>#}
 
     <canvas id="canvasMarker"></canvas>
 
     <hr>
 </div>
+
+{#TODO odkomentowac i zrobic zeby wskazywany kwadracik dawal tu dane#}
+{#<div>#}
+{#    WSKAZYWANY MARKER:#}
+{#    <div>#}
+{#        {[ wskazywanyMarker ]}#}
+{#    </div>#}
+{#    <hr>#}
+{#</div>#}
+
+
+<button ng-click="showWszystkieMarkery = !showWszystkieMarkery">Wszystkie Markery</button>
+<table ng-show="showWszystkieMarkery">
+    <tr ng-repeat="marker in superDane.markery | orderBy:'fields.pozycja_od'"
+        ng-mouseenter="wybierzMarker($index, marker.fields.pozycja_od, marker.fields.pozycja_do, marker.fields.sekwencja)"
+        ng-class='{selected: $index==wybranyMarker.index}'>
+        <td>
+            <table>
+                <tr>
+                    <td ng-hide=($index==wybranyMarker.index)&&showEdytujMarker>
+                        pozycja od: <code><strong>{[ marker.fields.pozycja_od ]}</strong></code>
+                        pozycja do: <code><strong>{[ marker.fields.pozycja_do ]}</strong></code>
+                    </td>
+                    <td ng-show=($index==wybranyMarker.index)&&showEdytujMarker>
+                        pozycja od: <input size="5" ng-model="markerEdytowany.pozycja_od">
+                        pozycja do: <input size="5" ng-model="markerEdytowany.pozycja_do">
+                    </td>
+                    <td><button ng-show=($index==wybranyMarker.index)&&showEdytujMarker
+                                ng-click="edytujMarker(markerEdytowany)">
+                        Zapisz
+                    </button></td>
+                    <td><button ng-show=$index==wybranyMarker.index
+                                ng-click="toggleEdytujMarker()">
+                        Edytuj
+                    </button></td>
+                    <td><button ng-show=$index==wybranyMarker.index
+                                ng-click="usunMarker(wybranyMarker.marker)">
+                        Usuń
+                    </button></td>
+                </tr>
+                <tr>
+                    <td ng-hide=($index==wybranyMarker.index)&&showEdytujMarker>
+                        sekwencja: <code><strong>{[ marker.fields.sekwencja ]}</strong></code>
+                    </td>
+                    <td ng-show=($index==wybranyMarker.index)&&showEdytujMarker>
+                        sekwencja: <input size="30" ng-model="markerEdytowany.sekwencja">
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

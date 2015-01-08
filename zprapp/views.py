@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from zprapp.models import Organizm, Chromosom
+from zprapp.models import Organizm, Chromosom, Marker;
 from django.http import QueryDict
 from django.core import serializers
 import json
@@ -92,7 +92,6 @@ def ajaxUsunChromosom(request):
     o = Organizm.objects.get(id = request.REQUEST['id_org']);
     chr = o.chromosom_set.get(id = request.REQUEST['id_chr']);
     chr.delete();
-    print chr;
     chrall = o.chromosom_set.all();
     chrall_json = serializers.serialize("json", chrall);
     response = HttpResponse(chrall_json, content_type="application/json");
@@ -127,6 +126,42 @@ def ajaxMarkery(request):
     markall_json = serializers.serialize("json", markall);
     response = HttpResponse(markall_json, content_type="application/json");
     return response;
+
+def ajaxNowyMarker(request):
+    print "nowy marker", request.REQUEST['id_org'], request.REQUEST['id_chr'], request.REQUEST['sekwencja'], request.REQUEST['poz_od'], request.REQUEST['poz_do'];
+    o = Organizm.objects.get(id = request.REQUEST['id_org']);
+    ch = o.chromosom_set.get(id = request.REQUEST['id_chr']);
+    ch.marker_set.create(pozycja_od = request.REQUEST['poz_od'], pozycja_do = request.REQUEST['poz_do'], sekwencja = request.REQUEST['sekwencja']);
+    markall = ch.marker_set.all();
+    markall_json = serializers.serialize("json", markall);
+    response = HttpResponse(markall_json, content_type="application/json");
+    return response;
+
+def ajaxUsunMarker(request):
+    print "usuwam marker", request.REQUEST['id_org'], request.REQUEST['id_chr'], request.REQUEST['id_mark'];
+    o = Organizm.objects.get(id = request.REQUEST['id_org']);
+    ch = o.chromosom_set.get(id = request.REQUEST['id_chr']);
+    m = ch.marker_set.get(id = request.REQUEST['id_mark']);
+    m.delete();
+    markall = ch.marker_set.all();
+    markall_json = serializers.serialize("json", markall);
+    response = HttpResponse(markall_json, content_type="application/json");
+    return response;
+
+def ajaxEdytujMarker(request):
+    print "Edytuje marker", request.REQUEST['o'], request.REQUEST['ch'], request.REQUEST['m'], request.REQUEST['od'], request.REQUEST['do'], request.REQUEST['s'];
+    o = Organizm.objects.get(id = request.REQUEST['o']);
+    ch = o.chromosom_set.get(id = request.REQUEST['ch']);
+    m = ch.marker_set.get(id = request.REQUEST['m']);
+    m.pozycja_od = request.REQUEST['od'];
+    m.pozycja_do = request.REQUEST['do'];
+    m.sekwencja = request.REQUEST['s'];
+    m.save();
+    markall = ch.marker_set.all();
+    markall_json = serializers.serialize("json", markall);
+    response = HttpResponse(markall_json, content_type="application/json");
+    return response;
+
 
 
 #pierwsza proba wymiany danych pomiedzy django a angularem przez get

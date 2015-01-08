@@ -61,13 +61,16 @@
         <td ng-show=($index==wybranyChromosom)&&showEdytujChromosom>
             <input ng-model="dlugoscEdytowana">
         </td>
-        <td><button ng-click="edytujChromosom(chr.pk, chr.fields.nazwa, chr.fields.dlugosc, chromosomEdytowany, dlugoscEdytowana)" ng-show=($index==wybranyChromosom)&&showEdytujChromosom>
+        <td><button ng-click="edytujChromosom(chr.pk, chr.fields.nazwa, chr.fields.dlugosc, chromosomEdytowany, dlugoscEdytowana)"
+                    ng-show=($index==wybranyChromosom)&&showEdytujChromosom>
             Zapisz
         </button></td>
-        <td><button ng-show=($index==wybranyChromosom) ng-click="toggleEdytujChromosom(chr.fields.nazwa)">
+        <td><button ng-show=($index==wybranyChromosom)
+                    ng-click="toggleEdytujChromosom(chr.fields.nazwa)">
             Edytuj
         </button></td>
-        <td><button ng-click="usunChromosom(chr.pk, chr.fields.nazwa)" ng-show=$index==wybranyChromosom>
+        <td><button ng-click="usunChromosom(chr.pk, chr.fields.nazwa)"
+                    ng-show=$index==wybranyChromosom>
             Usuń
         </button></td>
     </tr>

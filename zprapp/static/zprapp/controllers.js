@@ -271,6 +271,79 @@ zprModule.factory('Items',function($http, $q) {
             return  odp;
         };
 
+        items.nowyMarker = function(id_org, id_chr, sekwencja, poz_od, poz_do){
+            var obiekt = {id_org: id_org, id_chr: id_chr, sekwencja: sekwencja, poz_od: poz_od, poz_do: poz_do};
+            var request = {
+                method: 'GET',
+                url: 'ajax_nowyMarker',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
+        items.usunMarker = function(id_org, id_chr, id_mark){
+            var obiekt = {id_org: id_org, id_chr: id_chr, id_mark: id_mark};
+            var request = {
+                method: 'GET',
+                url: 'ajax_usunMarker',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
+        items.edytujMarker = function(id_org, id_chr, id_mark, poz_od, poz_do, sekwencja){
+            var obiekt = {
+                o: id_org,
+                ch: id_chr,
+                m: id_mark,
+                od: poz_od,
+                do: poz_do,
+                s: sekwencja
+            };
+            var request = {
+                method: 'GET',
+                url: 'ajax_edytujMarker',
+                params: obiekt
+            };
+            var obietnica = $q.defer();
+            $http(request)
+                .success(function(data){
+                    obietnica.resolve(
+                        //{obiet: data['organizm']}
+                        data
+                    );
+                })
+                .error(function(data){
+
+                });
+            var odp = obietnica.promise;
+            return  odp;
+        };
+
         return items;
       });
 
@@ -389,8 +462,63 @@ function MarkerKontroler($scope, $routeParams, Items){
     //w funkcji zrobic $scope.superDane.organizm.$$v.nazwa
     $scope.superDane.organizm = Items.organizm($routeParams.id_org);
     $scope.superDane.chromosom = Items.chromosom($routeParams.id_org, $routeParams.id_chr);
-    //$scope.superDane.markery = Items.markery($routeParams.id_org, $routeParams.id_chr);
     $scope.superDane.markery = Items.markery($routeParams.id_org, $routeParams.id_chr);
+
+    //formularz Marker
+    $scope.showNowyMarker = false;
+    $scope.nowyMarker = {};
+    $scope.toggleNowyMarker = function (){
+        $scope.showNowyMarker = !$scope.showNowyMarker;
+        $scope.nowyMarker.pozycja_od = null;
+        $scope.nowyMarker.pozycja_do = null;
+        $scope.nowyMarker.sekwencja = "";
+    }
+    $scope.zapiszNowyMarker = function (nowyMarker){
+        alert("Utworzyłeś nowy marker \n\npozycja od:  " + nowyMarker.pozycja_od + "\npozycja do:  " + nowyMarker.pozycja_do + "\nsekwencja:  " + nowyMarker.sekwencja);
+        $scope.superDane.markery = Items.nowyMarker($routeParams.id_org, $routeParams.id_chr, $scope.nowyMarker.sekwencja, $scope.nowyMarker.pozycja_od, $scope.nowyMarker.pozycja_do);
+    }
+
+    $scope.wybranyMarker = {};
+    $scope.markerEdytowany = {};
+    //$scope.markerEdytowany.fields = {};
+
+    $scope.wybierzMarker = function(index, poz_od, poz_do, sek){
+        $scope.wybranyMarker.index = index;
+        $scope.wybranyMarker.marker = $scope.superDane.markery.$$v[index];
+        //$scope.wybranyMarker.marker = marker;
+        $scope.markerEdytowany.pozycja_od = poz_od;
+        $scope.markerEdytowany.pozycja_do = poz_do;
+        $scope.markerEdytowany.sekwencja = sek;
+
+        $scope.wskazywanyMarker = $scope.superDane.markery.$$v[index];
+
+    }
+
+    //usuwanie markera
+    $scope.usunMarker = function (marker){
+        alert("Usunięto marker o id: " + marker.pk);
+        $scope.superDane.markery = Items.usunMarker($routeParams.id_org, $routeParams.id_chr, marker.pk)
+    }
+
+    //edycja markera
+    $scope.showEdytujMarker = false;
+    $scope.toggleEdytujMarker = function(){
+        $scope.showEdytujMarker = !$scope.showEdytujMarker;
+        //$scope.markerEdytowany = $scope.wybranyMarker.marker;
+    }
+
+    $scope.edytujMarker = function(marker){
+        alert("zapisano zmiany\nsekwencja: " + marker.sekwencja + "\nod: " + marker.pozycja_od + "\ndo: " + marker.pozycja_do + "\npk: " + $scope.wybranyMarker.marker.pk);
+        $scope.superDane.markery = Items.edytujMarker($routeParams.id_org,
+                                                        $routeParams.id_chr,
+                                                        $scope.wybranyMarker.marker.pk,
+                                                        marker.pozycja_od,
+                                                        marker.pozycja_do,
+                                                        marker.sekwencja);
+    }
+    $scope.showWszystkieMarkery=false;
+
+
 }
 
 function CanvasCtrl($scope,$routeParams, Items){
@@ -448,9 +576,9 @@ function CanvasCtrl($scope,$routeParams, Items){
             drawMarker(odkad, dokad);
         }
 
-        context.font = "18pt Calibri";
-        context.fillStyle = "black";
-        context.fillText($scope.superDane.markery.$$v[0].fields.sekwencja, 120, 43);
+        //context.font = "18pt Calibri";
+        //context.fillStyle = "black";
+        //context.fillText($scope.superDane.markery.$$v[0].fields.sekwencja, 120, 43);
         //context.fillText($scope.superDane.markery.$$v.length, 120, 43);
 
 
