@@ -26,6 +26,5 @@ urlpatterns = patterns('',
 
 
     #nizej do pierwszych prob
-    url(r'organizm/(?P<org_id>\d+)/$', views.organizm),
     url(r'ajax/$', views.odpowiedz),
 )

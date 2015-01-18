@@ -20,8 +20,8 @@ def markery(request):
 def ajaxOrganizmy(request):
     oall = Organizm.objects.all();
     oall_json = serializers.serialize("json", oall);
-    print "JSON Organizm.objects.all(): ", oall_json
-    #print "dupa", request.REQUEST['id'];
+    print "daje wszystkie organizmy";
+    #print "JSON Organizm.objects.all(): ", oall_json
     #print "ajaxOrganizm: serialize JSON Organizm.objects.all():", oall_json;
     #o1 = Organizm.objects.get( id = request.REQUEST['id']);
     #o1_json = serializers.serialize("json", o1);
@@ -73,11 +73,11 @@ def ajaxEdytujOrganizm(request):
     return response;
 
 def ajaxChromosomy(request):
-    print "wypluje chromosomy organizmu", request.REQUEST['id_org'];
+    print "daje chromosomy organizmu", request.REQUEST['id_org'];
     o = Organizm.objects.get(id = request.REQUEST['id_org']);
     chrall = o.chromosom_set.all();
     chrall_json = serializers.serialize("json", chrall);
-    print chrall_json;
+    #print chrall_json;
     response = HttpResponse(chrall_json, content_type="application/json");
     return response;
 
@@ -163,16 +163,6 @@ def ajaxEdytujMarker(request):
     return response;
 
 
-
-#pierwsza proba wymiany danych pomiedzy django a angularem przez get
-def organizm(request, org_id):
-    response = "Organizm o id: %s"
-    #o = Organizm.objects.get(id = org_id)
-    #o = get_object_or_404(Organizm, id = org_id)
-    #return HttpResponse(o)
-    organizm = Organizm.objects.get(id = org_id)
-    context = {'organizm': organizm}
-    return render(request, 'zprapp/index2.html', context)
 
 #pierwsza proba wymiany danych pomiedzy django a angularem przez get (udana)
 def odpowiedz(request):
