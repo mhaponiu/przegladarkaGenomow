@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     url(r'ajax_usunMarker', views.ajaxUsunMarker),
     url(r'ajax_edytujMarker', views.ajaxEdytujMarker),
 
+    url(r'ajax_post', views.ajaxPost),
+
 
     #nizej do pierwszych prob
     url(r'ajax/$', views.odpowiedz),

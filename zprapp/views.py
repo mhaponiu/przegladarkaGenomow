@@ -3,6 +3,7 @@ from django.http import HttpResponse, JsonResponse
 from zprapp.models import Organizm, Chromosom, Marker;
 from django.http import QueryDict
 from django.core import serializers
+from django.views.decorators.csrf import csrf_exempt
 import json
 
 def index(request):
@@ -161,6 +162,20 @@ def ajaxEdytujMarker(request):
     markall_json = serializers.serialize("json", markall);
     response = HttpResponse(markall_json, content_type="application/json");
     return response;
+
+@csrf_exempt #dzieki temu dziala post w ogole
+def ajaxPost(request):
+    # oall = Organizm.objects.all();
+    # oall_json = serializers.serialize("json", oall);
+    # print "proba posta: organizmy wszystkie"
+    print "request method: ";
+    print request.method;
+    print request.REQUEST;
+    #print request.REQUEST['o']
+    #print oall_json;
+    #response = HttpResponse(oall_json, content_type="application/json");
+    #return response;
+    return HttpResponse("JAKIS POST");
 
 
 

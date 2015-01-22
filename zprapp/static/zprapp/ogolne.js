@@ -7,6 +7,7 @@ var zprModule = angular.module('ZprAppModule', []);
 zprModule.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
     $interpolateProvider.endSymbol(']}');
+    //$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 });
 
 //ZprAppModule.factory('Items', function(){
@@ -340,6 +341,35 @@ zprModule.factory('Items', function ($http, $q) {
             .error(function (data) {
 
             });
+        var odp = obietnica.promise;
+        return odp;
+    };
+
+    items.posttt = function (id_org) {
+        var obiekt = {
+            o: id_org
+        };
+        var request = {
+            method: 'GET',
+            url: 'ajax_post',
+            params: obiekt
+            //data: {o: id_org}
+        };
+        var obietnica = $q.defer();
+        $http({
+            method: 'POST',
+            url: 'ajax_post',
+            ///params: {o: '3'},
+            //data: {test: 'test'},
+            //data: $.param({test: "test"}),
+            data: 'test=danePOSTdanePOSTdanePOST',
+            //data: request,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+            //headers: {'Content-Type': 'application/json'}
+        }).success(function(data){
+            obietnica.resolve(data);
+        });
+
         var odp = obietnica.promise;
         return odp;
     };

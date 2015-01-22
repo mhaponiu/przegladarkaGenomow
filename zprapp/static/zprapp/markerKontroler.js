@@ -70,10 +70,15 @@ function CanvasCtrl($scope, $routeParams, Items) {
     //$scope.canvasText = "canvasowy text";
     //$scope.canvasText = $scope.jakistamtext;
     //$scope.canvasText = $scope.superDane.chromosom;
+    $scope.reqpost = "REQPOST_PUSTY";
     $scope.guzik = function () {
         //alert("guzik");
         //alert($scope.canvasText.$$v.dlugosc);
-        $scope.canvasText = $scope.superDane.markery;
+        //$scope.canvasText = $scope.superDane.markery;
+        $scope.reqpost = Items.posttt(2);
+        //$scope.reqpost = Items.posttt(3);
+        //var item = Items.posttt(numer);
+        //$scope.canvasText = item;
         //$scope.canvasText = $scope.superDane.markery.$$v[0].fields.sekwencja;
     }
 
