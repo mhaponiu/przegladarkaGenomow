@@ -165,12 +165,27 @@ def ajaxEdytujMarker(request):
 
 @csrf_exempt #dzieki temu dziala post w ogole
 def ajaxPost(request):
-    # oall = Organizm.objects.all();
-    # oall_json = serializers.serialize("json", oall);
+    oall = Organizm.objects.all();
+    oall_json = serializers.serialize("json", oall);
     # print "proba posta: organizmy wszystkie"
     print "request method: ";
     print request.method;
     print request.REQUEST;
+    req = request.body;
+    #req_des = serializers.deserialize("json", req);
+    #req_json = serializers.serialize("json", req);
+    req2 = unicode("["+request.body+"]");
+    req2_json = json.loads(req2);
+
+    # dziala
+    req3 = unicode(request.body);
+    req3_json = json.loads(req3);
+    print req3_json['url'];
+
+
+    #req_json = serializers.serialize("json", req2);
+    #print req_json;
+
     #print request.REQUEST['o']
     #print oall_json;
     #response = HttpResponse(oall_json, content_type="application/json");

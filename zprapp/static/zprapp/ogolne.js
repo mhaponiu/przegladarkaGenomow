@@ -355,6 +355,7 @@ zprModule.factory('Items', function ($http, $q) {
             params: obiekt
             //data: {o: id_org}
         };
+        var req_json = angular.toJson(request);
         var obietnica = $q.defer();
         $http({
             method: 'POST',
@@ -362,8 +363,9 @@ zprModule.factory('Items', function ($http, $q) {
             ///params: {o: '3'},
             //data: {test: 'test'},
             //data: $.param({test: "test"}),
-            data: 'test=danePOSTdanePOSTdanePOST',
+            //data: 'test='+request.url,
             //data: request,
+            data: req_json,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
             //headers: {'Content-Type': 'application/json'}
         }).success(function(data){
