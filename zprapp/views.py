@@ -180,7 +180,7 @@ def ajaxPost(request):
     # dziala
     req3 = unicode(request.body);
     req3_json = json.loads(req3);
-    print req3_json['url'];
+    print req3_json['params']['o'];
 
 
     #req_json = serializers.serialize("json", req2);
