@@ -1,0 +1,4 @@
+select scaffold_scaffold.chromosome_id as chr_id, scaffold_scaffold.id as scaff_id, scaffold_scaffoldposition.start, scaffold_scaffoldposition.end, scaffold_scaffoldposition.order, length_bp from scaffold_scaffold, scaffold_scaffoldposition where scaffold_scaffold.id = scaffold_scaffoldposition.scaff_id order by scaffold_scaffoldposition.order, scaff_id limit 20;
+
+GRANT ALL PRIVILEGES ON TABLE scaffold_scaffold TO zpr
+
