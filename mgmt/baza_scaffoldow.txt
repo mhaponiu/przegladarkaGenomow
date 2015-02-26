@@ -1,0 +1,8 @@
+1. przenieść dane dotyczące scaffoldów z projektu WebOmics
+2. scaffold powinien mieć następujące atrybuty: id (unikalny), porządek (order ze starej bazy danych), start (indeks w jedn. fizycznych), length_bp (długość, składowa redundantna), sekwencja (oddzielna tabela)
+3. zbadać, czy order jest poprawny, czyli czy dla każdego scaffoldu jest różny i czy występują wszystkie wartości; jeżeli występują wymienione sytuacje to przenumerować
+4. wygenerować dane dla chromosomów: id (unikalny), numer (int), długość w jednostkach fyzycznych (bp) - odczytać z wikipedii
+5. wygenerować start w jednostkach fizycznych: odczytać dłogość chromosomu w jednostkach fizycznych (bp, Mbp) odjąć suma długości scaffoldów dla danego chromosomu (w jednostkach fizycznych) = suma długości przerw pomiędzy scaffoldami
+6. liczba przerw = liczba scaffoldów + 1, każda przerwa ma tą samą długość więc obliczamy start dla każdego scaffolda w jednostkach fizycznych
+
+(do zrobienia do 9 marca)
