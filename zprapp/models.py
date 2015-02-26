@@ -43,4 +43,4 @@ class Scaffold(models.Model):
 
 class Sequence(models.Model):
     scaffold = models.ForeignKey(Scaffold)
-    sequence = models.TextField(primary_key=True, null=False, unique=True)
+    sequence = models.TextField()

@@ -1,0 +1,10 @@
+<div>
+    SCAFFOLDY chromosomu {[chr_id]} (łącznie {[scflds.length]}):
+</div>
+<div>
+    <table>
+        <tr ng-repeat="scf in scflds | orderBy: 'fields.order'">
+            <td><a ng-href="#/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">scaffold {[scf.pk]}</a> o długosci {[scf.fields.length]} ; order: {[scf.fields.order]} </td>
+        </tr>
+    </table>
+</div>

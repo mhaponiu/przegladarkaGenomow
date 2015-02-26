@@ -57,6 +57,7 @@ def create_scaffolds():
             continue; #proba zapisania scaffolda o identycznym id ale innym order - pomijam taki
         #print row['chr_id'], row['scaff_id'], row['order'], row['length_bp'];
     print "zapisano scaffoldy"
+    conn.close()
 
 def delete_scaffolds():
     chrs = Chromosome.objects.all();
@@ -77,9 +78,25 @@ def delete_sequences():
     print "usunieto sekwencje"
 
 def create_sequences():
-    #TODO wczytać do bazy django sekwencje
-    pass
+    try:
+        conn = psycopg2.connect(CONNECT_STRING)
+    except:
+        print "CONNECT DATABASE ERROR"
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute('''select id, sequence from scaffold_scaffold''')
+    rows = cur.fetchall()
+    for row in rows:
+        scfld = Scaffold.objects.get(id=row['id'])
+        scfld.sequence_set.create(sequence=row['sequence'])
+        #OperationalError: index row requires 121032 bytes, maximum size is 8191
+    print "utworzono sekwencje"
+    conn.close()
 
+# try:
+#     conn = psycopg2.connect(CONNECT_STRING)
+# except:
+#     print "CONNECT DATABASE ERROR"
+# cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 
 # try:
