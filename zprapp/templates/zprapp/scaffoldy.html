@@ -13,11 +13,12 @@
         <h3 class="panel-heading">SCAFFOLDY chromosomu {[chr_id]} (łącznie {[scflds.length]}): </h3>
         <table class="table table-striped table-bordered table-hover">
             <thead>
-                <tr><th>Scaffold</th><th>Długość</th><th>Order:</th></tr>
+                <tr><th>Scaffold</th><th>Długość</th><th>Start</th><th>Order</th></tr>
             </thead>
             <tr ng-repeat="scf in scflds | orderBy: 'fields.order'">
                 <td><a ng-href="#/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">scaffold {[scf.pk]}</a></td>
                 <td>{[scf.fields.length]}</td>
+                <td>{[scf.fields.start]}</td>
                 <td>{[scf.fields.order]} </td>
             </tr>
 

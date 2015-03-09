@@ -29,7 +29,7 @@ class Marker(models.Model):
 #NEW
 
 class Chromosome(models.Model):
-    id = models.IntegerField(primary_key=True, null=False, unique=True)
+    number = models.IntegerField()
     length = models.FloatField()
 
 class Scaffold(models.Model):
@@ -37,6 +37,7 @@ class Scaffold(models.Model):
     chromosome = models.ForeignKey(Chromosome)
     length = models.FloatField()
     order = models.IntegerField()
+    start = models.FloatField()
     #start = models.FloatField()
     #end = models.FloatField()
 

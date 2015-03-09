@@ -16,7 +16,7 @@
                 <tr><th>Chromosom</th><th>Długość</th></tr>
             </thead>
             <tr ng-repeat="ch in chrms">
-                <td><a ng-href="#/chromosom/{[ch.pk]}/scaffoldy">chromosom {[ch.pk]}</a></td>
+                <td><a ng-href="#/chromosom/{[ch.pk]}/scaffoldy">chromosom {[ch.fields.number]}</a></td>
                 <td>{[ch.fields.length]}</td>
             </tr>
 
