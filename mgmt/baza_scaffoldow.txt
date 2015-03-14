@@ -10,7 +10,8 @@
 1. zbadać, których scaffoldów (liczy się suma length_bp) jest więcej: czy assemb_type=0, czy assemb_type=1; przy przenoszeniu danych do własnych tabel uwzględnić tylko ten dłuższy, ten krótszy pominąć,
 później pk 1-6 z poprzedniego zadania
 
-2. atrybut scaffold_id powinien być typu int (a nie text)
+2. atrybut scaffold_id powinien być typu int (a nie text) 
+//zdarzają sie id z literami np 360320a i 360320b i mają ten sam assemb_type = 1    ?
 3. zaimportować niektóre dane dotyczące markerów z tabeli xls; dane te to: nazwa markera (pozycja marker), scaffold_nr (klucz obcy do scaffold_id - osobno dostarczyć markerów, które mają nieistniejący scaffold_id), scaffold_start, scaffold_stop (indeksy początku i końca) - zbadać, czy indeksy nie przekraczają długości danego skafoldu (length_bp);
 4. tabela 'marker' powinna mieć następujące pola: id (autoint), nazwa (wzięte z xls), scaffold_id (klucz obcy, wzięty z xls), start, stop (indeksy, wizięte z xls)
 5. dodatkowy widok - tabela markerów (wszystkie markery)
