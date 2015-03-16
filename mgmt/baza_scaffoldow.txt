@@ -1,0 +1,21 @@
+1. przenieść dane dotyczące scaffoldów z projektu WebOmics
+2. scaffold powinien mieć następujące atrybuty: id (unikalny), porządek (order ze starej bazy danych), start (indeks w jedn. fizycznych), length_bp (długość, składowa redundantna), sekwencja (oddzielna tabela)
+3. zbadać, czy order jest poprawny, czyli czy dla każdego scaffoldu jest różny i czy występują wszystkie wartości; jeżeli występują wymienione sytuacje to przenumerować
+4. wygenerować dane dla chromosomów: id (unikalny), numer (int), długość w jednostkach fyzycznych (bp) - odczytać z wikipedii
+5. wygenerować start w jednostkach fizycznych: odczytać dłogość chromosomu w jednostkach fizycznych (bp, Mbp) odjąć suma długości scaffoldów dla danego chromosomu (w jednostkach fizycznych) = suma długości przerw pomiędzy scaffoldami
+6. liczba przerw = liczba scaffoldów + 1, każda przerwa ma tą samą długość więc obliczamy start dla każdego scaffolda w jednostkach fizycznych
+
+(do zrobienia do 9 marca)
+
+1. zbadać, których scaffoldów (liczy się suma length_bp) jest więcej: czy assemb_type=0, czy assemb_type=1; przy przenoszeniu danych do własnych tabel uwzględnić tylko ten dłuższy, ten krótszy pominąć,
+później pk 1-6 z poprzedniego zadania
+
+2. atrybut scaffold_id powinien być typu int (a nie text) 
+//zdarzają sie id z literami np 360320a i 360320b i mają ten sam assemb_type = 1    ?
+3. zaimportować niektóre dane dotyczące markerów z tabeli xls; dane te to: nazwa markera (pozycja marker), scaffold_nr (klucz obcy do scaffold_id - osobno dostarczyć markerów, które mają nieistniejący scaffold_id), scaffold_start, scaffold_stop (indeksy początku i końca) - zbadać, czy indeksy nie przekraczają długości danego skafoldu (length_bp);
+4. tabela 'marker' powinna mieć następujące pola: id (autoint), nazwa (wzięte z xls), scaffold_id (klucz obcy, wzięty z xls), start, stop (indeksy, wizięte z xls)
+5. dodatkowy widok - tabela markerów (wszystkie markery)
+6. dodatkowy widok - markery dla danego skafolda (po wybraniu chromosomu i skafolda)
+7. graficzny widok chromosomów (jako dodatkowy)
+
+(do zrobienia do 23 marca)
