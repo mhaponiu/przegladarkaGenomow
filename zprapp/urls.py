@@ -1,5 +1,7 @@
 from django.conf.urls import patterns, url
 from zprapp import views
+from django.shortcuts import render_to_response
+from django.http import HttpResponse
 
 urlpatterns = patterns('',
     url(r'^$', views.index),

@@ -13,7 +13,9 @@ import psycopg2.extras;
 '''
     nalezy wczytac backup bazy danych '17.11.2012-cucumber_plain.backup'
     do nowo utworzonej bazy i wpisac jej dane do ponizszego CONNECT_STRING'a
+    oraz lokacje pliku xls z markerami podac do MARKER_FILE_LOCATION
 '''
+MARKER_FILE_LOCATION = "Cucumber_scaffold_markers.xls"
 CONNECT_STRING = "dbname='ogorek_roboczy' user='zpr' host='localhost' password='zpr'"
 
 def delete_chromosomes():
@@ -152,6 +154,20 @@ def create_all():
     scaffolds_start_attr_gen()
     create_sequences_from_webomics_db()
     print "zakonczono tworzenie danych"
+
+def create_markers():
+    import xlrd;
+    workbook = xlrd.open_workbook(MARKER_FILE_LOCATION)
+    sheet = workbook.sheet_by_index(0)
+    for col in range(sheet.ncols):
+        print sheet.cell_value(0, col)
+    data = [[sheet.cell_value(r,c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
+    print "DATA[0][0]: ", data[0][0];
+    # TODO wczytac markery do bazy
+
+
+
+
 
 # try:
 #     conn = psycopg2.connect(CONNECT_STRING)
