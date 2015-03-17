@@ -155,15 +155,94 @@ def create_all():
     create_sequences_from_webomics_db()
     print "zakonczono tworzenie danych"
 
-def create_markers():
+def get_markers_from_xls():
     import xlrd;
     workbook = xlrd.open_workbook(MARKER_FILE_LOCATION)
-    sheet = workbook.sheet_by_index(0)
-    for col in range(sheet.ncols):
-        print sheet.cell_value(0, col)
-    data = [[sheet.cell_value(r,c) for c in range(sheet.ncols)] for r in range(sheet.nrows)]
-    print "DATA[0][0]: ", data[0][0];
-    # TODO wczytac markery do bazy
+    sheet = workbook.sheet_by_index(1)
+    # for row in range(2, sheet.nrows):
+    #     print sheet.cell_value(0, row)
+    data = [[sheet.cell_value(r,c) for c in range(sheet.ncols)] for r in range(2, sheet.nrows)]
+    # print "DATA[0][1]: ", data[0][1];
+    return data
+
+def get_scaffolds_with_bad_text_id():
+    #sprawdza czy w id scaffolda nie ma np liter
+    try:
+        conn = psycopg2.connect(CONNECT_STRING)
+    except:
+        print "CONNECT DATABASE ERROR"
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("select id, assemb_type from scaffold_scaffold")
+    rows = cur.fetchall()
+    bad_id = []
+    for row in rows:
+        try:
+            id = row['id']
+            int(id)
+        except ValueError:
+            bad_id.append((id, row['assemb_type']))
+    return bad_id;
+
+def check_undef_sc_id_and_start_stop_markers():
+    #UWAGA: czyta dane z bazy django a nie tej z backupu!
+    NAME, SC_ID, START, STOP = 1, 6, 7, 8;
+    markers = get_markers_from_xls();
+    undef_scfld_id=[]
+    bad_start_stop_marker=[]
+    for marker in markers:
+        try:
+            sc=Scaffold.objects.get(id=int(marker[SC_ID]))
+            if sc.length < marker[START] or sc.length < marker[STOP]:
+                bad_start_stop_marker.append((marker[NAME], marker[SC_ID]))
+        except:
+            undef_scfld_id.append((marker[NAME], marker[SC_ID]))
+            continue;
+    return undef_scfld_id, bad_start_stop_marker;
+
+def check_undef_start_stop_markers(assemb_type=-1):
+    NAME, SC_ID, START, STOP = 1, 6, 7, 8;
+    markers = get_markers_from_xls();
+    bad_start_stop_marker=[];
+    try:
+        conn = psycopg2.connect(CONNECT_STRING)
+    except:
+        print "CONNECT DATABASE ERROR"
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    if assemb_type == 0 or assemb_type == 1:
+        cur.execute("select id, length_bp from scaffold_scaffold where assemb_type=%s", str(assemb_type))
+    else:
+        cur.execute("select id, length_bp from scaffold_scaffold")
+    data = cur.fetchall()
+    scflds_id = []
+    scflds_len = []
+    for sc in data:
+        try:
+            scflds_id.append(int(sc[0]))
+            scflds_len.append(sc[1])
+        except:
+            continue;
+    #scflds = zip(scflds_id, scflds_len)
+    undef_scfld_id =[]
+    cur.execute("select id, length_bp from scaffold_scaffold")
+    #scflds_all = [sc[0] for sc in cur.fetchall()]
+    scflds_all=[]
+    for sc in cur.fetchall():
+        try:
+            scflds_all.append(int(sc[0]))
+        except:
+            continue;
+    for marker in markers:
+        if int(marker[SC_ID]) in scflds_id:
+            index = scflds_id.index(marker[SC_ID],)
+            sc_len = scflds_len[index]
+            if sc_len < marker[START] or sc_len < marker[STOP]:
+                bad_start_stop_marker.append((marker[NAME], marker[SC_ID]))
+        else:
+            if int(marker[SC_ID]) not in scflds_all:
+                undef_scfld_id.append((marker[NAME], marker[SC_ID]))
+    return undef_scfld_id, bad_start_stop_marker;
+
+
 
 
 
