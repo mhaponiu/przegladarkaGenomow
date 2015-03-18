@@ -2,3 +2,5 @@ select scaffold_scaffold.chromosome_id as chr_id, scaffold_scaffold.id as scaff_
 
 GRANT ALL PRIVILEGES ON TABLE scaffold_scaffold TO zpr
 
+select length_bp from scaffold_scaffold where id in ('360311a', '360311b', '360320a', '360320b', '360332a', '360332b', '360352a', '360352b', '360368a', '360368b');
+

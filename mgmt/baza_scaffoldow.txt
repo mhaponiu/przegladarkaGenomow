@@ -3,7 +3,7 @@
 3. zbadać, czy order jest poprawny, czyli czy dla każdego scaffoldu jest różny i czy występują wszystkie wartości; jeżeli występują wymienione sytuacje to przenumerować
 4. wygenerować dane dla chromosomów: id (unikalny), numer (int), długość w jednostkach fyzycznych (bp) - odczytać z wikipedii
 5. wygenerować start w jednostkach fizycznych: odczytać dłogość chromosomu w jednostkach fizycznych (bp, Mbp) odjąć suma długości scaffoldów dla danego chromosomu (w jednostkach fizycznych) = suma długości przerw pomiędzy scaffoldami
-6. liczba przerw = liczba scaffoldów + 1, każda przerwa ma tą samą długość więc obliczamy start dla każdego scaffolda w jednostkach fizycznych
+6. liczba przerw = liczba scaffoldów + 1, każda przerwa ma tą samą długość więc obliczamy start dla każdego scaffolda w jednostkach fizycznych; edit: zaorkąglić do liczb całkowitych 'start'
 
 (do zrobienia do 9 marca)
 
@@ -22,6 +22,8 @@ w scaffold_scaffold jest scaffoldow:
     801 o assemb_type=0    suma length_bp=    940221
     163 o assemb_type=1    suma length_bp= 203265130
 
+DECYZJA: wczytać do bazy tylko te o assemb_type=1, assemb_type=0 pominąć całkowicie
+
 dlugosci chromosomow: http://onlinelibrary.wiley.com/doi/10.1111/j.1365-313X.2012.05017.x/pdf
 
 chromosome_id	suma_scaffoldow_length_bp:	sum_len_assemb_type=0:	sum_len_assemb_type=1:	len_chr (z linku powyzej):
@@ -32,14 +34,21 @@ chromosome_id	suma_scaffoldow_length_bp:	sum_len_assemb_type=0:	sum_len_assemb_t
 	5		30087488			136720			29950768	27400000
 	6		33276520			186952			33089568	28600000
 	7		19334245			 83430			19250815	18900000
+DECYZJA: jako dlugości chromosomów przyjąć sum_len_assemb_type=1 + 1000000
+
 Ad2:
-problem bo niektóre id (10) z literami (wszystkie assemb_type=1): 360311a 360311b 360320a 360320b 360332a 360332b 360352a 360352b 360368a 360368b (i tak nie ma na nich markerów)
+problem bo niektóre id (10) z literami (wszystkie assemb_type=1): '360311a', '360311b', '360320a', '360320b', '360332a', '360332b', '360352a', '360352b', '360368a', '360368b' (i tak nie ma na nich markerów)
+DECYZJA: pominąć je póki co zupełnie przy wpisywaniu do włanych tabel
 
 Ad3:
 markerów z nieistniejącym id_scaff jest tylko 5 (bo maja id_scaff=0): 802107228004_K_4 SSR11665 SSR00215 SSR00048 SSR11741
-markery z indeksami początku i końca przekraczającymi length_bp scaffolda jest aż 1572 (wszystkie assemb_type=0) ! gdzie wszystkich markerów jest 1642 => poprawnych markerów jest raptem 70
-Czy jako dostarczenie osobno markerów z nieistniejącym id scaffoldu mam również traktować te o innym assemb_type niż biorę pod uwagę?
+markery z indeksami początku i końca przekraczającymi length_bp scaffolda jest aż 1572 (wszystkie assemb_type=0) ! gdzie wszystkich markerów jest 1642 => poprawnych markerów jest 65 (70 - 5 niezdefiniowanych) => wszystkie assemb_type=0
+Czy jako dostarczenie osobno markerów z nieistniejącym id scaffoldu mam również traktować te o innym assemb_type niż biorę pod uwagę? odp: w ogole nie uwzględniam tych z assemb_type=0
 
 Ad5:
 Czy wyswietlać wszystkie markery razem z tymi dla których nie ma scaffoldów i z innymi assemb_type?
+
+17 marzec 2015:
+8.Sprawdzic czy sa poprawne markery dla assemb_type = 1 (Ad3) => nie ma, wszystkie assemb_type=0
+9.Chwilowo jako dlugosc chromosomow przyjac sume length_bp (dla assemb_type=1) scaffoldow + 1Mbp
 

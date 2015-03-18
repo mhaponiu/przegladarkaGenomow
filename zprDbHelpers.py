@@ -157,12 +157,12 @@ def create_all():
 
 def get_markers_from_xls():
     import xlrd;
-    workbook = xlrd.open_workbook(MARKER_FILE_LOCATION)
-    sheet = workbook.sheet_by_index(1)
+    workbook = xlrd.open_workbook(MARKER_FILE_LOCATION);
+    sheet = workbook.sheet_by_index(1);
     # for row in range(2, sheet.nrows):
     #     print sheet.cell_value(0, row)
     data = [[sheet.cell_value(r,c) for c in range(sheet.ncols)] for r in range(2, sheet.nrows)]
-    # print "DATA[0][1]: ", data[0][1];
+    #data = [(int(d[0]), d[1], d[2], int(d[3]), int(d[4]), int(d[5]), int(d[6]), int(d[7]), int(d[8])) for d in data]
     return data
 
 def get_scaffolds_with_bad_text_id():
@@ -185,6 +185,7 @@ def get_scaffolds_with_bad_text_id():
 
 def check_undef_sc_id_and_start_stop_markers():
     #UWAGA: czyta dane z bazy django a nie tej z backupu!
+    #lepiej korzystac z get_good_bad_undef_markers():
     NAME, SC_ID, START, STOP = 1, 6, 7, 8;
     markers = get_markers_from_xls();
     undef_scfld_id=[]
@@ -200,6 +201,8 @@ def check_undef_sc_id_and_start_stop_markers():
     return undef_scfld_id, bad_start_stop_marker;
 
 def check_undef_start_stop_markers(assemb_type=-1):
+    #nie do konca dziala tak jak intuicja by nakazala ale jest teoretycznie dobrze
+    #lepiej korzystac z get_good_bad_undef_markers():
     NAME, SC_ID, START, STOP = 1, 6, 7, 8;
     markers = get_markers_from_xls();
     bad_start_stop_marker=[];
@@ -241,6 +244,51 @@ def check_undef_start_stop_markers(assemb_type=-1):
             if int(marker[SC_ID]) not in scflds_all:
                 undef_scfld_id.append((marker[NAME], marker[SC_ID]))
     return undef_scfld_id, bad_start_stop_marker;
+
+def get_scaffolds_all_without_bad_id():
+    ID, LENGTH_BP, ASSEMB_TYPE = 0, 1, 2
+    try:
+        conn = psycopg2.connect(CONNECT_STRING)
+    except:
+        print "CONNECT DATABASE ERROR"
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    cur.execute("select id, length_bp, assemb_type from scaffold_scaffold")
+    data = cur.fetchall()
+    scflds=[]
+    for sc in data:
+        try:
+            scflds.append((int(sc[ID]), int(sc[LENGTH_BP]), sc[ASSEMB_TYPE]))
+        except:
+            continue;
+    return scflds;
+
+def get_good_bad_undef_markers():
+    markers = get_markers_from_xls();
+    NAME, SC_ID, START, STOP = 1, 6, 7, 8;
+    markers = [(int(d[0]), d[NAME], d[2], int(d[3]), int(d[4]), int(d[5]), int(d[SC_ID]), int(d[START]), int(d[STOP])) for d in markers]
+    scflds = get_scaffolds_all_without_bad_id()
+    ID, LENGTH_BP, ASSEMB_TYPE = 0, 1, 2;
+    scflds_id = [sc[ID] for sc in scflds]
+    scflds_length = [sc[LENGTH_BP] for sc in scflds]
+    scflds_assemb_type = [sc[ASSEMB_TYPE] for sc in scflds]
+    good_markers=[]
+    bad_markers=[]
+    undef_markers=[]
+    for marker in markers:
+        if marker[SC_ID] not in scflds_id:
+            undef_markers.append((marker[NAME], marker[SC_ID]))
+            continue;
+        else:
+            index = scflds_id.index(marker[SC_ID],)
+            sc_len = scflds_length[index]
+            sc_assemb_type = scflds_assemb_type[index]
+            if sc_len < marker[START] or sc_len < marker[STOP]:
+                bad_markers.append({'name':marker[NAME], 'sc_id':marker[SC_ID], 'assemb_type':sc_assemb_type})
+            else:
+                good_markers.append({'name':marker[NAME], 'sc_id':marker[SC_ID], 'assemb_type':sc_assemb_type})
+    return good_markers, bad_markers, undef_markers
+
+
 
 
 
