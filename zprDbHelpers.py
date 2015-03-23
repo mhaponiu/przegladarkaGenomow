@@ -44,8 +44,13 @@ def chromosomes_lenght_to_bp():
     # http://www.biomedcentral.com/content/pdf/1471-2164-14-461.pdf
     length_bp = [29100000, 23200000, 42300000, 23800000, 27400000, 28600000, 18900000]
 
+    #sum length_bp from scaffolds where assemb_type==1
+    length_bp = [28150775, 25165221, 39056285, 28601718, 29950768, 33089568, 19250815]
+    #kazdy zwiekszamy o 1Mbp zeby byly przerwy miedzy scaffoldami
+    for l in range(length_bp.__len__()):
+        length_bp[l]+=1000000
     ###################TESTOWO length_bp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    length_bp = [40000000]*7
+    #length_bp = [40000000]*7
     ###################TESTOWO length_bp!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     chrms = Chromosome.objects.all()
@@ -96,7 +101,7 @@ def scaffolds_start_attr_gen():
         scflds = chr.scaffold_set.all();
         for sc in scflds:
             scflds_suma_len += sc.length;
-        przerwa = (chr_len - scflds_suma_len) / (scflds.__len__() + 1)
+        przerwa = int((chr_len - scflds_suma_len) / (scflds.__len__() + 1))
         scflds = sorted(scflds, key=lambda a: a.order)
         start = 0;
         for sc in scflds:
@@ -283,9 +288,9 @@ def get_good_bad_undef_markers():
             sc_len = scflds_length[index]
             sc_assemb_type = scflds_assemb_type[index]
             if sc_len < marker[START] or sc_len < marker[STOP]:
-                bad_markers.append({'name':marker[NAME], 'sc_id':marker[SC_ID], 'assemb_type':sc_assemb_type})
+                bad_markers.append({'name':marker[NAME], 'sc_id':marker[SC_ID], 'sc_len':sc_len, 'start':marker[START], 'stop':marker[STOP] ,'assemb_type':sc_assemb_type})
             else:
-                good_markers.append({'name':marker[NAME], 'sc_id':marker[SC_ID], 'assemb_type':sc_assemb_type})
+                good_markers.append({'name':marker[NAME], 'sc_id':marker[SC_ID], 'sc_len':sc_len, 'start':marker[START], 'stop':marker[STOP] ,'assemb_type':sc_assemb_type})
     return good_markers, bad_markers, undef_markers
 
 
