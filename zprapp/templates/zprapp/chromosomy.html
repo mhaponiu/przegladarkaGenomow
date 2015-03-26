@@ -1,35 +1,32 @@
-{#<div>#}
-{#    CHROMOSOMY:#}
-{#</div>#}
-{#<div>#}
-{#    <table>#}
-{#        <tr ng-repeat="ch in chrms">#}
-{#            <td><a ng-href="#/chromosom/{[ch.pk]}/scaffoldy">chromosom {[ch.pk]}</a> o długosci {[ch.fields.length]} </td>#}
-{#        </tr>#}
-{#    </table>#}
-{#</div>#}
-
-{#<div ng-controller="chrCanvasCtrl">#}
-{#    {[ chrms ]}#}
-{#</div>#}
 
 
-<div class="row" ng-controller="chrCanvasCtrl">
-    <div class="col-xs-12">
-        <canvas id="canvasChromosom"></canvas>
+{#940 x 400 gdy width > 991;  gdy <= 991 720 x 400  > 765 #}
+
+<div class="row">
+    <div class="col-sm-10">
+        <canvas id="canvasChromosom" width="720" height="400"></canvas>
     </div>
 </div>
 
-<div class="panel">
-        <h3 class="panel-heading">CHROMOSOMY: </h3>
 
-        <table class="table table-striped table-bordered table-hover">
-            <thead>
-                <tr><th>Chromosom</th><th>Długość</th></tr>
-            </thead>
-            <tr ng-repeat="ch in chrms">
-                <td><a ng-href="#/chromosom/{[ch.pk]}/scaffoldy">chromosom {[ch.fields.number]}</a></td>
-                <td>{[ch.fields.length]}</td>
-            </tr>
-        </table>
+
+<div class="well well-lg" ng-controller="chrCanvasCtrl" ng-click="klik()">
+    <button class="btn btn-block btn-lg btn-danger">BUTTON</button>
+</div>
+
+<div class="panel">
+    <h3 class="panel-heading">CHROMOSOMY: </h3>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Chromosom</th>
+            <th>Długość</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="ch in chrms">
+            <td><a ng-href="#/chromosom/{[ch.pk]}/scaffoldy">chromosom {[ch.fields.number]}</a></td>
+            <td>{[ch.fields.length]}</td>
+        </tr>
+    </table>
 </div>
