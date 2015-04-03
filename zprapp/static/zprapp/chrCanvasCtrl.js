@@ -23,6 +23,7 @@ function chrCanvasCtrl($scope, $http, $location) {
 
     var chr_tab = [29150775, 26165221, 40056285, 29601718, 30950768, 34089568, 20250815]
     //var chr_tab = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
+    var chr_tab_id = [52, 53, 54, 55, 56, 57, 58]
 
 
     //do użytku wewnątrz events.setDrawStage jako rodzic powinno byc 'this' events'a
@@ -77,18 +78,17 @@ function chrCanvasCtrl($scope, $http, $location) {
             context.fillStyle = "#5cb85c";
             drawChromosom(x, y, szer_chr, h)
             context.restore()
-            rodzic.addRegionEventListener("mousemove", function () {
+            rodzic.addRegionEventListener("mousedown", function () {
                 var mousePos = events.getMousePos();
                 var mouseX = mousePos.x;
                 var mouseY = mousePos.y;
-                //TODO przekazac jakos zmienną z zewnątrz
-                console.log("Mysz w : " + mouseX + "," + mouseY + " zmienna=" + napis);
+                console.log("Mysz w : " + mouseX + "," + mouseY + " chromosom=" + napis);
+                //TODO odsylac do odpowiedniego linku ze scaffoldami ->  window.location.replace("#/chromosom/[id_scaff]/scaffoldy")
+                window.location.replace("#/chromosom/" + chr_tab_id[i] + "/scaffoldy")
             });
             //rodzic.addRegionEventListener("mouseout", function () {
             //    console.log("mysz usunieta z pola !")
             //});
-            //TODO dlaczego przekazywane i zawsze jest takie same?!
-            //addRegionEventListener(rodzic, "mouseout", i, mouseOut)
             rodzic.closeRegion();
             delta_x += szer_chr + szer_przerwy
             context.save()
@@ -121,11 +121,19 @@ function chrCanvasCtrl($scope, $http, $location) {
         events.drawStage();
         console.log(window.innerWidth)
         console.log(window.innerHeight)
+        //window.location.href("http://www.onet.pl")
+        fkcja()
     }
+
     window.onresize = function(){
         events.drawStage();
     }
 
+    var fkcja = function(){
+        console.log("fkcja")
+        window.location.replace("http://onet.pl")
+        //$location.path("chromosom/53/scaffoldy");
+    }
 
 
     //var events = new Events('canvasChromosom');
@@ -184,9 +192,11 @@ function chrCanvasCtrl($scope, $http, $location) {
     //    })
     //}
     //drawChromosomCavas(chr_tab);
+
     $scope.guzik = function(){
-        alert("guzik")
-        var path = "chromosom/"+"52"+"/scaffoldy"
-        //$location.path(path);
+        console.log("guzik")
+        window.location.href("chromosom/53/scaffoldy")
+        var path = "chromosom/"+"53"+"/scaffoldy"
+        $location.path(path);
     }
 }

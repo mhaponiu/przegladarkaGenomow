@@ -11,11 +11,12 @@ function ScaffoldKontroler($scope, $routeParams, $http) {
             url: 'ajax_scfldy',
             params: {id: id_chr}
         };
-        $http(request)
+        return $http(request)
             .success(function (data) {
                 $scope.scflds = data;
             });
     }
-    $scope.loadScaffolds($routeParams.id);
+    $scope.promiseLoadScaffolds = $scope.loadScaffolds($routeParams.id);
+    //$scope.loadScaffolds($routeParams.id);
     //$scope.scflds = Items.scaffoldy($routeParams.id);
 }

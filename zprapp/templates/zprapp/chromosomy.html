@@ -1,7 +1,8 @@
 
 
 {#940 x 400 gdy width > 991;  gdy <= 991 720 x 400  > 765 #}
-
+{#gdy ng-controller="chrCanvasCtrl" to po kliknieciu na chromosom#}
+{#wszystko dziala ale Uncaught TypeError: Cannot read property 'tagName' of null z evensts.js/getCanvasPos #}
 <div class="row">
     <div class="col-sm-10">
         <canvas id="canvasChromosom" width="720" height="400"></canvas>
@@ -10,8 +11,17 @@
 
 
 
-<div class="well well-lg" ng-controller="chrCanvasCtrl" ng-click="klik()">
-    <button class="btn btn-block btn-lg btn-danger">BUTTON</button>
+{#<div class="well well-lg" ng-controller="chrCanvasCtrl" ng-click="klik()">#}
+{#    <button class="btn btn-block btn-lg btn-danger">KLIK</button>#}
+{#</div>#}
+{##}
+{#<div class="well well-lg" ng-controller="chrCanvasCtrl" ng-click="klik()">#}
+{#    <button class="btn btn-block btn-lg btn-primary">GUZIK</button>#}
+{#</div>#}
+
+<div class="row btn-group" ng-controller="chrCanvasCtrl">
+    <button class="btn btn-lg btn-danger" ng-click="klik()">KLIK</button>
+    <button class="btn btn-lg btn-primary" ng-click="guzik()">GUZIK</button>
 </div>
 
 <div class="panel">
