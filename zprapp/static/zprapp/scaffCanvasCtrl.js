@@ -7,9 +7,7 @@ function scaffCanvasCtrl($scope){
     var events = new Events("canvasScaffold");
     var canvas = events.getCanvas();
     var context = events.getContext();
-    with(canvas.style){
-        backgroundColor="#f5f5f5";
-        //width="100%";
-        //height="auto"
-    }
+    canvas.style.backgroundColor="#f5f5f5";
+    document.getElementById("span_od").style.backgroundColor = "#c7c7c7";
+    document.getElementById("span_do").style.backgroundColor = "#c7c7c7";;
 }
