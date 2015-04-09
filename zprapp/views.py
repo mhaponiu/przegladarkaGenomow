@@ -14,10 +14,18 @@ def chromosomy(request):
 
 def ajaxChromosomy(request):
     print "daje chromosomy"
-    chall = Chromosome.objects.all();
+    if 'id' in request.REQUEST:
+        chall = [Chromosome.objects.get(id = request.REQUEST['id'])]
+    else:
+        chall = Chromosome.objects.all();
     chall_json = serializers.serialize("json", chall);
     # print chall_json;
     return HttpResponse(chall_json, content_type="application/json");
+
+def ajaxChromLength(request):
+    print "daje chr_len"
+    ch = Chromosome.objects.get(id=request.REQUEST['id'])
+
 
 def scaffoldy(request):
     return render(request, 'zprapp/scaffoldy.html')

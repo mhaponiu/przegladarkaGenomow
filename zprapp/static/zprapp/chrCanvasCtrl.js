@@ -2,7 +2,7 @@
  * Created by mhaponiu on 23.03.15.
  */
 
-function chrCanvasCtrl($scope, $http, $location) {
+function chrCanvasCtrl($scope, $http, $location, DataBufor) {
     var events = new Events("canvasChromosom");
     var canvas = events.getCanvas();
     var context = events.getContext();
@@ -21,6 +21,7 @@ function chrCanvasCtrl($scope, $http, $location) {
         //context.closePath()
     }
 
+    //TODO pobierac z bazy chr_tab i chr_tab_id
     var chr_tab = [29150775, 26165221, 40056285, 29601718, 30950768, 34089568, 20250815]
     //var chr_tab = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
     var chr_tab_id = [52, 53, 54, 55, 56, 57, 58]
@@ -84,6 +85,7 @@ function chrCanvasCtrl($scope, $http, $location) {
                 var mouseY = mousePos.y;
                 console.log("Mysz w : " + mouseX + "," + mouseY + " chromosom=" + napis);
                 //TODO odsylac do odpowiedniego linku ze scaffoldami ->  window.location.replace("#/chromosom/[id_scaff]/scaffoldy")
+                DataBufor.setData("chr_length", chr_tab[i]);
                 window.location.replace("#/chromosom/" + chr_tab_id[i] + "/scaffoldy")
             });
             //rodzic.addRegionEventListener("mouseout", function () {
@@ -113,6 +115,10 @@ function chrCanvasCtrl($scope, $http, $location) {
 
     setDrawStage(chr_tab);
 
+    window.onresize = function(){
+        events.drawStage();
+    }
+
 
     $scope.klik = function (){
         var ca = events.getCanvas();
@@ -122,17 +128,6 @@ function chrCanvasCtrl($scope, $http, $location) {
         console.log(window.innerWidth)
         console.log(window.innerHeight)
         //window.location.href("http://www.onet.pl")
-        fkcja()
-    }
-
-    window.onresize = function(){
-        events.drawStage();
-    }
-
-    var fkcja = function(){
-        console.log("fkcja")
-        window.location.replace("http://onet.pl")
-        //$location.path("chromosom/53/scaffoldy");
     }
 
 
@@ -195,8 +190,9 @@ function chrCanvasCtrl($scope, $http, $location) {
 
     $scope.guzik = function(){
         console.log("guzik")
-        window.location.href("chromosom/53/scaffoldy")
-        var path = "chromosom/"+"53"+"/scaffoldy"
-        $location.path(path);
+
+        //window.location.href("chromosom/53/scaffoldy")
+        //var path = "chromosom/"+"53"+"/scaffoldy"
+        //$location.path(path);
     }
 }

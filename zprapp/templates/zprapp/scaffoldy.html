@@ -20,51 +20,72 @@
 
     <div class="well">
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-4">
                 <div class="input-group input-group-lg">
                     <span class="input-group-btn">
                     <button class="btn btn-primary"><span class="glyphicon glyphicon-zoom-out"></span></button>
                     <button class="btn btn-primary"><span class="glyphicon glyphicon-zoom-in"></span></button>
                         </span>
 
-                    <input class="form-control" placeholder="zoom">
+                    <input ng-model="settings.zoom" class="form-control" type="number" min="0" placeholder="zoom">
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-5">
                 <div class="input-group input-group-lg">
                     <span class="input-group-btn">
                     <button class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></button>
                     <button class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span></button>
                         </span>
-                    <input class="form-control" placeholder="skok">
+                    <input ng-model="settings.skok" class="form-control" min="1" type="number" placeholder="skok">
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="btn-group btn-group-lg">
+                    <button class="btn btn-info" ng-click="textarea.toggle()"><span ng-class="textarea.ikona"></span>
+                    </button>
+                    <button class="btn btn-warning" ng-click="settings.reset()">Reset</button>
                 </div>
             </div>
         </div>
+
         <br>
+
         <div class="input-group input-group-lg">
             <span class="input-group-addon" id="span_od">od</span>
-            <input type="text" class="form-control" placeholder="widok od">
+            <input ng-model="settings.widok_od" type="number" class="form-control" placeholder="widok od">
             <span class="input-group-addon" id="span_do">do</span>
-            <input type="text" class="form-control" placeholder="widok do">
+            <input ng-model="settings.widok_do" type="number" class="form-control" placeholder="widok do">
         </div>
     </div>
 
-</div>
+    <textarea id="textAreaSequence" ng-show="textarea.visible" class="form-control input-lg" rows="4"
+              placeholder="czekaj...">{[textarea.text]}</textarea>
+
+    <div class="row btn-group">
+        <button class="btn btn-lg btn-danger" ng-click="klik()">KLIK</button>
+        <button class="btn btn-lg btn-primary" ng-click="guzik()">GUZIK</button>
+    </div>
 
 
-
-<div class="panel">
+    <div class="panel">
         <h3 class="panel-heading">SCAFFOLDY chromosomu {[chr_id]} (łącznie {[scflds.length]}): </h3>
         <table class="table table-striped table-bordered table-hover">
             <thead>
-                <tr><th>Scaffold</th><th>Długość</th><th>Start</th><th>Order</th></tr>
+            <tr>
+                <th>Scaffold</th>
+                <th>Długość</th>
+                <th>Start</th>
+                <th>Order</th>
+            </tr>
             </thead>
-            <tr ng-repeat="scf in scflds | orderBy: 'fields.order'">
+            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">
                 <td><a ng-href="#/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">scaffold {[scf.pk]}</a></td>
                 <td>{[scf.fields.length]}</td>
                 <td>{[scf.fields.start]}</td>
-                <td>{[scf.fields.order]} </td>
+                <td>{[scf.fields.order]}</td>
             </tr>
 
         </table>
+    </div>
+
 </div>

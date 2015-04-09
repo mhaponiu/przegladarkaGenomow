@@ -74,3 +74,44 @@ function cucRouteConfig($routeProvider) {
 //});
 
 cucModule.config(cucRouteConfig);
+
+cucModule.filter("wytnijNaScaffView", function(){
+    //wycina ze wszystkich scaffoldow te ktore maja byc widoczne w glownym widoku canvas'a
+    return function(data, odkad, dokad){
+        if (angular.isArray(data) && angular.isNumber(odkad) && angular.isNumber(dokad)){
+            console.log("wytnijNaScaffView in: odkad " + odkad + " dokad: " + dokad);
+            var noweScaffoldy = [];
+            angular.forEach(data, function(item){
+                if (!(
+                    (item.fields.start + item.fields.length < odkad) ||
+                    (item.fields.start > dokad)
+                    )){
+                    noweScaffoldy.push(item)
+                }
+                else{
+                    //console.log("odpada id: " + item.pk + " start: " + item.fields.start)
+                }
+                //noweScaffoldy.push(item)
+            })
+            return noweScaffoldy;
+        }
+        else{
+            //console.log("wytnijNaScaffView out: odkad " + odkad + " dokad: " + dokad);
+            return data
+        }
+    }
+})
+
+cucModule.service("DataBufor", function(){
+    var data = {};
+    return {
+        getData: function(name){
+            //console.log("DataBufor: getData: " + name + " value: " + data[name])
+            return data[name]
+        },
+        setData: function(name, value){
+            //console.log("DataBufor: setData: " + name + " value: " + value)
+            data[name] = value;
+        }
+    }
+})
