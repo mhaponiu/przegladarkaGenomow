@@ -84,7 +84,7 @@ function chrCanvasCtrl($scope, $http, $location, DataBufor) {
                 var mouseX = mousePos.x;
                 var mouseY = mousePos.y;
                 console.log("Mysz w : " + mouseX + "," + mouseY + " chromosom=" + napis);
-                //TODO odsylac do odpowiedniego linku ze scaffoldami ->  window.location.replace("#/chromosom/[id_scaff]/scaffoldy")
+                //odsylac do odpowiedniego linku ze scaffoldami ->  window.location.replace("#/chromosom/[id_scaff]/scaffoldy")
                 DataBufor.setData("chr_length", chr_tab[i]);
                 window.location.replace("#/chromosom/" + chr_tab_id[i] + "/scaffoldy")
             });

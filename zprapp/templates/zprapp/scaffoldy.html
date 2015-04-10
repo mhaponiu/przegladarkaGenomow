@@ -23,25 +23,33 @@
             <div class="col-sm-4">
                 <div class="input-group input-group-lg">
                     <span class="input-group-btn">
-                    <button class="btn btn-primary"><span class="glyphicon glyphicon-zoom-out"></span></button>
-                    <button class="btn btn-primary"><span class="glyphicon glyphicon-zoom-in"></span></button>
-                        </span>
-
-                    <input ng-model="settings.zoom" class="form-control" type="number" min="0" placeholder="zoom">
+                        <button class="btn btn-primary" ng-click="zoomOut()">
+                            <span class="glyphicon glyphicon-zoom-out"></span>
+                        </button>
+                        <button class="btn btn-primary" ng-click="zoomIn()">
+                            <span class="glyphicon glyphicon-zoom-in"></span>
+                        </button>
+                    </span>
+                    <input ng-model="settings.zoom" class="form-control" placeholder="zoom">
+                    <span class="input-group-addon" id="zoom_procent">&#37</span>
                 </div>
             </div>
             <div class="col-sm-5">
                 <div class="input-group input-group-lg">
                     <span class="input-group-btn">
-                    <button class="btn btn-primary"><span class="glyphicon glyphicon-chevron-left"></span></button>
-                    <button class="btn btn-primary"><span class="glyphicon glyphicon-chevron-right"></span></button>
+                        <button class="btn btn-primary" ng-click="skokLewo()">
+                            <span class="glyphicon glyphicon-chevron-left"></span>
+                        </button>
+                    <button class="btn btn-primary" ng-click="skokPrawo()">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </button>
                         </span>
                     <input ng-model="settings.skok" class="form-control" min="1" type="number" placeholder="skok">
                 </div>
             </div>
             <div class="col-sm-3">
                 <div class="btn-group btn-group-lg">
-                    <button class="btn btn-info" ng-click="textarea.toggle()"><span ng-class="textarea.ikona"></span>
+                    <button class="btn btn-primary" ng-click="textarea.toggle()"><span ng-class="textarea.ikona"></span>
                     </button>
                     <button class="btn btn-warning" ng-click="settings.reset()">Reset</button>
                 </div>
@@ -52,23 +60,31 @@
 
         <div class="input-group input-group-lg">
             <span class="input-group-addon" id="span_od">od</span>
-            <input ng-model="settings.widok_od" type="number" class="form-control" placeholder="widok od">
+            <input ng-model="settings.tmp.widok_od" type="number" class="form-control" placeholder="widok od">
             <span class="input-group-addon" id="span_do">do</span>
-            <input ng-model="settings.widok_do" type="number" class="form-control" placeholder="widok do">
+            <input ng-model="settings.tmp.widok_do" type="number" class="form-control" placeholder="widok do">
+            <span class="input-group-btn">
+                <button class="btn btn-primary" ng-click="logIn()">
+                    <span class="glyphicon glyphicon-log-in"></span>
+                </button>
+            </span>
         </div>
     </div>
 
     <textarea id="textAreaSequence" ng-show="textarea.visible" class="form-control input-lg" rows="4"
               placeholder="czekaj...">{[textarea.text]}</textarea>
 
+{############################# POMOCNICZE ##########################}
     <div class="row btn-group">
-        <button class="btn btn-lg btn-danger" ng-click="klik()">KLIK</button>
+        <button class="btn btn-lg btn-danger" ng-click="klik()">
+            KLIK &#37
+        </button>
         <button class="btn btn-lg btn-primary" ng-click="guzik()">GUZIK</button>
     </div>
 
 
     <div class="panel">
-        <h3 class="panel-heading">SCAFFOLDY chromosomu {[chr_id]} (łącznie {[scflds.length]}): </h3>
+        <h3 class="panel-heading">SCAFFOLDY chromosomu {[chr_id]} (łącznie {[scflds.length]}; wyświetlone {[canvas.data.length]}): </h3>
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
@@ -78,7 +94,8 @@
                 <th>Order</th>
             </tr>
             </thead>
-            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">
+{#            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">#}
+            <tr ng-repeat="scf in canvas.data |orderBy: 'fields.order'">
                 <td><a ng-href="#/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">scaffold {[scf.pk]}</a></td>
                 <td>{[scf.fields.length]}</td>
                 <td>{[scf.fields.start]}</td>
