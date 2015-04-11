@@ -181,11 +181,12 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         updatePanel()
     }
 
+
 //-------------canvas data aktualnych scaffoldow------------------------------------
     $scope.canvas = {};
     $scope.canvas.data = [];
-    $scope.canvas.skala = {}
-    $scope.canvas.podglad = {}
+    $scope.canvas.skala = {};
+    $scope.canvas.podglad = {};
 
     //wywolywanie ma sens dopiero gdy istnieje juz $scope.scflds   =>   $scope.promiseLoadScaffolds
     $scope.canvas.getViewData = function () {
@@ -263,10 +264,8 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         else{
             drawRectangle(odkad, y + 0.5*height, dokad-odkad, height)
         }
-
         context.restore()
     }
-
 
     function drawScaffCanvas(data, parent){
         fitCanvasToScreen();
