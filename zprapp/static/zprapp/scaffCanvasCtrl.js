@@ -196,6 +196,10 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
     $scope.canvas.getViewData = function () {
         console.log("getViewDATA")
         $scope.canvas.data = $filter("wytnijNaScaffView")($scope.scflds, $scope.settings.widok_od, $scope.settings.widok_do)
+        //sortowanie rosnace po fields.order
+        $scope.canvas.data.sort(function(a,b){
+            return a.fields.order - b.fields.order;
+        })
     }
 
     //zwraca promise http
@@ -240,7 +244,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         return pobierzChromosomeLength();
     }).then(function () {
         initSettings();
-        $scope.canvas.getViewData();
+        //$scope.canvas.getViewData(); -> wykonywany juz w initSettings()?
     }).then(function(){
         setDrawStage($scope.canvas.data)
     })
@@ -282,13 +286,15 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
     function drawPreview(x_from, x_to, y, height){
         context.save();
         //linia
+        context.beginPath()
         context.lineWidth = 2;
         context.strokeStyle = "black";
         context.moveTo(x_from, y);
         context.lineTo(x_to, y);
         context.stroke();
         //prostokat podgladu
-        context.fillStyle = "rgba(91, 192, 222, 0.5)"
+        //context.fillStyle = "rgba(91, 192, 222, 0.5)"
+        context.fillStyle = "rgba(92, 184, 92, 0.6)";
         var length = x_to - x_from;
         var max_real = DataBufor.getData("chr_length")
         var odkad_real = $scope.settings.widok_od;
@@ -297,6 +303,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         var dokad = x_from + (dokad_real/max_real) * length;
         //namalowanie na sile za kreski gdy bylaby za mala
         var prog = 0.005 * length;
+        context.beginPath();//nie wiem czy to musi byc -> nie zaszkodzi a moze bledow uniknie;
         if(dokad - odkad < prog){
             drawRectangle(odkad, y + 0.5*height, prog, height)
         }
@@ -370,6 +377,167 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         //drawLabelText(x_to, y-h_coma/2, h_coma, "END");
     }
 
+    function drawMainViewScaff(x_from, x_to, y, h){
+        function drawScaff(from, to){
+            drawRectangle(from, y+h/2, to-from, h);
+        }
+        context.save();
+        //glowny prostokat z obramowaniem
+        context.fillStyle = "#fdfdfd";
+        context.beginPath();
+        context.lineWidth = 1;
+        drawRectangle(x_from, y+h/2, x_to-x_from, h);
+        context.stroke();
+        context.restore()
+
+        context.save();
+        //context.fillStyle = "rgba(91, 192, 222, 0.5)"; //niebieski
+        //context.fillStyle = "rgba(217, 83, 79, 0.9)"; //czerwony-rozowy
+        //context.fillStyle = "#855E42"; //braz
+        context.fillStyle = "#B5A642"; //oliwka
+        var i, k, item, odkad, dokad;//dla glownej petli
+
+        ////pierwszy lub ostatni scaffold -> moze trzeba go przyciac do widoku
+        //var pierwszy = $scope.canvas.data[0];
+        //if(pierwszy.fields.start < $scope.settings.widok_od){
+        //    console.log("trzeba uciąć (pierwszy)");
+        //    dokad = (pierwszy.fields.start + pierwszy.fields.length - $scope.settings.widok_od)
+        //            *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
+        //    if(dokad > x_to) dokad = x_to;
+        //    context.beginPath();
+        //    drawScaff(x_from, dokad);
+        //    i = 1;
+        //}
+        //else {
+        //    console.log("nie ucinamy (pierwszy)");
+        //    i = 0;
+        //}
+        //var ostatni = $scope.canvas.data[$scope.canvas.data.length - 1];
+        //if((ostatni.fields.start + ostatni.fields.length > $scope.settings.widok_do)
+        //    && ($scope.canvas.data.length > 1)){
+        //    console.log("trzeba uciąć (ostatni)");
+        //    odkad = (ostatni.fields.start - $scope.settings.widok_od)
+        //            *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
+        //    if(odkad < x_from) odkad = x_from;
+        //    context.beginPath();
+        //    drawScaff(odkad, x_to);
+        //    k = 1;
+        //}
+        //else{
+        //    console.log("nie ucinamy (ostatni)");
+        //    k = 0;
+        //}
+        //
+        //console.log($scope.canvas.data[i].fields.order);
+        //console.log($scope.canvas.data[$scope.canvas.data.length-1-k].fields.order);
+        //for(;i<$scope.canvas.data.length -1-k; i++){
+        //    item = $scope.canvas.data[i];
+        //    odkad = (item.fields.start - $scope.settings.widok_od)
+        //            *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
+        //    dokad = (item.fields.start + item.fields.length - $scope.settings.widok_od)
+        //            *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
+        //    context.beginPath();
+        //    drawScaff(odkad, dokad);
+        //
+        //    //console.log(item.fields.order);
+        //}
+
+        for(i = 0;i<=$scope.canvas.data.length-1; i++){
+            item = $scope.canvas.data[i];
+            odkad = (item.fields.start - $scope.settings.widok_od)
+                    *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
+            dokad = (item.fields.start + item.fields.length - $scope.settings.widok_od)
+                    *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
+            if(i==0 && item.fields.start < $scope.settings.widok_od){
+                odkad = x_from;
+                if(item.fields.start + item.fields.length > $scope.settings.widok_do){
+                    dokad = x_to;
+                }
+            }
+            else{
+                if(i==$scope.canvas.data.length-1 && item.fields.start + item.fields.length > $scope.settings.widok_do){
+                    dokad = x_to;
+                }
+            }
+            context.beginPath();
+            drawScaff(odkad, dokad);
+        }
+
+
+        //context.save();
+        ////context.beginPath();
+        ////context.fillStyle = "rgba(217, 83, 79, 0.5)"; //czerwony-rozowy
+        //context.fillStyle = "rgba(91, 192, 222, 0.5)"; //niebieski
+        //var len_view=x_to-x_from;
+        //var real_len_view = $scope.settings.widok_do - $scope.settings.widok_od;
+        //
+        ////drawScaff(x_from + 0.1*len_view, x_from + 0.5*len_view);
+        ////context.beginPath();
+        ////drawScaff(x_from + 0.4*len_view, x_from + 0.6*len_view);
+        ////context.beginPath();
+        ////drawScaff(x_from + 0.2*len_view, x_from + 0.5*len_view);
+        ////context.beginPath();
+        ////drawScaff(x_from + 0.45*len_view, x_from + 0.5*len_view);
+        //
+        ////pierwszy lub ostatni scaffold -> moze trzeba go przyciac do widoku
+        ////canvas.data jest uporzadkowany malejaco po order -> pierwszy to ostatni itd.
+        //var i; //dla petli for (nizej) decydujemy czy wlaczamy do rysowania w petli pierwszy.
+        //var k; //dla petli for (nizej) decydujemy czy wlaczamy do rysowania w petli ostatni.
+        //var item, odkad, dokad;
+        //
+        //var pierwszy = $scope.canvas.data[$scope.canvas.data.length - 1];
+        //if(pierwszy.fields.start < $scope.settings.widok_od){
+        //    console.log("trzeba uciąć");
+        //    dokad = ((pierwszy.fields.start + pierwszy.fields.length - $scope.settings.widok_od)*(x_to-x_from)/real_len_view) + x_from;
+        //    if(dokad > x_to) dokad = x_to;
+        //    if(dokad < x_from){
+        //        //proba rysowania poza plansza -> nie zaglebiam sie czemu, pomijam rysowanie wtedy
+        //        console.log("proba rysowania poza plansza?");
+        //    }
+        //    else{
+        //        context.beginPath();
+        //        drawScaff(x_from, dokad);
+        //    }
+        //    //i = 1;
+        //    k = 2;
+        //}
+        //else{
+        //    console.log("nie ucinam");
+        //    //i = 0;
+        //    k = 1;
+        //}
+        //
+        ////TODO ostatni obluga
+        //var ostatni = $scope.canvas.data[0];
+        //if(ostatni.fields.start + ostatni.fields.length > $scope.settings.widok_do){
+        //    //k = 2;
+        //    i = 1;
+        //}
+        //else{
+        //    //k = 1;
+        //    i = 0;
+        //}
+        ////k = 2;
+        //for( ; i<$scope.canvas.data.length - k; i++){
+        //    context.beginPath();
+        //    item = $scope.canvas.data[i];
+        //    dokad = ((item.fields.start + item.fields.length - $scope.settings.widok_od)*(x_to-x_from)/real_len_view) + x_from;
+        //    odkad = ((item.fields.start - $scope.settings.widok_od)*(x_to-x_from)/real_len_view) + x_from;
+        //    drawScaff(odkad, dokad);
+        //    //console.log($scope.canvas.data[i].pk);
+        //}
+
+        //czerwona linia
+        //context.beginPath()
+        //context.lineWidth = 4;
+        //context.strokeStyle = "red";
+        //context.moveTo(x_from, y);
+        //context.lineTo(x_to, y);
+        //context.stroke();
+
+        context.restore();
+    }
+
     function drawScaffCanvas(data, parent){
         fitCanvasToScreenAndSkala();
         parent.clear();
@@ -393,6 +561,12 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         drawSkala(x_left_margin,
                   x_right_margin,
                   height * 0.8);
+
+        var h_mainView = height * 0.2;
+        drawMainViewScaff(x_left_margin,
+                          x_right_margin,
+                          y_up_margin + h_mainView,
+                          h_mainView);
 
         //drawRectangle(50, 50, data[0].fields.length / 10, data[0].fields.length / 10)
     }
