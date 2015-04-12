@@ -75,6 +75,7 @@
               placeholder="czekaj...">{[textarea.text]}</textarea>
 
 {############################# POMOCNICZE ##########################}
+    {[ settings.widok_do - settings.widok_od ]}
     <input ng-model="aaa">
 {#    <table>#}
 {#        <tr>#}
@@ -83,7 +84,7 @@
 {#            </td>#}
 {#        </tr>        #}
 {#    </table>#}
-    {[ aaa | roundAndformatBP  ]}
+    {[ aaa | roundAndFormatBP:2  ]}
     <br><br>
 
     <div class="row btn-group">
