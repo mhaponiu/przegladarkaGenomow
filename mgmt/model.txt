@@ -1,0 +1,17 @@
+zadania do poprzedniego: sekwencja pobierana po wciśnięciu przycisku 'pobierz sekwencję', sekwencja ukrywana po dowolnej akcji zmiany nawigacji (left, right, zoom itd), jeżeli
+sekwencja miałaby być dłuższa niż 10000 symboli to ostrzeżenie 
+
+1. dodać tabelę 'organizm', chromosom ma klucz obcy do danego organizmu
+
+2. dodać ekran wyświelający listę organizmów w bazie danych. Po wybraniu osobnika (organizmu) wyświetlane są chromosomy dla tego osobnika, a później scaffoldy
+
+3. markery, dodać możliwość przechowywania markerów, marker posiada: id, id_chromosomu, start, length. Marker nie przechowuje sekwencji, marker posiada nazwę oraz znaczenie (klucz obcy do tabeli znaczenia)
+
+4. znaczenia jest to tabela, (id, nazwa), np. (1, 'początek genu')
+
+5. dodać zakładkę do modyfikacji tabeli znaczeń (add/update/delete)
+
+6. dodać zakładkę do dodawania/modyfikowania/usuwania markerów
+
+7. markery obrazowane w zakładce podglądu scaffolda, aby obrazować markery należy zaznaczyć (np. checkbox) - obrazuj markery, dodatkowo lista wyboru znaczeń markerów, które będą obrazowane
+
