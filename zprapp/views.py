@@ -52,6 +52,17 @@ def ajaxSekwencja(request):
     return HttpResponse(seq.sequence);
     return HttpResponse(seq_json, content_type="application/json");
 
+def test(request):
+    #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja
+    # print "TEST widok_od:", request.REQUEST['widok_od']," widok_do: ", request.REQUEST['widok_do'];
+    # return HttpResponse("TEST OD SERWERA");
+    ch = Chromosome.objects.get(id=52);
+    scfld = ch.scaffold_set.get(id=360360);
+    seq = scfld.sequence_set.all()[0];# liscie sekwencji i tak jest jedna tylko
+    #seq_json = serializers.serialize("json", seq)
+    #print seq_json;
+    return HttpResponse(seq.sequence[:100000]);
+
 
 ######################################### STARE ################################
 #

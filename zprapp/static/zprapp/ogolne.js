@@ -2,7 +2,7 @@
  * Created by mhaponiu on 25.02.15.
  */
 
-var cucModule = angular.module('CucModule', ['ngRoute']);
+var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap']);
 cucModule.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
     $interpolateProvider.endSymbol(']}');

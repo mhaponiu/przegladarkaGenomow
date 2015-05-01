@@ -47,9 +47,10 @@
                     <input ng-model="settings.skok" class="form-control" min="1" type="number" placeholder="skok">
                 </div>
             </div>
+
             <div class="col-sm-3">
-                <div class="btn-group btn-group-lg">
-                    <button class="btn btn-primary" ng-click="textarea.toggle()"><span ng-class="textarea.ikona"></span>
+                <div class="btn-group btn-group-lg" ng-controller="ScaffModalCtrl">
+                    <button class="btn btn-primary" ng-click="toggleTextArea()"><span ng-class="textarea.ikona"></span>
                     </button>
                     <button class="btn btn-warning" ng-click="settings.reset()">Reset</button>
                 </div>
@@ -71,10 +72,40 @@
         </div>
     </div>
 
-    <textarea id="textAreaSequence" ng-show="textarea.visible" class="form-control input-lg" rows="4"
-              placeholder="czekaj...">{[textarea.text]}</textarea>
+    <div collapse="!textarea.visible">
+        <textarea id="textAreaSequence" class="form-control input-lg" rows="4">{[textarea.text]}</textarea>
+    </div>
 
-{############################# POMOCNICZE ##########################}
+    <div ng-controller="ScaffModalCtrl">
+        <script type="text/ng-template" id="scaffModalContent.html">
+            <div class="modal-header">
+                <h3 class="modal-title">UWAGA!</h3>
+            </div>
+            <div class="modal-body">
+                Próbujesz wyświetlić {[roznica]} znaków, jesteś pewien?
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-warning" ng-click="ok()">TAK</button>
+                <button class="btn btn-success" ng-click="cancel()">NIE</button>
+            </div>
+        </script>
+        <button class="btn btn-primary" ng-click="open()">MODAL</button>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <accordion>
+                <accordion-group heading="FILTRY">
+                    sdadsadsa
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+
+
+
+    {############################# POMOCNICZE BEGIN ##########################}
     {[ settings.widok_do - settings.widok_od ]}
     <input ng-model="aaa">
 {#    <table>#}
@@ -93,7 +124,7 @@
         </button>
         <button class="btn btn-lg btn-primary" ng-click="guzik()">GUZIK</button>
     </div>
-
+{############################# POMOCNICZE END ##########################}
 
     <div class="panel">
         <h3 class="panel-heading">SCAFFOLDY chromosomu {[chr_id]} (łącznie {[scflds.length]}; wyświetlone {[canvas.data.length]}): </h3>

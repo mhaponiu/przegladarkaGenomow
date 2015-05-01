@@ -40,6 +40,8 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
             $scope.settings.tmp = {};
             $scope.settings.tmp.widok_od = $scope.settings.defaults.widok_od;
             $scope.settings.tmp.widok_do = $scope.settings.defaults.widok_do;
+            $scope.textarea.text = $scope.textarea.defaults.text;
+            $scope.textarea.visible = false;
             updatePanel();
         }
         $scope.settings.reset();
@@ -48,35 +50,59 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
 
     //pole z tekstem sekwencji aktualnie wyswietlanej
     $scope.textarea = {};
-    $scope.textarea.text = "BBBBBBBBBBBBBBBBBBBBBAAAAAAAAAAAAAAAAAAAAAAARRRRRRRRRRRRRRRRRRRRRRRDDDDDDDDDDDDDDDDDDDDDDDZZZZZZZZZZZZZZZZZZZZZZZOOOOOOOOOOOOOOOOOOOODDDDDDDDDDDDDDDDDDDDDLLLLLLLLLLLLLLLLLLLLLUUUUUUUUUUUUUUUUUUUUGGGGGGGGGGGGGGGGGGGGIIIIIIIIIIIIIIIIITTTTTTTTTTTEEEEEEEEEEKKKKKKKKSSSSSTTTTTTT"
+    $scope.textarea.text = "jakis tam tekst inicjalizacyjny";
+    $scope.textarea.defaults = {};
+    $scope.textarea.defaults.text = "<<< czekaj... >>>"
     $scope.textarea.ikona = "glyphicon glyphicon-eye-close"
     $scope.textarea.visible = false;
+    $scope.textarea.reset = function(){
+        $scope.textarea.text = $scope.textarea.defaults.text;
+    }
     $scope.textarea.toggle = function () {
+        //TODO obluga klikniecia oczka -> okienko modalne i pobranie sekwencji
+        //$('#sequenceWarningModal').modal('toggle') // modal zdefiniowany w index.html bo musi byc poza div'ami
         $scope.textarea.visible = !$scope.textarea.visible;
         if ($scope.textarea.visible) {
+            $scope.textarea.reset();
             $scope.textarea.ikona = "glyphicon glyphicon-eye-open"
         }
         else {
             $scope.textarea.ikona = "glyphicon glyphicon-eye-close"
         }
     }
+    $scope.textarea.loadSequence = function(){
+        var request = {
+            method: 'GET',
+            url: 'test',
+            params: {widok_od: $scope.settings.widok_od, widok_do: $scope.settings.widok_do}
+        };
+        return $http(request)
+            .success(function (data) {
+                $scope.textarea.text = data;
+            });
+    }
 
     //pomocnicze guziki do wywolan asynchronicznych
     $scope.klik = function () {
         console.log("KLIK")
         //DataBufor.setData("chr_length", 777);
-        $scope.settings.skala = $scope.settings.skala - 1;
+        //$scope.settings.skala = $scope.settings.skala - 1;
     }
     $scope.guzik = function () {
         console.log("GUZIK")
         //console.log(DataBufor.getData("chr_length"));
         $scope.settings.skala = $scope.settings.skala + 1;
+        //$('#myModal').modal('toggle')
     }
 
     var updatePanel = function(){
         $scope.settings.tmp.widok_od = $scope.settings.widok_od;
         $scope.settings.tmp.widok_do = $scope.settings.widok_do;
         $scope.canvas.getViewData();
+        if($scope.textarea.visible){
+            $scope.textarea.toggle();
+        }
+
         setDrawStage($scope.canvas.data);
     }
 
@@ -190,7 +216,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
     $scope.canvas = {};
     $scope.canvas.data = [];
     $scope.canvas.skala = 2;
-    $scope.canvas.podglad = {};
+
 
     //wywolywanie ma sens dopiero gdy istnieje juz $scope.scflds   =>   $scope.promiseLoadScaffolds
     $scope.canvas.getViewData = function () {
