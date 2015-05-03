@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from zprapp.models import Marker, Chromosome, Scaffold, Sequence, Organism;
+from zprapp.models import Marker, Chromosome, Scaffold, Sequence, Organism, Meaning;
 from django.http import QueryDict
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -18,26 +18,31 @@ def chromosomy(request):
 
 def ajaxChromosomy(request):
     print "daje chromosomy"
-    if 'id' in request.REQUEST:
-        chall = [Chromosome.objects.get(id = request.REQUEST['id'])]
+    if 'id_chr_len' in request.REQUEST:
+        chall = [Chromosome.objects.get(id = request.REQUEST['id_chr_len'])]
     else:
-        chall = Chromosome.objects.all();
+        o = Organism.objects.get(id=request.REQUEST['id_org'])
+        #chall = Chromosome.objects.all();
+        chall = o.chromosome_set.all();
     chall_json = serializers.serialize("json", chall);
     # print chall_json;
     return HttpResponse(chall_json, content_type="application/json");
 
-def ajaxChromLength(request):
-    print "daje chr_len"
-    ch = Chromosome.objects.get(id=request.REQUEST['id'])
+# def ajaxChromLength(request):
+#     print "daje chr_len"
+#     ch = Chromosome.objects.get(id=request.REQUEST['id'])
 
 
 def scaffoldy(request):
     return render(request, 'zprapp/scaffoldy.html')
 
 def ajaxScaffoldy(request):
-    print "daje scaffoldy chromosomu ", request.REQUEST['id'];
-    ch = Chromosome.objects.get(id=request.REQUEST['id']);
+    print "daje scaffoldy chromosomu ", request.REQUEST['id_chr'];
+    o = Organism.objects.get(id=request.REQUEST['id_org']);
+    ch = o.chromosome_set.get(id=request.REQUEST['id_chr']);
     scflds = ch.scaffold_set.all();
+    #ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
+    # scflds = ch.scaffold_set.all();
     print "liczba scaffoldow to ", len(scflds);
     scflds_json = serializers.serialize("json", scflds);
     return HttpResponse(scflds_json, content_type="application/json");
@@ -47,8 +52,11 @@ def sekwencja(request):
 
 def ajaxSekwencja(request):
     print "daje sekwencje chr:", request.REQUEST['id_chr']," scaff: ", request.REQUEST['id_sc'];
-    ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
-    scfld = ch.scaffold_set.get(id=request.REQUEST['id_sc']);
+    o = Organism.objects.get(id=request.REQUEST['id_org'])
+    ch = o.chromosome_set.get(id=request.REQUEST['id_chr'])
+    scfld = ch.scaffold_set.get(id=request.REQUEST['id_sc'])
+    # ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
+    # scfld = ch.scaffold_set.get(id=request.REQUEST['id_sc']);
     seq = scfld.sequence_set.all()[0];# liscie sekwencji i tak jest jedna tylko
     print seq;
     #seq_json = serializers.serialize("json", seq)
@@ -60,8 +68,13 @@ def ajaxOrganizmy(request):
     print "daje organizmy"
     orgs = Organism.objects.all();
     orgs_json = serializers.serialize("json", orgs);
-    print orgs_json;
     return HttpResponse(orgs_json, content_type="application/json");
+
+def ajaxMeanings(request):
+    print "daje meanings"
+    means = Meaning.objects.all();
+    means_json = serializers.serialize("json", means);
+    return HttpResponse(means_json, content_type="application/json");
 
 def test(request):
     #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja

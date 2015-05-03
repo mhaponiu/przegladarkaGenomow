@@ -1,14 +1,16 @@
 /**
  * Created by mhaponiu on 25.02.15.
  */
-function ChromosomKontroler($scope, $http) {
+function ChromosomKontroler($scope, $http, $routeParams) {
     $scope.napis = "ala ma kota";
-    $scope.napis = "ala ma psa";
 
-    $scope.loadChromosomes = function(){
+    $scope.id_org = $routeParams.id_org;
+
+    $scope.loadChromosomes = function(id_org){
         var request = {
             method: 'GET',
-            url: 'ajax_chrmy'
+            url: 'ajax_chrmy',
+            params: {id_org: id_org}
         };
         return $http(request)
             .success(function (data) {
@@ -16,5 +18,5 @@ function ChromosomKontroler($scope, $http) {
                 $scope.chrms = data;
             });
     }
-    $scope.promiseLoadChromosomes = $scope.loadChromosomes();
+    $scope.promiseLoadChromosomes = $scope.loadChromosomes($routeParams.id_org);
 }

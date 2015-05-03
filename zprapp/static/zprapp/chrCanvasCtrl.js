@@ -2,7 +2,7 @@
  * Created by mhaponiu on 23.03.15.
  */
 
-function chrCanvasCtrl($scope, $http, $location, DataBufor) {
+function chrCanvasCtrl($scope, $http, $location, DataBufor, $routeParams) {
     var events = new Events("canvasChromosom");
     var canvas = events.getCanvas();
     var context = events.getContext();
@@ -100,7 +100,7 @@ function chrCanvasCtrl($scope, $http, $location, DataBufor) {
                 console.log("Mysz w : " + mouseX + "," + mouseY + " chromosom=" + napis);
                 //odsylac do odpowiedniego linku ze scaffoldami ->  window.location.replace("#/chromosom/[id_scaff]/scaffoldy")
                 DataBufor.setData("chr_length", chr_tab[i]);
-                window.location.replace("#/chromosom/" + chr_tab_id[i] + "/scaffoldy")
+                window.location.replace("#/organizm/" + $routeParams.id_org +"/chromosom/" + chr_tab_id[i] + "/scaffoldy")
             });
             //rodzic.addRegionEventListener("mouseout", function () {
             //    console.log("mysz usunieta z pola !")

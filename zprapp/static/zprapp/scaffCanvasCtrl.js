@@ -59,8 +59,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         $scope.textarea.text = $scope.textarea.defaults.text;
     }
     $scope.textarea.toggle = function () {
-        //TODO obluga klikniecia oczka -> okienko modalne i pobranie sekwencji
-        //$('#sequenceWarningModal').modal('toggle') // modal zdefiniowany w index.html bo musi byc poza div'ami
         $scope.textarea.visible = !$scope.textarea.visible;
         if ($scope.textarea.visible) {
             $scope.textarea.reset();
@@ -84,12 +82,23 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
 
     $scope.markery = {};
     $scope.markery.visible = false;
-    //TODO markery sciagac z bazy
-    $scope.markery.meanings = ["pierwsze", "drugie", "trzecie", "czwarte", "piate", "szóste", "siódme"];
+    $scope.markery.meanings = [];
+
+    var getMarkerMeanings = function(){
+        var request = {
+            method: 'GET',
+            url: 'ajax_meanings'
+        };
+        return $http(request)
+            .success(function (data) {
+                $scope.markery.meanings = data;
+            });
+    }
 
     //pomocnicze guziki do wywolan asynchronicznych
     $scope.klik = function () {
         console.log("KLIK")
+        getMarkerMeanings();
         //DataBufor.setData("chr_length", 777);
         //$scope.settings.skala = $scope.settings.skala - 1;
     }
@@ -238,7 +247,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         var request = {
             method: 'GET',
             url: 'ajax_chrmy',
-            params: {id: $scope.chr_id}
+            params: {id_chr_len: $scope.chr_id}
         };
         return $http(request)
             .success(function (data) {
@@ -273,6 +282,8 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
 //######################### GLOWNA INICJALIZACJA ###############################
     $scope.promiseLoadScaffolds.then(function () {
         return pobierzChromosomeLength();
+    }).then(function(){
+        getMarkerMeanings();
     }).then(function () {
         initSettings();
         //$scope.canvas.getViewData(); -> wykonywany juz w initSettings()?

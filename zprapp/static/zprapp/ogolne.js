@@ -9,26 +9,49 @@ cucModule.config(function ($interpolateProvider) {
     //$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 });
 
+//function cucRouteConfig($routeProvider) {
+//    $routeProvider.
+//        when('/organizmy', {
+//            controller: OrganizmKontroler,
+//            templateUrl: 'organizmy'
+//        }).
+//        when('/chromosomy', {
+//            controller: ChromosomKontroler,
+//            templateUrl: 'chromosomy'
+//        }).
+//        when('/chromosom/:id/scaffoldy', {
+//            controller: ScaffoldKontroler,
+//            templateUrl: 'scaffoldy'
+//        }).
+//        when('/chromosom/:id_chr/scaffold/:id_sc/sekwencja', {
+//            controller: SekwencjaKontroler,
+//            templateUrl: 'sekwencje'
+//        }).
+//        otherwise({
+//            redirectTo: '/chromosomy'
+//        });
+//}
+
 function cucRouteConfig($routeProvider) {
     $routeProvider.
         when('/organizmy', {
             controller: OrganizmKontroler,
             templateUrl: 'organizmy'
         }).
-        when('/chromosomy', {
+        when('/organizm/:id_org/chromosomy', {
             controller: ChromosomKontroler,
             templateUrl: 'chromosomy'
         }).
-        when('/chromosom/:id/scaffoldy', {
+        when('/organizm/:id_org/chromosom/:id_chr/scaffoldy', {
             controller: ScaffoldKontroler,
             templateUrl: 'scaffoldy'
         }).
-        when('/chromosom/:id_chr/scaffold/:id_sc/sekwencja', {
+        when('/organizm/:id_org/chromosom/:id_chr/scaffold/:id_sc/sekwencja', {
             controller: SekwencjaKontroler,
             templateUrl: 'sekwencje'
         }).
         otherwise({
-            redirectTo: '/chromosomy'
+            redirectTo: '/organizmy'
         });
 }
 
