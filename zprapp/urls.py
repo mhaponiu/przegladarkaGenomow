@@ -5,6 +5,8 @@ from django.http import HttpResponse
 
 urlpatterns = patterns('',
     url(r'^$', views.index),
+    url(r'organizmy', views.organizmy),
+    url(r'ajax_orgs', views.ajaxOrganizmy),
     url(r'chromosomy', views.chromosomy),
     url(r'ajax_chrmy', views.ajaxChromosomy),
     url(r'scaffoldy', views.scaffoldy),

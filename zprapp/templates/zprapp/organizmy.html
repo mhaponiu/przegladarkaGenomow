@@ -1,0 +1,17 @@
+dsadsadsa
+{[aaa]}
+
+<div class="panel">
+    <h3 class="panel-heading">ORGANIZMY: </h3>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th>Nazwa</th>
+        </tr>
+        </thead>
+        <tr ng-repeat="o in orgs">
+            <td><a ng-href="#/organizm/{[o.pk]}/chromosomy">{[o.fields.name]}</a></td>
+        </tr>
+    </table>
+</div>

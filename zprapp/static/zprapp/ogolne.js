@@ -11,6 +11,10 @@ cucModule.config(function ($interpolateProvider) {
 
 function cucRouteConfig($routeProvider) {
     $routeProvider.
+        when('/organizmy', {
+            controller: OrganizmKontroler,
+            templateUrl: 'organizmy'
+        }).
         when('/chromosomy', {
             controller: ChromosomKontroler,
             templateUrl: 'chromosomy'

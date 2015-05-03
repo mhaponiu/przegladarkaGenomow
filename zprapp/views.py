@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from zprapp.models import Marker, Chromosome, Scaffold, Sequence;
+from zprapp.models import Marker, Chromosome, Scaffold, Sequence, Organism;
 from django.http import QueryDict
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -9,8 +9,12 @@ import json
 def index(request):
     return render(request, 'zprapp/index.html')
 
+def organizmy(request):
+    return render(request, 'zprapp/organizmy.html')
+
 def chromosomy(request):
     return render(request, 'zprapp/chromosomy.html')
+
 
 def ajaxChromosomy(request):
     print "daje chromosomy"
@@ -51,6 +55,13 @@ def ajaxSekwencja(request):
     #print seq_json;
     return HttpResponse(seq.sequence);
     return HttpResponse(seq_json, content_type="application/json");
+
+def ajaxOrganizmy(request):
+    print "daje organizmy"
+    orgs = Organism.objects.all();
+    orgs_json = serializers.serialize("json", orgs);
+    print orgs_json;
+    return HttpResponse(orgs_json, content_type="application/json");
 
 def test(request):
     #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja
