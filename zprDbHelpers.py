@@ -6,9 +6,10 @@ except:
     print "error django.setup(), ale w sumie to nic nie zmienia chyba"
 import django_manage_shell;
 django_manage_shell.run("/home/mhaponiu/workspace/Pycharm workspace/zpr")
-from zprapp.models import Chromosome, Scaffold, Sequence;
+from zprapp.models import Chromosome, Scaffold, Sequence, Marker, Meaning, Organism;
 import psycopg2
 import psycopg2.extras;
+import random;
 
 '''
     nalezy wczytac backup bazy danych '17.11.2012-cucumber_plain.backup'
@@ -25,6 +26,7 @@ def delete_chromosomes():
     print "Usunieto chromosomy"
 
 def create_chromosomes_from_webomics_db():
+    # wszystkie chromosomy do pierwszego organizmu daje
     try:
         conn = psycopg2.connect(CONNECT_STRING)
     except:
@@ -32,10 +34,11 @@ def create_chromosomes_from_webomics_db():
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     cur.execute('''SELECT id, length_celera from chromosome_chromosome''')
     rows = cur.fetchall()
+    org = Organism.objects.all()[0]
     for row in rows:
-        ch = Chromosome(number=row['id'], length=row['length_celera'])
-        # print "zapis chromosom:  id:", ch.id,"  length: ", ch.length
-        ch.save();
+        org.chromosome_set.create(number=row['id'], length=row['length_celera'])
+        # ch = Chromosome(number=row['id'], length=row['length_celera'])
+        # ch.save();
     print "zapisano chromosomy"
     conn.close()
 
@@ -144,21 +147,79 @@ def create_sequences_from_webomics_db():
     print "utworzono sekwencje"
     conn.close()
 
+
 def delete_all():
     print "trwa usuwanie..."
     delete_sequences();
     delete_scaffolds();
+    delete_markers();
     delete_chromosomes();
+    delete_organizms()
+    delete_meanings()
+    print "zakonczono usuwanie danych"
+
+def create_organisms():
+    for i in range(1, 4):
+        o = Organism(name = "organizm " + str(i))
+        o.save();
+    print "utworzono organizmy"
+
+def delete_organizms():
+    orgs = Organism.objects.all();
+    for o in orgs:
+        o.delete()
+    print "usunieto organizmy"
+
+def create_meanings():
+    means = ["poczatek genu", "koniec genu", "znaczenie 3", "znaczenie 4", "znaczenie 5", "znaczenie 6", "znaczenie 7", "znaczenie 8"]
+    for m in means:
+        mean = Meaning(mean = m);
+        mean.save();
+    print "utworzono znaczenia markerow (meaning)"
+
+def delete_meanings():
+    meanings = Meaning.objects.all();
+    for m in meanings:
+        m.delete()
+    print "usunieto znaczenia markerow (meaning)"
 
 def create_all():
     print "trwa tworzenie danych..."
+    create_organisms()
+    create_meanings()
     create_chromosomes_from_webomics_db()
     chromosomes_lenght_to_bp()
+    create_markers()
     create_scaffolds_from_webomics_db()
     scaffolds_reorder_order()
     scaffolds_start_attr_gen()
     create_sequences_from_webomics_db()
     print "zakonczono tworzenie danych"
+
+def create_markers():
+    #wszystkie markery tworze jako atrapy dla pierwszego chromosomu
+    #jaki jest w bazie (czyli dla pierwszego organizmu) z losowym znaczeniem
+    NAME = ["SR123", "SF35324", "SQ54353", "SJ432", "SP5435"]
+    START = [10, 10000, 100000, 1000000, 10000000]
+    LENGTH = [5000, 15000, 150000, 1500000, 15000000]
+    MEANING = Meaning.objects.all()[:2]
+    org = Organism.objects.all()[0];
+    chr = org.chromosome_set.all()[0];
+    for i in range(NAME.__len__()):
+        if(i%2):
+            m = MEANING[0]
+        else:
+            m = MEANING[1]
+        marker = Marker(chromosome = chr, name = NAME[i], start = START[i], length = LENGTH[i], meaning = m)
+        marker.save();
+        #chr.marker_set.create(name = NAME[i], start = START[i], length = LENGTH[i], meaning = m);
+    print "utworzono markery";
+
+def delete_markers():
+    markers = Marker.objects.all()
+    for m in markers:
+        m.delete();
+    print "usunieto markery";
 
 def get_markers_from_xls():
     import xlrd;

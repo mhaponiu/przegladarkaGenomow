@@ -82,6 +82,11 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
             });
     }
 
+    $scope.markery = {};
+    $scope.markery.visible = false;
+    //TODO markery sciagac z bazy
+    $scope.markery.meanings = ["pierwsze", "drugie", "trzecie", "czwarte", "piate", "szóste", "siódme"];
+
     //pomocnicze guziki do wywolan asynchronicznych
     $scope.klik = function () {
         console.log("KLIK")

@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, JsonResponse
-from zprapp.models import Organizm, Chromosom, Marker, Chromosome, Scaffold, Sequence;
+from zprapp.models import Marker, Chromosome, Scaffold, Sequence;
 from django.http import QueryDict
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
@@ -56,7 +56,7 @@ def test(request):
     #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja
     # print "TEST widok_od:", request.REQUEST['widok_od']," widok_do: ", request.REQUEST['widok_do'];
     # return HttpResponse("TEST OD SERWERA");
-    ch = Chromosome.objects.get(id=52);
+    ch = Chromosome.objects.get(id=43);
     scfld = ch.scaffold_set.get(id=360360);
     seq = scfld.sequence_set.all()[0];# liscie sekwencji i tak jest jedna tylko
     #seq_json = serializers.serialize("json", seq)

@@ -70,6 +70,37 @@
                 </button>
             </span>
         </div>
+
+        <br>
+
+
+            <div class="row">
+            <div class="col-sm-6">
+                <label>
+                    <input type="checkbox" ng-model="markery.visible"> MARKERY
+                </label>
+            </div>
+            <div class="col-sm-6">
+                <label>
+                    <span class="glyphicon glyphicon-arrow-left"/>
+                    {[ settings.widok_do - settings.widok_od | roundAndFormatBP:2 ]}
+                    <span class="glyphicon glyphicon-arrow-right"/>
+                </label>
+            </div>
+
+        </div>
+
+        <div class="panel" collapse="!markery.visible">
+            <div class="row">
+                <div class="col-sm-4 col-md-3" ng-repeat="mean in markery.meanings">
+                    <label>
+                        <input type="checkbox"> {[mean]}
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
     </div>
 
     <div collapse="!textarea.visible">

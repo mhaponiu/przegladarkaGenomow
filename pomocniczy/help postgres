@@ -1,0 +1,25 @@
+[zalogowanie na konto postgres]
+sudo su postgres
+
+    [wyswietlenie wszystkich baz]
+    psql -l
+
+[zalogowanie do bazy]
+psql -U [user] [dbname]
+
+    [tabele bazy]
+    \d
+
+    [kolumny tabeli]
+    \d [nazwa_tabeli]
+
+    [zmiana uzytkownika bądź bazy]
+    \c [baza] [uzytkownik]
+
+
+http://www.thegeekstuff.com/2009/01/how-to-backup-and-restore-postgres-database-using-pg_dump-and-psql/
+[backup]
+$ pg_dump -U {user-name} {source_db} -f {dumpfilename.sql}
+
+[restore backup]
+$ psql -U {user-name} -d {desintation_db}-f {dumpfilename.sql}

@@ -10,11 +10,11 @@ function ChromosomKontroler($scope, $http) {
             method: 'GET',
             url: 'ajax_chrmy'
         };
-        $http(request)
+        return $http(request)
             .success(function (data) {
                 //trzeba odrazu dane wsadzac to obiektu scope - nie potrafie ich przekazac przez returna
                 $scope.chrms = data;
             });
     }
-    $scope.loadChromosomes();
+    $scope.promiseLoadChromosomes = $scope.loadChromosomes();
 }
