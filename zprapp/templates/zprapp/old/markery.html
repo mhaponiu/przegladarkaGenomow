@@ -43,16 +43,6 @@
     <hr>
 </div>
 
-{#TODO odkomentowac i zrobic zeby wskazywany kwadracik dawal tu dane#}
-{#<div>#}
-{#    WSKAZYWANY MARKER:#}
-{#    <div>#}
-{#        {[ wskazywanyMarker ]}#}
-{#    </div>#}
-{#    <hr>#}
-{#</div>#}
-
-
 <button ng-click="showWszystkieMarkery = !showWszystkieMarkery">Wszystkie Markery</button>
 <table ng-show="showWszystkieMarkery">
     <tr ng-repeat="marker in superDane.markery | orderBy:'fields.pozycja_od'"

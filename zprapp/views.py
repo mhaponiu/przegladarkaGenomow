@@ -76,6 +76,14 @@ def ajaxMeanings(request):
     means_json = serializers.serialize("json", means);
     return HttpResponse(means_json, content_type="application/json");
 
+def ajaxMarkers(request):
+    print "daje markery"
+    o = Organism.objects.get(id=request.REQUEST['id_org'])
+    ch = o.chromosome_set.get(id=request.REQUEST['id_chr'])
+    mrkrs = ch.marker_set.all()
+    mrkrs_json = serializers.serialize("json", mrkrs)
+    return HttpResponse(mrkrs_json, content_type="application/json");
+
 def test(request):
     #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja
     # print "TEST widok_od:", request.REQUEST['widok_od']," widok_do: ", request.REQUEST['widok_do'];

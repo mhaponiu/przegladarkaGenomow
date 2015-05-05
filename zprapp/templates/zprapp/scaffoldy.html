@@ -90,11 +90,22 @@
 
         </div>
 
+{#        wszystkie meanings wyswietla#}
+{#        <div class="panel" collapse="!markery.visible">#}
+{#            <div class="row">#}
+{#                <div class="col-sm-4 col-md-3" ng-repeat="mean in meanings">#}
+{#                    <label>#}
+{#                        <input type="checkbox"> {[mean.fields.mean]}#}
+{#                    </label>#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
         <div class="panel" collapse="!markery.visible">
             <div class="row">
-                <div class="col-sm-4 col-md-3" ng-repeat="mean in markery.meanings">
+                <div class="col-sm-4 col-md-3" ng-repeat="mean in canvas.meanings">
                     <label>
-                        <input type="checkbox"> {[mean.fields.mean]}
+                        <input type="checkbox"> {[mean.meaning]}
                     </label>
                 </div>
 
@@ -148,6 +159,23 @@
         </button>
         <button class="btn btn-lg btn-primary" ng-click="guzik()">GUZIK</button>
     </div>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>nazwa</th>
+                <th>start</th>
+                <th>length</th>
+                <th>id_meaning</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="m in mrkrs">
+            <td>{[m.fields.name]}</td>
+            <td>{[m.fields.start]}</td>
+            <td>{[m.fields.length]}</td>
+            <td>{[m.fields.meaning]}</td>
+        </tr>
+    </table>
 {############################# POMOCNICZE END ##########################}
 
     <div class="panel">

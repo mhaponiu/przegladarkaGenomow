@@ -107,20 +107,20 @@ cucModule.filter("wytnijNaScaffView", function(){
     return function(data, odkad, dokad){
         if (angular.isArray(data) && angular.isNumber(odkad) && angular.isNumber(dokad)){
             console.log("wytnijNaScaffView in: odkad " + odkad + " dokad: " + dokad);
-            var noweScaffoldy = [];
+            var noweObiekty = [];
             angular.forEach(data, function(item){
                 if (!(
                     (item.fields.start + item.fields.length < odkad) ||
                     (item.fields.start > dokad)
                     )){
-                    noweScaffoldy.push(item)
+                    noweObiekty.push(item)
                 }
                 else{
                     //console.log("odpada id: " + item.pk + " start: " + item.fields.start)
                 }
                 //noweScaffoldy.push(item)
             })
-            return noweScaffoldy;
+            return noweObiekty;
         }
         else{
             //console.log("wytnijNaScaffView out: odkad " + odkad + " dokad: " + dokad);
@@ -172,6 +172,43 @@ cucModule.filter("wytnijNaScaffView", function(){
         else {
             return data;
 
+        }
+    }
+}).filter("uniqueMeaningsFromMarkers", function(){
+    return function(markery, meanings){
+        if(angular.isArray(markery) && angular.isArray(meanings)){
+            var id = [];
+            var mngs = [];
+            var m;
+            angular.forEach(markery, function(marker){
+                m = marker.fields.meaning //to id_meaning tak naprawde
+                if(id.indexOf(m) < 0){
+                    id.push(m)
+                    for(var i=0; i<meanings.length; i++){
+                        if(meanings[i].pk == m){
+                            mngs.push(meanings[i].fields.mean);
+                            break;
+                        }
+                    }
+                }
+            })
+            var uniqueMeanings = [];
+            for(var i=0; i<id.length; i++){
+                uniqueMeanings.push({id: id[i], meaning: mngs[i]});
+            }
+            return uniqueMeanings;
+        }
+        else{
+            return markery;
+        }
+    }
+}).filter("selectMarkersChecked", function() {
+    return function (markery, meanings) {
+        if (angular.isArray(markery) && angular.isArray(meanings)) {
+            //TODO selectMarkersChecked -> wybierz te markery na widok co są zaznaczone check
+        }
+        else {
+            return markery;
         }
     }
 })

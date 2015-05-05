@@ -2,18 +2,11 @@
  * Created by mhaponiu on 02.04.15.
  */
 
-function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
+function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
 //PANEL SETTINGS
     var initSettings = function () {
         $scope.settings = {};
         $scope.settings.defaults = {};
-        //FIXME ladniej niby ale nie dziala bo sie caly obiekt nadpisuje -> pokombinowac z with($scope.settings.defaults){}
-        //$scope.settings.defaults = {
-        //    zoom: 2,
-        //    skok: 10000,
-        //    widok_od: 0,
-        //    widok_do: DataBufor.getData("chr_length")
-        //}
         $scope.settings.defaults.zoom = 50;
         $scope.settings.defaults.skok = 200000;
         $scope.settings.defaults.widok_od = 0;
@@ -21,17 +14,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         $scope.settings.defaults.skala = 2;
 
         $scope.settings.reset = function () {
-            //FIXME ladniej niby ale nie dziala bo sie caly obiekt nadpisuje -> pokombinowac z with($scope.settings.defaults){}
-            //$scope.settings = {
-            //    zoom: $scope.settings.defaults.zoom,
-            //    skok: $scope.settings.defaults.skok,
-            //    widok_od: $scope.settings.defaults.widok_od,
-            //    widok_do: $scope.settings.defaults.widok_do,
-            //    tmp: {
-            //        widok_od: $scope.settings.defaults.widok_od,
-            //        widok_do: $scope.settings.defaults.widok_do
-            //    }
-            //}
             $scope.settings.zoom = $scope.settings.defaults.zoom;
             $scope.settings.skok = $scope.settings.defaults.skok;
             $scope.settings.widok_od = $scope.settings.defaults.widok_od;
@@ -80,33 +62,55 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
             });
     }
 
+    //-------------canvas data aktualnych scaffoldow------------------------------------
+    $scope.canvas = {};
+    $scope.canvas.data = []; //scaffoldy na aktualny main view
+    $scope.canvas.mrkrs = []; //markery na aktualny main view
+    $scope.canvas.meanings = []; //meanings na main view -> te beda wyswietlane w checkboxie wyboru
+    $scope.canvas.skala = 2;
+
     $scope.markery = {};
     $scope.markery.visible = false;
-    $scope.markery.meanings = [];
 
-    var getMarkerMeanings = function(){
-        var request = {
-            method: 'GET',
-            url: 'ajax_meanings'
-        };
-        return $http(request)
-            .success(function (data) {
-                $scope.markery.meanings = data;
-            });
+//######################### GLOWNA INICJALIZACJA ###############################
+    $scope.promiseLoadScaffolds.then(function () {
+        return pobierzChromosomeLength();
+    }).then(function(){
+        return $scope.loadMarkers($routeParams.id_org, $routeParams.id_chr);
+    }).then(function(){
+        return $scope.loadMarkerMeanings();
+    }).then(function(){
+        $scope.canvas.meanings = $filter("uniqueMeaningsFromMarkers")($scope.mrkrs, $scope.meanings);
+        //sortowanie rosnace po id
+        $scope.canvas.meanings.sort(function(a,b){
+            return a.id - b.id;
+        })
+    }).then(function () {
+        initSettings();
+        //$scope.canvas.getViewData(); -> wykonywany juz w initSettings()?
+    }).then(function(){
+        setDrawStage($scope.canvas.data)
+    })
+
+    //wywolywanie ma sens dopiero gdy istnieje juz $scope.scflds   =>   $scope.promiseLoadScaffolds
+    $scope.canvas.getViewData = function () {
+        console.log("getViewDATA")
+        $scope.canvas.data = $filter("wytnijNaScaffView")($scope.scflds, $scope.settings.widok_od, $scope.settings.widok_do)
+        //sortowanie rosnace po fields.order
+        $scope.canvas.data.sort(function(a,b){
+            return a.fields.order - b.fields.order;
+        })
     }
 
     //pomocnicze guziki do wywolan asynchronicznych
     $scope.klik = function () {
         console.log("KLIK")
-        getMarkerMeanings();
-        //DataBufor.setData("chr_length", 777);
-        //$scope.settings.skala = $scope.settings.skala - 1;
+        //$scope.canvas.meanings = $filter("uniqueMeaningsFromMarkers")($scope.mrkrs, $scope.meanings);
+        //console.log($scope.canvas.meanings);
+        //console.log($scope.meanings);
     }
     $scope.guzik = function () {
         console.log("GUZIK")
-        //console.log(DataBufor.getData("chr_length"));
-        $scope.settings.skala = $scope.settings.skala + 1;
-        //$('#myModal').modal('toggle')
     }
 
     var updatePanel = function(){
@@ -225,23 +229,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         updatePanel()
     }
 
-
-//-------------canvas data aktualnych scaffoldow------------------------------------
-    $scope.canvas = {};
-    $scope.canvas.data = [];
-    $scope.canvas.skala = 2;
-
-
-    //wywolywanie ma sens dopiero gdy istnieje juz $scope.scflds   =>   $scope.promiseLoadScaffolds
-    $scope.canvas.getViewData = function () {
-        console.log("getViewDATA")
-        $scope.canvas.data = $filter("wytnijNaScaffView")($scope.scflds, $scope.settings.widok_od, $scope.settings.widok_do)
-        //sortowanie rosnace po fields.order
-        $scope.canvas.data.sort(function(a,b){
-            return a.fields.order - b.fields.order;
-        })
-    }
-
     //zwraca promise http
     var pobierzChromosomeLength = function () {
         var request = {
@@ -278,18 +265,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         }
         return tablica;
     }
-
-//######################### GLOWNA INICJALIZACJA ###############################
-    $scope.promiseLoadScaffolds.then(function () {
-        return pobierzChromosomeLength();
-    }).then(function(){
-        getMarkerMeanings();
-    }).then(function () {
-        initSettings();
-        //$scope.canvas.getViewData(); -> wykonywany juz w initSettings()?
-    }).then(function(){
-        setDrawStage($scope.canvas.data)
-    })
 
 
 //-------------------------CANVAS----------------------
@@ -505,7 +480,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
             drawScaff(odkad, dokad);
         }
 
-
         //context.save();
         ////context.beginPath();
         ////context.fillStyle = "rgba(217, 83, 79, 0.5)"; //czerwony-rozowy
@@ -549,7 +523,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         //    k = 1;
         //}
         //
-        ////TODO ostatni obluga
+        //
         //var ostatni = $scope.canvas.data[0];
         //if(ostatni.fields.start + ostatni.fields.length > $scope.settings.widok_do){
         //    //k = 2;
@@ -578,6 +552,8 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http) {
         //context.stroke();
 
         context.restore();
+
+        //TODO rysowanie markerow
     }
 
     function drawScaffCanvas(data, parent){
