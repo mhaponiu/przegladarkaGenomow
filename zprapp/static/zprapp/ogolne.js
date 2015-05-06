@@ -106,7 +106,7 @@ cucModule.filter("wytnijNaScaffView", function(){
     //wycina ze wszystkich scaffoldow te ktore maja byc widoczne w glownym widoku canvas'a
     return function(data, odkad, dokad){
         if (angular.isArray(data) && angular.isNumber(odkad) && angular.isNumber(dokad)){
-            console.log("wytnijNaScaffView in: odkad " + odkad + " dokad: " + dokad);
+            //console.log("wytnijNaScaffView in: odkad " + odkad + " dokad: " + dokad);
             var noweObiekty = [];
             angular.forEach(data, function(item){
                 if (!(
@@ -205,7 +205,21 @@ cucModule.filter("wytnijNaScaffView", function(){
 }).filter("selectMarkersChecked", function() {
     return function (markery, meanings) {
         if (angular.isArray(markery) && angular.isArray(meanings)) {
-            //TODO selectMarkersChecked -> wybierz te markery na widok co są zaznaczone check
+            var mrkrs_selected=[]
+            var id_mean = []
+            for(var i=0; i<meanings.length; i++){
+                if(meanings[i].check){
+                    if(id_mean.indexOf(meanings[i].id) < 0){
+                        id_mean.push(meanings[i].id)
+                    }
+                }
+            }
+            for(var i=0; i<markery.length; i++){
+                if(id_mean.indexOf(markery[i].fields.meaning) >= 0){
+                    mrkrs_selected.push(markery[i]);
+                }
+            }
+            return mrkrs_selected;
         }
         else {
             return markery;

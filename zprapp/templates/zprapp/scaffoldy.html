@@ -103,9 +103,9 @@
 {#        </div>#}
         <div class="panel" collapse="!markery.visible">
             <div class="row">
-                <div class="col-sm-4 col-md-3" ng-repeat="mean in canvas.meanings">
+                <div class="col-sm-4 col-md-3" ng-repeat="mean in canvas.meanings.data">
                     <label>
-                        <input type="checkbox"> {[mean.meaning]}
+                        <input type="checkbox" ng-model="mean.check"> {[mean.meaning]}
                     </label>
                 </div>
 
@@ -169,7 +169,7 @@
                 <th>id_meaning</th>
             </tr>
         </thead>
-        <tr ng-repeat="m in mrkrs">
+        <tr ng-repeat="m in canvas.mrkrs">
             <td>{[m.fields.name]}</td>
             <td>{[m.fields.start]}</td>
             <td>{[m.fields.length]}</td>
