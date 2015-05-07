@@ -1,0 +1,127 @@
+Dobry wieczór,
+
+cieszę się, że sporo działa. Próbowałem uruchomić całość ale mam problemy z inicjacją bazy; prawdopodobnie nie działa ona poprawnie po wykonaniu python manage.py syncdb.
+
+Proszę wykonać następujące 3 zadania:
+
+- import do aplikacji z plików FASTA 
+
+w naszej aplikacji plik fasta zawiera linię opisu (zaczynającą się od znaku >) a następnie identyfikator sekwencji, w kolejnych liniach sekwencja, aż do napotkania kolejnej linii ze znakiem '>', np.
+
+>1
+AAAAAAAA
+>2
+TTTTTTTT
+TTTTTTTT
+>3
+CCC
+
+opisuje 3 sekwencje o identyfikatorach '1', '2', '3'; sekwencja '1' ma długość 8, sekwencja '2' ma długość 16, sekwencja '3' ma długość 3
+
+http://en.wikipedia.org/wiki/FASTA_format
+
+
+- import do aplikacji plików GFF
+
+pliki GFF opisują położenie sekwencji, u nas następujące kolumny
+
+seq_id start length master_seq_id
+
+gdzie seq_id jest identyfikatorem sekwencji, start, length to pozycja początku sekwencji i jej długość, master_seq_id identyfikator sekwencji nadrzędnej (np. chromosomu)
+
+https://genome.ucsc.edu/FAQ/FAQformat.html#format3
+
+
+
+Generalnie po wybraniu organizmu powinniśmy wskazać plik FASTA oraz GFF i wtedy powinny się wczytać skafoldy.
+
+Trzecie zadanie: proszę wygenerować pliki FASTA oraz GFF z bazy danych, której Pan używa i dodać te pliki do repozytorium. Proszę uporządkować aplikację, aby inicjacja na nowym komputerze polegała na tym,
+że kompiluje się całość (za pomocą scons) a następnie inicjuje się bazę danych.
+
+Pozdrawiam,
+Robert Nowak
+
+
+
+
+W dniu 2015-05-07 15:23, Michał H napisał(a):
+> Dzień dobry,
+> 
+> zrobiłem w zasadzie prawie wszystko (zostały mi drobne poprawki) co
+> ustaliliśmy przy poprzednim spotkaniu: 
+> - przebudowałem bazę danych, oraz trasowanie URL, dodając
+> możliwość przechowywania organizmów (chromosom ma klucz obcy do
+> organizmu)
+> - prosty widok organizmów w formie tabelarycznej, po wybraniu
+> osobnika (organizmu), wyświetlane są chromosomy dla tego osobnika, a
+> później scaffoldy
+> - dodałem możliwość przechowywania markerów oraz ich znaczeń
+> zgodnie z ustalonymi założeniami
+> - obrazuje markery w zakładce podglądu scaffolda zgodnie z
+> założeniami, czyli: aby obrazować markery należy w panelu
+> zaznaczyć checkbox, po czym wysuwa się
+>   okno z listą wyboru znaczeń, które będą obrazowane.
+> - sekwencja scaffoldu pobierana jest po wciśnięciu przycisku.
+> Wyświetlana jest w formie wysuwanego pola textfield z zawartością
+> sekwencji, natomiast
+>   ukrywana po dowolnej zmianie nawigacji. W przypadku żądania o
+> sekwencje dłuższą niż np. 10000 znaków wyskakuje okienko
+> dialogowe z komunikatem
+>   ostrzeżenia. Miałem pewne problemy z prawidłowym wykonywaniem
+> żądań POST pomiędzy angularem i django, ale udało mi się to
+> prawidłowo skonfigurować,
+>   natomiast póki co sekwencja zwracana przez serwer jest losowa - to
+> jeszcze dokończę.
+> 
+> Z zapisanych zadań nie zrealizowałem dodania zakładki do
+> dodawania/modyfikowania/usuwania markerów oraz ich znaczeń,
+> ponieważ ustaliliśmy
+> na poprzednim spotkaniu, że omówimy to przy kolejnej wizycie.
+> 
+> Pozdrawiam,
+> Michał Haponiuk.
+> 
+> W dniu 5 maja 2015 22:33 użytkownik rnowak2 <rnowak2@elka.pw.edu.pl
+> [4]> napisał:
+> 
+>> Dobry wieczór,
+>>
+>> przepraszam Pana; jestem w delegacji do 15 maja. Proszę napisać,
+>> co udało się zrobić (z zapisanych zadań).
+>>
+>> Pozdrawiam,
+>> Robert Nowak
+>>
+>> W dniu 2015-05-05 21:03, Michał H napisał(a):
+>>
+>>> Dobry wieczór,
+>>>
+>>> byliśmy umówieni w poniedziałek (4 maja) na spotkanie o godz.
+>>> 14
+>>> ale niestety nie zastałem Pana w pokoju.
+>>> Próbowałem Pana złapać też dzisiaj ale również mi się to
+>>> nie
+>>> udało.
+>>> Kiedy mógłbym przyjść i pokazać stan mojej pracy?
+>>>
+>>> Pozdrawiam,
+>>> Michał Haponiuk.
+>>
+>> --
+>> dr inż. Robert Nowak
+>> r.m.nowak@elka.pw.edu.pl [1], rbmnowak@gmail.com [2]
+>> http://staff.elka.pw.edu.pl/~rnowak2 [3]
+> 
+> 
+> 
+> Links:
+> ------
+> [1] mailto:r.m.nowak@elka.pw.edu.pl
+> [2] mailto:rbmnowak@gmail.com
+> [3] http://staff.elka.pw.edu.pl/~rnowak2
+> [4] mailto:rnowak2@elka.pw.edu.pl
+
+-- 
+dr inż. Robert Nowak
+r.m.nowak@elka.pw.edu.pl, rbmnowak@gmail.com
+http://staff.elka.pw.edu.pl/~rnowak2
