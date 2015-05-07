@@ -64,6 +64,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
             });
     }
 
+
     //-------------canvas data aktualnych scaffoldow------------------------------------
     $scope.canvas = {};
     $scope.canvas.data = []; //scaffoldy na aktualny main view
@@ -78,9 +79,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
     $scope.markery.defaults = {}
     $scope.markery.defaults.visible = false;
     $scope.markery.visible = $scope.markery.defaults.visible;
-    $scope.$watch("markery.visible", function(){
-        updatePanel();
-    })
 
 
 //######################### GLOWNA INICJALIZACJA ########################################################
@@ -104,6 +102,9 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
                 updatePanel();
             })
         }
+        $scope.$watch("markery.visible", function () {
+            updatePanel();
+        })
     }).then(function () {
         initSettings();
         //$scope.canvas.getViewData(); -> wykonywany juz w initSettings()?
@@ -133,12 +134,29 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
     $scope.klik = function () {
         console.log("KLIK")
         console.log($scope.canvas.mrkrs)
+
         //$scope.canvas.meanings = $filter("uniqueMeaningsFromMarkers")($scope.mrkrs, $scope.meanings);
         //console.log($scope.canvas.meanings);
         //console.log($scope.meanings);
     }
     $scope.guzik = function () {
         console.log("GUZIK")
+        ajaxRequest()
+    }
+
+    var ajaxRequest = function(){
+        var request = {
+            method: 'POST',
+            url: 'ajax_post',
+            params: {param1: "p1p1p1", param2: "p2p2p2"}, //query string parametr
+            data: {data1: "d1d1d1", data2: "d2d2d2"} //ukryte data w poscie
+            //headers: {'Content-Type': 'application/x-www-form-urlencoded', //musi tak byc zeby posta dobrze odebralo, wiekszosc bibliotek JS tak robi
+            //            'X-Requested-With': 'XMLHttpRequest'} //zeby w django request.is_ajax dawalo true
+        };
+        $http(request)
+            .success(function (data) {
+                console.log(data)
+            });
     }
 
     var updatePanel = function(){

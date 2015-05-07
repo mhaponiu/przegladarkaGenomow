@@ -1,0 +1,87 @@
+zebrane informacje jak poprawnie wykonac posta pomiedzy django(1.7) a angular(1.2.22):
+
+wywołanie w angularze:
+
+    var request = {
+            method: 'POST',
+            url: 'ajax_post',
+            params: {param1: "p1p1p1", param2: "p2p2p2"}, //query string parametr
+            data: {data1: "d1d1d1", data2: "d2d2d2"}, //ukryte data w poscie
+                       //musi tak byc zeby posta dobrze odebralo jako suchy tekst(bo to JSON), wiekszosc bibliotek JS tak robi
+                       //ale w sumie teraz lepiej dziala bez tego -> lepiej jak jest application/json, czyli domyslnie w angularze
+            headers: {'Content-Type': 'application/x-www-form-urlencoded',
+                        'X-Requested-With': 'XMLHttpRequest'} //zeby w django request.is_ajax dawalo true
+        };
+    $http(request)
+        .success(function (data) {
+            console.log(data)
+        });
+
+leci request: "POST /ajax_post?param1=p1p1p1&param2=p2p2p2 HTTP/1.1" 200 10"
+
+
+odbiór w django:
+
+    #dekorator pomija sprawdzanie cookie csrftoken bo diango chce w ajax_requescie CSRF token
+    #zamiast Cookie:csrftoken=[token] to: X-CSRFToken:[token]
+    @csrf_exempt
+    def ajaxPost(request):
+        print "request method: ", request.method;
+        print "is_ajax: ", request.is_ajax();
+        print "request.REQUEST: ", request.REQUEST;
+        print "request.body: ", request.body;
+        body = json.loads(request.body);
+        print "body['data1']: ", body['data1'];
+        print "request.REQUEST['param1']: ", request.REQUEST['param1'];
+        return HttpResponse("JAKIS POST");
+
+
+możemy automatycznie dodawać nagłówki do requesta oraz jak chcemy pozbyc sie małoeleganckiego @csrf_exempt:
+http://www.daveoncode.com/2013/10/17/how-to-make-angularjs-and-django-play-nice-together/
+
+In order to make AngularJS working as I wish in my Django app, these are the settings that I’ve adopted:
+
+1. Differentiate Angular templates symbols from Django ones:
+
+Both Angular than Django use doble curly braces to mark variables and/or expressions ({{ myVar }}).
+In order to have the full control on how and by who our templates are rendered, I redefined the Angular interpolations signs in the config() method of my client app.
+
+$interpolateProvider.startSymbol('{$');
+$interpolateProvider.endSymbol('$}');
+
+2. Change the default Angular Content-type header used in POST method:
+Angular defines the “Content-Type” header as “application/json” for ajax POST, but Django doesn’t understand that content properly and as result, the POST data is not an object as we expect but rather a string! So, I modified the default content type as “application/x-www-form-urlencoded” (which is the format used by jQuery and other JavaScript libraries).
+
+//wyzej wytlumaczone, ze juz to nie jest konieczne a nawet django lepiej odbiera jako application/json
+$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+3. Assign the CSFR token to each ajax call automagically
+In Django templates we can use the tag {% csrf_token %} inside a form to print an hidden input containing the token. But when it comes to making an xhr post request, how can we pass the token in an effective and DRY manner? The answer I gave myself is to set a default http header for ajax calls containing the value of the token obtained by reading the session cookie (in this way this stuff is handle 100% by JavaScript).
+
+$http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+
+Differently from points 1 and 2, this is done in the run() method, since $cookies is an Angular service and can’t be used in config() block (in that function only provider objects can be used).
+In order to use $cookies we have also to import “angular-cookies.js” in addition to the base “angular.js“.
+
+The final configuration is the following:
+
+angular.module('myapp', ['ngCookies']).
+    config([
+    '$httpProvider',
+    '$interpolateProvider',
+    function($httpProvider, $interpolateProvider) {
+        $interpolateProvider.startSymbol('{$');
+        $interpolateProvider.endSymbol('$}');
+        $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    }]).
+    run([
+    '$http',
+    '$cookies',
+    function($http, $cookies) {
+        $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+    }]);
+UPDATE:
+
+Starting from Angular 1.2, you have also to set default headers in order to use Django helper method is_ajax() in your views:
+
+$httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';

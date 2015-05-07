@@ -2,11 +2,18 @@
  * Created by mhaponiu on 25.02.15.
  */
 
-var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap']);
+var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap', 'ngCookies']);
+
+//w configu moga byc tylko providery, service'y trzeba do run dawac
 cucModule.config(function ($interpolateProvider) {
     $interpolateProvider.startSymbol('{[');
     $interpolateProvider.endSymbol(']}');
+}).config(function($httpProvider){
+    //chyba juz nie konieczne
     //$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+}).run(function($http, $cookies){
+    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
 });
 
 //function cucRouteConfig($routeProvider) {

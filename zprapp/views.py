@@ -95,6 +95,17 @@ def test(request):
     #print seq_json;
     return HttpResponse(seq.sequence[:100000]);
 
+# @csrf_exempt
+def ajaxPost(request):
+    print "request method: ", request.method;
+    print "is_ajax: ", request.is_ajax();
+    print "request.REQUEST: ", request.POST;
+    print "request.body: ", request.body;
+    body = json.loads(request.body);
+    print "body['data1']: ", body['data1'];
+    print "request.REQUEST['param1']: ", request.REQUEST['param1'];
+    return HttpResponse("JAKIS POST");
+
 
 ######################################### STARE ################################
 #
