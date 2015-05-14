@@ -1,5 +1,5 @@
 #TODO class Markery
-from baza import DBBase
+from dbbase import DBBase
 
 class Markery(DBBase):
     def glos(self):

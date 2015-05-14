@@ -1,5 +1,5 @@
 #TODO class Meanings
-from baza import DBBase
+from dbbase import DBBase
 
 class Meanings(DBBase):
     def glos(self):

@@ -1,5 +1,5 @@
 # TODO class Chromosomes
-from baza import DBBase
+from dbbase import DBBase
 
 class Chromosomes(DBBase):
     def glos(self):

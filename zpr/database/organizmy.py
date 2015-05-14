@@ -1,5 +1,5 @@
 # TODO class organizmy
-from baza import DBBase
+from dbbase import *
 
 class Organisms(DBBase):
     def glos(self):

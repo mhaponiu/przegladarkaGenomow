@@ -1,3 +1,4 @@
+from dbbase import *
 from organizmy import *
 from chromosomy import *
 from scaffoldy import *
@@ -9,10 +10,8 @@ from znaczenia import *
     nalezy wczytac backup bazy danych '17.11.2012-cucumber_plain.backup'
     do nowo utworzonej bazy i wpisac jej dane do ponizszego CONNECT_STRING'a
     oraz lokacje pliku xls z markerami podac do MARKER_FILE_LOCATION
+    (zajrzyj do klasy bazowej DBBase w dbbase.py )
 '''
-class DBBase(object):
-    MARKER_FILE_LOCATION = "Cucumber_scaffold_markers.xls"
-    CONNECT_STRING = "dbname='ogorek_roboczy' user='zpr' host='localhost' password='zpr'"
 
 class DatabaseGenome(DBBase):
     def __init__(self):

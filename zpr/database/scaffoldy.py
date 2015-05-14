@@ -1,6 +1,6 @@
 #TODO class Scaffoldy
 
-from baza import DBBase
+from dbbase import DBBase
 
 class Scaffolds(DBBase):
     def glos(self):

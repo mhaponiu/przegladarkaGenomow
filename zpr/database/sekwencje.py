@@ -1,5 +1,5 @@
 #TODO class Sekwencje
-from baza import DBBase
+from dbbase import DBBase
 
 class Sequences(DBBase):
     def glos(self):
