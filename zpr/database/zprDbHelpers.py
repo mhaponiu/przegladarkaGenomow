@@ -19,6 +19,7 @@ import random;
 MARKER_FILE_LOCATION = "Cucumber_scaffold_markers.xls"
 CONNECT_STRING = "dbname='ogorek_roboczy' user='zpr' host='localhost' password='zpr'"
 
+
 def delete_chromosomes():
     chrs = Chromosome.objects.all()
     for ch in chrs:

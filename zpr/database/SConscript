@@ -1,0 +1,15 @@
+from baza import *
+
+Import('env')
+
+baza = DatabaseGenome()
+
+if env['build_db'] == 1:
+    print 'BUILD_DB'
+    baza.glos()
+
+elif env['earse_db'] == 1:
+    print 'EARSE_DB'
+
+elif env['backup_restore'] == 1:
+    print 'BACKUP_RESTORE'
