@@ -88,12 +88,12 @@ def test(request):
     #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja
     # print "TEST widok_od:", request.REQUEST['widok_od']," widok_do: ", request.REQUEST['widok_do'];
     # return HttpResponse("TEST OD SERWERA");
-    ch = Chromosome.objects.get(id=43);
-    scfld = ch.scaffold_set.get(id=360360);
+    ch = Chromosome.objects.all()[0];
+    scfld = ch.scaffold_set.all()[0];
     seq = scfld.sequence_set.all()[0];# liscie sekwencji i tak jest jedna tylko
     #seq_json = serializers.serialize("json", seq)
     #print seq_json;
-    return HttpResponse(seq.sequence[:100000]);
+    return HttpResponse(seq.sequence[:1000]);
 
 # @csrf_exempt
 def ajaxPost(request):

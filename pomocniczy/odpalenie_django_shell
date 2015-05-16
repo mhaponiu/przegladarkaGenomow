@@ -1,0 +1,4 @@
+import sys, os
+sys.path.append(['/home/mhaponiu/workspace/Pycharm workspace/zpr'])
+os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
+from django.conf import settings

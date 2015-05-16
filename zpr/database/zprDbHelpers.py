@@ -9,7 +9,6 @@ django_manage_shell.run("/home/mhaponiu/workspace/Pycharm workspace/zpr")
 from zprapp.models import Chromosome, Scaffold, Sequence, Marker, Meaning, Organism;
 import psycopg2
 import psycopg2.extras;
-import random;
 
 '''
     nalezy wczytac backup bazy danych '17.11.2012-cucumber_plain.backup'
@@ -40,7 +39,7 @@ def create_chromosomes_from_webomics_db():
         org.chromosome_set.create(number=row['id'], length=row['length_celera'])
         # ch = Chromosome(number=row['id'], length=row['length_celera'])
         # ch.save();
-    print "zapisano chromosomy"
+    print "utworzono chromosomy"
     conn.close()
 
 def chromosomes_lenght_to_bp():
@@ -313,6 +312,7 @@ def check_undef_start_stop_markers(assemb_type=-1):
     return undef_scfld_id, bad_start_stop_marker;
 
 def get_scaffolds_all_without_bad_id():
+    #takie scaffoldy ktore nie maja liter w id
     ID, LENGTH_BP, ASSEMB_TYPE = 0, 1, 2
     try:
         conn = psycopg2.connect(CONNECT_STRING)
