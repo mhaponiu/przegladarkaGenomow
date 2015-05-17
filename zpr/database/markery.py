@@ -12,8 +12,10 @@ class Markery(DBBase):
         #wszystkie markery tworze jako atrapy dla pierwszego chromosomu
         #jaki jest w bazie (czyli dla pierwszego organizmu) z losowym znaczeniem
         NAME = ["SR123", "SF35324", "SQ54353", "SJ432", "SP5435"]
-        START = [10, 10000, 100000, 1000000, 10000000]
-        LENGTH = [5000, 15000, 150000, 1500000, 15000000]
+        # START = [10, 10000, 100000, 1000000, 10000000]
+        # LENGTH = [5000, 15000, 150000, 1500000, 15000000]
+        START = [10, 3000000, 5000000, 10000000, 15000000]
+        LENGTH = [1500000, 1500000, 3000000, 1000000, 3000000]
         MEANING = Meaning.objects.all()[:2]
         org = Organism.objects.all()[0];
         chr = org.chromosome_set.all()[0];

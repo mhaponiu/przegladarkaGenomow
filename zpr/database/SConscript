@@ -1,4 +1,5 @@
 from baza import DatabaseGenome
+import os
 
 Import('env')
 
@@ -17,8 +18,8 @@ elif env['restore_ogorek_roboczy'] == 1:
     #TODO sprawdzac czy istnieje plik 17.11.2012...
     os.system('psql -U zpr -d ogorek_roboczy -f data/17.11.2012-cucumber_plain.backup')
 
-elif env['restore_db'] == 1:
-    print 'RESTORE_DB'
-    #TODO sprawdzac czy istnieje plik backupzpr
-    os.system('psql -U zpr -d zpr -f data/backupzpr.backup')
+#elif env['restore_db'] == 1:
+#    print 'RESTORE_DB'
+#    #TODO sprawdzac czy istnieje plik backupzpr
+#    os.system('psql -U zpr -d zpr -f data/backupzpr.backup')
 

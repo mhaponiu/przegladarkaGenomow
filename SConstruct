@@ -45,13 +45,14 @@ elif ( env['build_db'] == 1 or env['clear_db'] == 1 or
 
     if env['build_db'] == 1 or env['clear_db'] == 1:
         os.system('python manage.py migrate')
-        # import ustawien django zeby mozna uzywac orm django do bazy danych
-        # bez wywolywania django shell, tylko z poziomu np terminala
-        sys.path.append([os.path.abspath('')])
-        os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
-        from django.conf import settings
-        import django
-        django.setup() #bez tego AppRegistryNotReady: Models aren't loaded yet.
+
+    # import ustawien django zeby mozna uzywac orm django do bazy danych
+    # bez wywolywania django shell, tylko z poziomu np terminala
+    sys.path.append([os.path.abspath('')])
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
+    from django.conf import settings
+    import django
+    django.setup() #bez tego AppRegistryNotReady: Models aren't loaded yet.
 
     SConscript(['zpr/database/SConscript'], exports=['env']);
 

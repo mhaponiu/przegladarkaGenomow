@@ -35,8 +35,10 @@ class Scaffolds(DBBase):
                        order by chr_id, scaffold_scaffoldposition.order, scaff_id
                        ''')
         rows = cur.fetchall()
+        chrms = Chromosome.objects.all()
         for row in rows:
-            chr = Chromosome.objects.get(number=row['chr_id'])
+            #chr = Chromosome.objects.get(number=row['chr_id'])
+            chr = chrms[row['chr_id']-1]
             try:
                 chr.scaffold_set.create(id=row['scaff_id'], length=row['length_bp'], order=row['order'], start=0)
             except:

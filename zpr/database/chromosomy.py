@@ -12,6 +12,7 @@ class Chromosomes(DBBase):
         print 'utworzono chromosomy'
         self._create_data_from_webomics_db()
         self._chromosomes_length_to_bp()
+        self._create_data_for_other_organisms()
 
     def delete(self):
         chrs = Chromosome.objects.all()
@@ -56,3 +57,18 @@ class Chromosomes(DBBase):
             chr.length = length_bp[chr.number - 1]
             chr.save();
         print "chromosom: zmieniono jednostki length z cM na bp"
+
+    def _create_data_for_other_organisms(self):
+        #tworze recznie chromosomy dla organizmu 2 i 3 zeby cokolwiek sie wyswietlalo
+        org = Organism.objects.all()
+        o = org[1]
+        for num, len in zip(range(1,12), range(100,5,-9)):
+            chr = Chromosome(number = num, length = len, organism = o)
+            chr.save()
+        o = org[2]
+        for num, len in zip(range(1,5), range(10, 101, 30)):
+            chr = Chromosome(number = num, length = len, organism = o)
+            chr.save()
+
+
+

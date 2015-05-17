@@ -52,8 +52,7 @@
         wczytaj baze danych ogorek_roboczy poleceniem <b><i>scons restore_ogorek_roboczy=1</i></b>
     </li>
     <li>
-        zbuduj baze od zera poleceniem <b><i>scons build_db=1</i></b> <br>
-        albo wczytaj z backupu poleceniem <b><i>scons restore_db=1</i></b> 
+        zbuduj baze od zera poleceniem <b><i>scons build_db=1</i></b>
     </li>
 </ul>
 
