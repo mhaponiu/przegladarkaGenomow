@@ -1,6 +1,6 @@
 #TODO class Markery
 from dbbase import DBBase
-from zprapp.models import Organism, Meaning, Marker
+from zprapp.models import Organism, Meaning, Marker, Chromosome
 import psycopg2
 import psycopg2.extras
 
@@ -18,7 +18,10 @@ class Markery(DBBase):
         LENGTH = [1500000, 1500000, 3000000, 1000000, 3000000]
         MEANING = Meaning.objects.all()[:2]
         org = Organism.objects.all()[0];
+        #TODO org.chromosome_set.all()[0] daje chromosom 7 a nie 1 ?!?! [6] tez daje 7 ?!
         chr = org.chromosome_set.all()[0];
+        #TODO nizej chwilowe rozwiazanie powyzszego bledu
+        chr = Chromosome.objects.all()[0]
         for i in range(NAME.__len__()):
             if(i%2):
                 m = MEANING[0]
