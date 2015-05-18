@@ -1,5 +1,3 @@
-#TODO class Scaffoldy
-
 from dbbase import DBBase
 from zprapp.models import Chromosome
 import psycopg2
@@ -74,3 +72,39 @@ class Scaffolds(DBBase):
                 start += sc.length + przerwa
                 sc.save();
         print "scaffold: nadano atrybut start"
+
+    def _get_data_without_bad_id(self):
+        #takie scaffoldy ktore nie maja liter w id
+        ID, LENGTH_BP, ASSEMB_TYPE = 0, 1, 2
+        try:
+            conn = psycopg2.connect(self.CONNECT_STRING)
+        except:
+            print "CONNECT DATABASE ERROR"
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("select id, length_bp, assemb_type from scaffold_scaffold")
+        data = cur.fetchall()
+        scflds=[]
+        for sc in data:
+            try:
+                scflds.append((int(sc[ID]), int(sc[LENGTH_BP]), sc[ASSEMB_TYPE]))
+            except:
+                continue;
+        return scflds;
+
+    def _get_data_with_bad_text_id(self):
+        #sprawdza czy w id scaffolda nie ma np liter
+        try:
+            conn = psycopg2.connect(self.CONNECT_STRING)
+        except:
+            print "CONNECT DATABASE ERROR"
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("select id, assemb_type from scaffold_scaffold")
+        rows = cur.fetchall()
+        bad_id = []
+        for row in rows:
+            try:
+                id = row['id']
+                int(id)
+            except ValueError:
+                bad_id.append((id, row['assemb_type']))
+        return bad_id;

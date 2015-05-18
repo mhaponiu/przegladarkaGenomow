@@ -1,4 +1,3 @@
-#TODO class Sekwencje
 from dbbase import DBBase
 from zprapp.models import Chromosome, Scaffold
 import psycopg2

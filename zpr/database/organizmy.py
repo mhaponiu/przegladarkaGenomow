@@ -1,4 +1,3 @@
-# TODO class organizmy
 from dbbase import *
 from zprapp.models import Organism
 import psycopg2

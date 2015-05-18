@@ -1,4 +1,3 @@
-#TODO class Meanings
 from dbbase import DBBase
 from zprapp.models import Meaning
 

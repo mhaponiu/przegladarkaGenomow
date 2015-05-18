@@ -15,11 +15,19 @@ elif env['clear_db'] == 1:
 
 elif env['restore_ogorek_roboczy'] == 1:
     print 'RESTORE_OGOREK_ROBOCZY'
-    #TODO sprawdzac czy istnieje plik 17.11.2012...
-    os.system('psql -U zpr -d ogorek_roboczy -f data/17.11.2012-cucumber_plain.backup')
+    if '17.11.2012-cucumber_plain.backup' in os.listdir(os.path.abspath('data')):
+        os.system('psql -U zpr -d ogorek_roboczy -f data/17.11.2012-cucumber_plain.backup')
+    else:
+        print "ERROR : brak potrzebnego backupu '17.11.2012-cucumber_plain.backup' w ", os.path.abspath('data')
 
 #elif env['restore_db'] == 1:
 #    print 'RESTORE_DB'
 #    #TODO sprawdzac czy istnieje plik backupzpr
 #    os.system('psql -U zpr -d zpr -f data/backupzpr.backup')
+
+elif env['test'] == 1:
+    if '17.11.2012-cucumber_plain.backup' in os.listdir(os.path.abspath('data')):
+        print 'JEA'
+    else:
+        print "ERROR: brak backupu '17.11.2012-cucumber_plain.backup' w ", os.path.abspath('data')
 

@@ -1,4 +1,3 @@
-# TODO class Chromosomes
 from dbbase import DBBase
 from zprapp.models import Organism, Chromosome
 import psycopg2
