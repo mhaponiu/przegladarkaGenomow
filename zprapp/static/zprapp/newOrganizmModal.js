@@ -27,7 +27,7 @@ angular.module('CucModule').controller('NewOrganizmModalCtrl', function($scope, 
 angular.module('CucModule').controller('NewOrganizmModalInstance', function($scope, $modalInstance, Upload, $filter){
     //tablica plikow do wyslania -> wazna kolejnosc
     $scope.files = [] //to lista list jednoelementowych -> potem przefiltruje zeby byla zwykla pojedyncza lista
-    $scope.opisPlikow = ["organizm gff", "chromosomy fasta"]
+    $scope.opisPlikow = ["organizm gff", "jakisplik"]
     $scope.name = ""
 
     $scope.toggleVisible = false; //odpowiada za widocznosc paru rzeczy, ktore sa wzgledem siebie odwrotne
@@ -67,38 +67,34 @@ angular.module('CucModule').controller('NewOrganizmModalInstance', function($sco
 
     var uploadFiles = function (files) {
         if (files && files.length) {
-            //FIXME wysylac wszystkie pliki jednym postem
-            for (var i = 0; i < files.length; i++) {
-                var file = files[i];
-                Upload.upload({
-                    url: 'ajax_newOrganism',
-                    fields: {'name': $scope.name},
-                    file: file
-                }).progress(function (evt) {
-                    var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                    console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-                    $scope.progressbar.value = progressPercentage
-                    $scope.progressbar.text = $scope.progressbar.value + ' %'
-                }).success(function (data, status, headers, config) {
-                    //po przeslaniu kazdego pliku wali sc
-                    $scope.progressbar.text = $scope.progressbar.value.toString() + ' % ZAKOŃCZONO PRZESYŁANIE'
-                    $scope.progressbar.class = "progress-striped"
-                    if(data.success){
-                        $scope.progressbar.type = "success"
-                        $scope.message.buttonClass = 'btn-success'
-                        $scope.message.type = 'success'
-                    }
-                    else{
-                        $scope.progressbar.type = "danger"
-                        $scope.message.buttonClass = 'btn-danger'
-                        $scope.message.type = 'danger'
-                    }
-                    $scope.message.text = data.message
-                    $scope.message.visible = $scope.toggleVisible
+            Upload.upload({
+                url: 'ajax_newOrganism',
+                fields: {'name': $scope.name},
+                file: files
+            }).progress(function (evt) {
+                var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                $scope.progressbar.value = progressPercentage
+                $scope.progressbar.text = $scope.progressbar.value + ' %'
+            }).success(function (data, status, headers, config) {
+                //po przeslaniu kazdego pliku wali sc
+                $scope.progressbar.text = $scope.progressbar.value.toString() + ' % ZAKOŃCZONO PRZESYŁANIE'
+                $scope.progressbar.class = "progress-striped"
+                if (data.success) {
+                    $scope.progressbar.type = "success"
+                    $scope.message.buttonClass = 'btn-success'
+                    $scope.message.type = 'success'
+                }
+                else {
+                    $scope.progressbar.type = "danger"
+                    $scope.message.buttonClass = 'btn-danger'
+                    $scope.message.type = 'danger'
+                }
+                $scope.message.text = data.message
+                $scope.message.visible = $scope.toggleVisible
 
-                    console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-                });
-            }
+                console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+            });
         }
     };
 

@@ -96,6 +96,19 @@ def ajaxNewOrganism(request):
     # TODO odebrac zuploadowany plik
     wynik = True;
     wiadomosc = "wiadomosc z serwera po niby odebraniu pliku"
+    if request.method == 'POST':
+        organism_name = request.POST['name']
+        print "nazwa nowego organizmu: ", organism_name
+
+        files = request.FILES.getlist('file') #lista plikow w kolejnosci jak wysylalismy
+        for f in file:
+            print "plik: ", f, " zawartosc: ", f.read()
+
+    else:
+        wynik = False
+        wiadomosc = "ERROR, pliki niepoprawne"
+
+
     return JsonResponse({'success': wynik, 'message': wiadomosc});
 
 # @csrf_exempt
