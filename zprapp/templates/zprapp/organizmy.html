@@ -2,7 +2,12 @@
 {#{[aaa]}#}
 
 <div class="panel">
-    <h3 class="panel-heading">ORGANIZMY: </h3>
+    <h3 class="panel-heading panel">ORGANIZMY:
+        <p class="text-right">
+            <button ng-controller="NewOrganizmModalCtrl" class="btn btn-primary" ng-click="open()">dodaj nowy organizm</button>
+        </p>
+    </h3>
+{#        <button ng-controller="NewOrganizmModalCtrl" class="btn btn-primary" ng-click="open()">nowy</button></h3>#}
 
     <table class="table table-striped table-bordered table-hover">
         <thead>
@@ -14,4 +19,63 @@
             <td><a ng-href="#/organizm/{[o.pk]}/chromosomy">{[o.fields.name]}</a></td>
         </tr>
     </table>
+</div>
+
+{#okno modalne z dodawaniem nowego organizmu#}
+<div ng-controller="NewOrganizmModalCtrl">
+        <script type="text/ng-template" id="NewOrganizmModalContent.html">
+            <div class="modal-header">
+                <h3 class="modal-title">NOWY ORGANIZM</h3>
+            </div>
+            <div class="modal-body">
+
+{#                <strong>Nazwa organizmu:</strong> <input class="form-control" ng-model="name">#}
+
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-sm-4">Nazwa organizmu: </label>
+                        <div class="col-sm-6">
+                            <input class="form-control col-sm-8" placeholder="nazwa" ng-model="name">
+                        </div>
+                    </div>
+
+                </form>
+
+                <table class="table table-hover">
+                    <thead><strong>Podaj pliki nowego organizmu:</strong></thead>
+                    <tr ng-repeat="opis in opisPlikow">
+                        <td>{[opis]}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" ngf-select ng-model="files[$index]"><span class="glyphicon glyphicon-folder-open"></span></button>
+                        </td>
+                        <td><i>{[files[$index][0].name]}</i></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <div collapse="!progressbar.visible">
+                    <progressbar value='progressbar.value'
+                                 ng-class="progressbar.class"
+                                 type='{[progressbar.type]}'>
+                        <strong>{[progressbar.text]}</strong>
+                    </progressbar>
+                </div>
+                <div collapse="!buttonyVisible">
+{#                    <button class="btn btn-success" ng-click="test()">TEST</button>#}
+                    <button class="btn btn-success" ng-class="disabledUpload" ng-click="uploadStart()">Upload <span class="glyphicon glyphicon-cloud-upload"></span></button>
+                    <button class="btn btn-warning" ng-click="cancel()">Cancel <span class="glyphicon glyphicon-remove-sign"></span></button>
+                </div>
+                <div collapse="!message.visible">
+                    <alert type="{[message.type]}">
+                        <p class="text-left">
+                            {[message.text]}
+                        </p>
+                        <button class="btn" ng-click="dismissModal()" ng-class="message.buttonClass">OK</button>
+
+                    </alert>
+                </div>
+
+            </div>
+        </script>
+{#        <button class="btn btn-primary" ng-click="open()">MODAL</button>#}
 </div>

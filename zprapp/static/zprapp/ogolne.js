@@ -2,7 +2,7 @@
  * Created by mhaponiu on 25.02.15.
  */
 
-var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap', 'ngCookies']);
+var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap', 'ngCookies', 'ngFileUpload']);
 
 //w configu moga byc tylko providery, service'y trzeba do run dawac
 cucModule.config(function ($interpolateProvider) {
@@ -230,6 +230,21 @@ cucModule.filter("wytnijNaScaffView", function(){
         }
         else {
             return markery;
+        }
+    }
+}).filter("listOfListsToOneList", function() {
+    return function (listaList) {
+        if(angular.isArray(listaList)){
+            var new_list = []
+            angular.forEach(listaList, function(lista){
+                angular.forEach(lista, function(element){
+                    new_list.push(element)
+                })
+            })
+            return new_list
+        }
+        else{
+            return listaList
         }
     }
 })

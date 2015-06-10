@@ -92,6 +92,12 @@ def test(request):
     #print seq_json;
     return HttpResponse(seq.sequence[:1000]);
 
+def ajaxNewOrganism(request):
+    # TODO odebrac zuploadowany plik
+    wynik = True;
+    wiadomosc = "wiadomosc z serwera po niby odebraniu pliku"
+    return JsonResponse({'success': wynik, 'message': wiadomosc});
+
 # @csrf_exempt
 def ajaxPost(request):
     print "request method: ", request.method;
