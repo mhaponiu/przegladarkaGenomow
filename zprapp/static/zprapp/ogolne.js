@@ -43,19 +43,19 @@ function cucRouteConfig($routeProvider) {
     $routeProvider.
         when('/organizmy', {
             controller: OrganizmKontroler,
-            templateUrl: 'organizmy'
+            templateUrl: 'templates/organizmy.html'
         }).
         when('/organizm/:id_org/chromosomy', {
             controller: ChromosomKontroler,
-            templateUrl: 'chromosomy'
+            templateUrl: 'templates/chromosomy.html'
         }).
         when('/organizm/:id_org/chromosom/:id_chr/scaffoldy', {
             controller: ScaffoldKontroler,
-            templateUrl: 'scaffoldy'
+            templateUrl: 'templates/scaffoldy.html'
         }).
         when('/organizm/:id_org/chromosom/:id_chr/scaffold/:id_sc/sekwencja', {
             controller: SekwencjaKontroler,
-            templateUrl: 'sekwencje'
+            templateUrl: 'templates/sekwencja.html'
         }).
         otherwise({
             redirectTo: '/organizmy'

@@ -9,12 +9,14 @@ import json
 def index(request):
     return render(request, 'zprapp/index.html')
 
-def organizmy(request):
-    return render(request, 'zprapp/organizmy.html')
-
-def chromosomy(request):
-    return render(request, 'zprapp/chromosomy.html')
-
+# def organizmy(request):
+#     return render(request, 'zprapp/organizmy.html')
+# def chromosomy(request):
+#     return render(request, 'zprapp/chromosomy.html')
+# def sekwencja(request):
+#     return render(request, 'zprapp/sekwencja.html')
+# def scaffoldy(request):
+#     return render(request, 'zprapp/scaffoldy.html')
 
 def ajaxChromosomy(request):
     print "daje chromosomy"
@@ -33,9 +35,6 @@ def ajaxChromosomy(request):
 #     ch = Chromosome.objects.get(id=request.REQUEST['id'])
 
 
-def scaffoldy(request):
-    return render(request, 'zprapp/scaffoldy.html')
-
 def ajaxScaffoldy(request):
     print "daje scaffoldy chromosomu ", request.REQUEST['id_chr'];
     o = Organism.objects.get(id=request.REQUEST['id_org']);
@@ -47,8 +46,6 @@ def ajaxScaffoldy(request):
     scflds_json = serializers.serialize("json", scflds);
     return HttpResponse(scflds_json, content_type="application/json");
 
-def sekwencja(request):
-    return render(request, 'zprapp/sekwencja.html')
 
 def ajaxSekwencja(request):
     print "daje sekwencje chr:", request.REQUEST['id_chr']," scaff: ", request.REQUEST['id_sc'];
