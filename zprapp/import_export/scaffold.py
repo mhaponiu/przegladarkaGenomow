@@ -11,9 +11,9 @@ from gffBase import Gff
 from collections import namedtuple
 from zprapp.models import Scaffold, Chromosome
 
-class ImpExpScaffold(Gff):
+class ScaffoldImpExp(Gff):
     def __init__(self):
-        super(ImpExpScaffold, self).__init__(namedtuple('ScaffGff', ['id', 'length', 'order', 'start', 'chromosome_id']))
+        super(ScaffoldImpExp, self).__init__(namedtuple('ScaffGff', ['id', 'length', 'order', 'start', 'chromosome_id']))
 
     def _gen_record_from_db(self, lista_id):
         if lista_id == None: scflds = Scaffold.objects.all()
@@ -23,7 +23,7 @@ class ImpExpScaffold(Gff):
 
 
 if __name__ == "__main__":
-    a = ImpExpScaffold()
+    a = ScaffoldImpExp()
     # for  bbb in a._gen_record_from_db():
     #     print bbb
     a.export_records_from_db_to_file("exported_data/scaff.gff")

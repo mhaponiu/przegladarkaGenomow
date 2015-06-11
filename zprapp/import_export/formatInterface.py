@@ -11,5 +11,5 @@ class FormatInterface(object):
     def export_records_from_db_to_file(self, filename, lista):
         pass
 
-    def _gen_record_from_db(self):
+    def _gen_record_from_db(self, lista):
         pass

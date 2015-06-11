@@ -44,7 +44,8 @@
                 <table class="table table-hover">
                     <thead><strong>Podaj pliki nowego organizmu:</strong></thead>
                     <tr ng-repeat="opis in opisPlikow">
-                        <td>{[opis]}</td>
+                        <td>{[opis[0]]}</td>
+                        <td>[ {[opis[1]]} ]</td>
                         <td>
                             <button class="btn btn-sm btn-primary" ngf-select ng-model="files[$index]"><span class="glyphicon glyphicon-folder-open"></span></button>
                         </td>
