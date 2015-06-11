@@ -9,7 +9,7 @@ class Organisms(DBBase):
 
     def create(self):
         for i in range(1, 4):
-            o = Organism(name = "organizm " + str(i))
+            o = Organism(name = "organizm_" + str(i))
             o.save();
         print "utworzono organizmy"
 
