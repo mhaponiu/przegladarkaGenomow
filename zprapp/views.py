@@ -6,6 +6,12 @@ from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 import json
 
+from zprapp.import_export.meaningImpExp import MeaningImpExp
+from zprapp.import_export.organizm import Organizm
+from zprapp.import_export.sekwencjaFasta import SekwencjaFastaImpExp
+from zprapp.import_export.wyjatki import CheckError
+from zprapp.import_export.dataMigrations import DataMigrations
+
 def index(request):
     return render(request, 'zprapp/index.html')
 
@@ -94,20 +100,31 @@ def test(request):
 
 def ajaxNewOrganism(request):
     wynik = True;
-    wiadomosc = "wiadomosc z serwera po niby odebraniu pliku"
+    wiadomosc = "wiadomosc z serwera po odebraniu plikow"
 
     if request.method == 'POST':
-        organism_name = request.POST['name']
-        print "nazwa nowego organizmu: ", organism_name
+        try:
+            files = request.FILES.getlist('file') #lista plikow w kolejnosci jak wysylalismy
+            # obj_list = [SekwencjaFastaImpExp()]
+            # for f in files:
+            #     print "plik: ", f, " zawartosc: ", f.read()
+            # print "plik: ", files[0], " zawartosc: ", files[0].read()
 
-        files = request.FILES.getlist('file') #lista plikow w kolejnosci jak wysylalismy
-        # TODO obsluzyc odebrane pliki
-        # for f in files:
-        #     print "plik: ", f, " zawartosc: ", f.read()
+            # obj_list = [SekwencjaFastaImpExp()]
 
+            data_migr = DataMigrations()
+            # obj_list domyslnie w data_migr => musi byc zgodne z pozycjami przeslanymi od klienta
+            data_migr.check(file_list=files, obj_list=None)
+
+        except CheckError as error:
+            wynik = False
+            wiadomosc = error.msg
+        except:
+            wynik = False
+            wiadomosc = "SERWER ERROR, blad przetwarzania plikow"
     else:
         wynik = False
-        wiadomosc = "ERROR, pliki niepoprawne"
+        wiadomosc = "SERVER ERROR, blad uploadu"
 
 
     return JsonResponse({'success': wynik, 'message': wiadomosc});

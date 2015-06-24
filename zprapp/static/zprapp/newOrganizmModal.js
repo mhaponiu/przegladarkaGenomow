@@ -31,7 +31,8 @@ angular.module('CucModule').controller('NewOrganizmModalInstance', function($sco
     $scope.opisPlikow = [["organizm","gff"], ["chromosom", "gff"], ["scaffold", "gff"],
                          ["marker", "gff"], ["meaning","gff"], ["sequence" ,"gff"],
                          ["sequence", "fasta"]]
-    //$scope.opisPlikow = ["plik 1", "plik 2"]
+    //$scope.opisPlikow = [['mean', 'gff'],["seq", 'fasta']]
+    //$scope.opisPlikow = [["seq", 'fasta']]
 
     $scope.name = "" //nazwa nowego organizmu
 
@@ -61,7 +62,7 @@ angular.module('CucModule').controller('NewOrganizmModalInstance', function($sco
 
     var checkDisableUpload = function(){
         //proste sprawdzenie czy wszystkie dane zostaly podane
-        if($scope.files.length == $scope.opisPlikow.length && $scope.name!=""){
+        if($scope.files.length == $scope.opisPlikow.length /*&& $scope.name!=""*/){
             $scope.disabledUpload = ""
         }
         else{ $scope.disabledUpload = "disabled" }
@@ -74,16 +75,19 @@ angular.module('CucModule').controller('NewOrganizmModalInstance', function($sco
         if (files && files.length) {
             Upload.upload({
                 url: 'ajax_newOrganism',
-                fields: {'name': $scope.name},
+                //fields: {'name': $scope.name},
                 file: files
             }).progress(function (evt) {
                 var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                 console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
                 $scope.progressbar.value = progressPercentage
                 $scope.progressbar.text = $scope.progressbar.value + ' %'
+                if(progressPercentage == 100){
+                    $scope.progressbar.text = "CZEKAJ AZ SERWER PRZETWORZY PRZESLANE PLIKI"
+                }
             }).success(function (data, status, headers, config) {
                 //po przeslaniu kazdego pliku wali sc
-                $scope.progressbar.text = $scope.progressbar.value.toString() + ' % ZAKOŃCZONO PRZESYŁANIE'
+                $scope.progressbar.text = $scope.progressbar.value.toString() + ' % ZAKOŃCZONO'
                 $scope.progressbar.class = "progress-striped"
                 if (data.success) {
                     $scope.progressbar.type = "success"
