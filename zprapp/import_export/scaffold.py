@@ -31,6 +31,23 @@ class ScaffoldImpExp(Gff):
         for s in scflds.iterator():
             yield self.FormatRecord(s.id, int(s.length), s.order, int(s.start), s.chromosome_id)
 
+    def import_records_from_file_to_db(self, file, slownik):
+        ret_slownik={}
+        # szukam najwiekszego id bo tu jest jako text i musze nowe sam wyliczac
+        ids = [sc.id for sc in Scaffold.objects.all()]
+        max = 0
+        for id in ids:
+            try:
+                if max < int(id): max = int(id)
+            except ValueError:
+                pass #niektore id maja litery i nie da sie ich na inta przerobic
+        for record in self._gen_record_from_file(file):
+            scfld = Scaffold(id=str(max), length=int(record.length), order=int(record.order), start=int(record.start), chromosome_id=slownik[str(record.chromosome_id)])
+            scfld.save()
+            ret_slownik[str(record.id)] = scfld.id
+            max=max+1
+        return ret_slownik
+
 
 if __name__ == "__main__":
     a = ScaffoldImpExp()

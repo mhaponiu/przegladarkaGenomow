@@ -31,7 +31,7 @@ angular.module('CucModule').controller('NewOrganizmModalInstance', function($sco
     $scope.opisPlikow = [["organizm","gff"], ["chromosom", "gff"], ["scaffold", "gff"],
                          ["marker", "gff"], ["meaning","gff"], ["sequence" ,"gff"],
                          ["sequence", "fasta"]]
-    //$scope.opisPlikow = [['mean', 'gff'],["seq", 'fasta']]
+    $scope.opisPlikow = [['org', 'gff'],["chr", 'fasta'], ["scaffold", "gff"]]
     //$scope.opisPlikow = [["seq", 'fasta']]
 
     $scope.name = "" //nazwa nowego organizmu

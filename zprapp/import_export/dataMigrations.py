@@ -3,7 +3,7 @@ from chromosom import Chromosom
 from scaffold import ScaffoldImpExp
 from markerImpExp import MarkerImpExp
 from meaningImpExp import MeaningImpExp
-from zprapp.models import Chromosome, Marker, Scaffold
+from zprapp.models import Chromosome, Marker, Scaffold, Organism, Meaning, Sequence
 from sekwencjaGff import SekwencjaGff
 from sekwencjaFasta import SekwencjaFastaImpExp
 from wyjatki import CheckError
@@ -27,6 +27,14 @@ class DataMigrations(object):
         for obj in zip(obj_list, file_list):
             obj[0].check(obj[1])
 
+    def imports(self, file_list, obj_list= None):
+        if obj_list == None:
+            obj_list = self.obj_list
+        slownik = {}
+        for obj in zip(obj_list, file_list):
+            new_slownik = obj[0].import_records_from_file_to_db(obj[1], slownik)
+            slownik = new_slownik
+
     def _prepare_lists_id(self, lista_id_org=None):
         # zwraca lista_id_chrms, lista_id_meaning
         if lista_id_org is not None:
@@ -42,23 +50,46 @@ class DataMigrations(object):
 
             # zbieram wszystkie id meaning jakie maja chromosomy
             lista_id_meaning = set()
+            lista_id_mrkrs = []
             mrkrs = Marker.objects.filter(chromosome_id__in = lista_id_chrms)
             for m in mrkrs:
+                lista_id_mrkrs.append(m.id)
                 lista_id_meaning.add(m.meaning_id)
             lista_id_meaning = list(lista_id_meaning)
 
 
         else:
-            return None, None, None
+            return None, None, None, None
 
-        return lista_id_chrms, lista_id_scflds, lista_id_meaning
+        return lista_id_chrms, lista_id_scflds, lista_id_meaning, lista_id_mrkrs
+
+    def delete_organism_full(self, lista_id_org):
+        ids_chrms, ids_scflds, _, ids_mrkrs = self._prepare_lists_id(lista_id_org)
+        orgs = Organism.objects.filter(id__in = lista_id_org)
+        for o in orgs:
+            o.delete()
+        chrms = Chromosome.objects.filter(id__in = ids_chrms)
+        for c in chrms:
+            c.delete()
+        scflds = Scaffold.objects.filter(id__in = ids_scflds)
+        for s in scflds:
+            s.delete()
+        mrkrs = Marker.objects.filter(id__in = ids_mrkrs)
+        for m in mrkrs:
+            m.delete()
+        seqs = Sequence.objects.filter(scaffold_id__in = ids_scflds)
+        for s in seqs:
+            s.delete()
+        # TODO usunac te meaningi ktore naleza tylko i wylacznie do tego organizmu
+
+
 
     def export(self, lista_orgs_id = None):
         print "rozpoczynam generacje (export) plikow z bazy"
         self.org.export_records_from_db_to_file("exported_data/org.gff", lista_orgs_id)
         self.chr.export_records_from_db_to_file("exported_data/chr.gff", lista_orgs_id)
 
-        lista_id_chrms, lista_id_scflds, lista_id_meanings = self._prepare_lists_id(lista_orgs_id)
+        lista_id_chrms, lista_id_scflds, lista_id_meanings, _ = self._prepare_lists_id(lista_orgs_id)
 
         self.scaff.export_records_from_db_to_file("exported_data/scaff.gff", lista_id_chrms)
         self.seqFasta.export_records_from_db_to_file("exported_data/seq.fasta", limit= -1, lista_master_id=lista_id_scflds)

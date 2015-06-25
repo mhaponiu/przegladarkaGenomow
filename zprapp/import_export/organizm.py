@@ -29,6 +29,14 @@ class Organizm(Gff):
         for o in orgs.iterator():
             yield self.FormatRecord(o.id, o.name)
 
+    def import_records_from_file_to_db(self, file, slownik):
+        ret_slownik={}
+        for record in self._gen_record_from_file(file):
+            o = Organism(name = record.name)
+            o.save()
+            ret_slownik[str(record.id)] = o.id
+        return ret_slownik
+
 
 if __name__ == "__main__":
     a = Organizm()

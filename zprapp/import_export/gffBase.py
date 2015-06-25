@@ -48,3 +48,10 @@ class Gff(FormatInterface):
                     f.write('\t')
                 f.seek(f.tell()-1)
                 f.write('\n')
+
+    # def import_records_from_file_to_db(self, file, slownik):
+    #     ret_slownik = {}
+    #     for a, *r in self._gen_record_from_file(file):
+    #         a, *b = a
+    #         print r
+    #     return ret_slownik

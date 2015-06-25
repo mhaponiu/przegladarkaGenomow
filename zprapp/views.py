@@ -9,6 +9,8 @@ import json
 from zprapp.import_export.meaningImpExp import MeaningImpExp
 from zprapp.import_export.organizm import Organizm
 from zprapp.import_export.sekwencjaFasta import SekwencjaFastaImpExp
+from zprapp.import_export.chromosom import Chromosom
+from zprapp.import_export.scaffold import ScaffoldImpExp
 from zprapp.import_export.wyjatki import CheckError
 from zprapp.import_export.dataMigrations import DataMigrations
 
@@ -105,7 +107,8 @@ def ajaxNewOrganism(request):
     if request.method == 'POST':
         try:
             files = request.FILES.getlist('file') #lista plikow w kolejnosci jak wysylalismy
-            # obj_list = [SekwencjaFastaImpExp()]
+            obj_list = None # domyslna lista obj_list -> DataMigrations.obj_list
+            obj_list = [Organizm(), Chromosom(), ScaffoldImpExp()]
             # for f in files:
             #     print "plik: ", f, " zawartosc: ", f.read()
             # print "plik: ", files[0], " zawartosc: ", files[0].read()
@@ -114,9 +117,12 @@ def ajaxNewOrganism(request):
 
             data_migr = DataMigrations()
             # obj_list domyslnie w data_migr => musi byc zgodne z pozycjami przeslanymi od klienta
-            data_migr.check(file_list=files, obj_list=None)
+            data_migr.check(file_list=files, obj_list=obj_list) #sprawdza poprawnosc struktur plikow
 
-        except CheckError as error:
+            # zapisuje dane do bazy
+            data_migr.imports(file_list=files, obj_list=obj_list)
+
+        except [CheckError, ImportError] as error:
             wynik = False
             wiadomosc = error.msg
         except:

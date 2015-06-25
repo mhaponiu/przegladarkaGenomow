@@ -1,4 +1,4 @@
-from wyjatki import CheckError
+from wyjatki import CheckError, ImportFileError
 
 class FormatInterface(object):
     def __init__(self, namedtuple):
@@ -10,8 +10,8 @@ class FormatInterface(object):
     def _check_handle(self, record):
         raise CheckError("nienadpisana metoda check_handle")
 
-    def import_records_from_file_to_db(self):
-        pass;
+    def import_records_from_file_to_db(self, file, slownik):
+        raise ImportFileError("nienadpisana metoda import_records_from_file_to_db")
 
     def _gen_record_from_file(self, filename):
         pass
