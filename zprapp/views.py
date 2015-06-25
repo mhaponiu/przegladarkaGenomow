@@ -122,7 +122,7 @@ def ajaxNewOrganism(request):
             # zapisuje dane do bazy
             data_migr.imports(file_list=files, obj_list=obj_list)
 
-        except [CheckError, ImportError] as error:
+        except CheckError as error:
             wynik = False
             wiadomosc = error.msg
         except:
