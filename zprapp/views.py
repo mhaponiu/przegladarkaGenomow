@@ -118,7 +118,6 @@ def ajaxNewOrganism(request):
 
             data_migr = DataMigrations()
             # obj_list domyslnie w data_migr => musi byc zgodne z pozycjami przeslanymi od klienta
-            # FIXME odkomentowac
             data_migr.check(file_list=files, obj_list=obj_list) #sprawdza poprawnosc struktur plikow
 
             # zapisuje dane do bazy

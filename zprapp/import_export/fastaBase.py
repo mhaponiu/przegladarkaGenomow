@@ -37,6 +37,7 @@ class Fasta(FormatInterface):
                     except IndexError:
                         raise StopIteration
         else:
+            filename.seek(0)
             line = filename.readline()
             while True:
                 try:
