@@ -35,7 +35,8 @@ class Organizm(Gff):
             o = Organism(name = record.name)
             o.save()
             ret_slownik[str(record.id)] = o.id
-        return ret_slownik
+        # return ret_slownik
+        return slownik._replace(org=ret_slownik)
 
 
 if __name__ == "__main__":

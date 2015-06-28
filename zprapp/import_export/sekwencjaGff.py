@@ -30,6 +30,11 @@ class SekwencjaGff(Gff):
         for s in seqs.iterator():
             yield self.FormatRecord(s.id, s.scaffold_id)
 
+    def import_records_from_file_to_db(self, file, slownik):
+        ret_slownik={}
+        for record in self._gen_record_from_file(file):
+            ret_slownik[str(record.id)] = slownik.scfld[str(record.scaffold_id)]
+        return slownik._replace(seq=ret_slownik)
 
 if __name__ == "__main__":
     a = SekwencjaGff()

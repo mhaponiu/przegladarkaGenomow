@@ -9,6 +9,7 @@ import json
 from zprapp.import_export.meaningImpExp import MeaningImpExp
 from zprapp.import_export.organizm import Organizm
 from zprapp.import_export.sekwencjaFasta import SekwencjaFastaImpExp
+from zprapp.import_export.sekwencjaGff import SekwencjaGff
 from zprapp.import_export.chromosom import Chromosom
 from zprapp.import_export.scaffold import ScaffoldImpExp
 from zprapp.import_export.wyjatki import CheckError
@@ -108,7 +109,7 @@ def ajaxNewOrganism(request):
         try:
             files = request.FILES.getlist('file') #lista plikow w kolejnosci jak wysylalismy
             obj_list = None # domyslna lista obj_list -> DataMigrations.obj_list
-            obj_list = [Organizm(), Chromosom(), ScaffoldImpExp()]
+            obj_list = [Organizm(), Chromosom(), ScaffoldImpExp(), SekwencjaGff(), SekwencjaFastaImpExp()]
             # for f in files:
             #     print "plik: ", f, " zawartosc: ", f.read()
             # print "plik: ", files[0], " zawartosc: ", files[0].read()
@@ -117,6 +118,7 @@ def ajaxNewOrganism(request):
 
             data_migr = DataMigrations()
             # obj_list domyslnie w data_migr => musi byc zgodne z pozycjami przeslanymi od klienta
+            # FIXME odkomentowac
             data_migr.check(file_list=files, obj_list=obj_list) #sprawdza poprawnosc struktur plikow
 
             # zapisuje dane do bazy
@@ -124,7 +126,8 @@ def ajaxNewOrganism(request):
 
         except CheckError as error:
             wynik = False
-            wiadomosc = error.msg
+            wiadomosc = error.msg + ". Blad w rekordzie " + str(error.n_record)
+            # wiadomosc = error.msg
         except:
             wynik = False
             wiadomosc = "SERWER ERROR, blad przetwarzania plikow"

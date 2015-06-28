@@ -7,6 +7,7 @@ from zprapp.models import Chromosome, Marker, Scaffold, Organism, Meaning, Seque
 from sekwencjaGff import SekwencjaGff
 from sekwencjaFasta import SekwencjaFastaImpExp
 from wyjatki import CheckError
+from collections import namedtuple
 
 class DataMigrations(object):
     def __init__(self):
@@ -17,7 +18,8 @@ class DataMigrations(object):
         self.meaning = MeaningImpExp()
         self.seqGff = SekwencjaGff()
         self.seqFasta = SekwencjaFastaImpExp()
-        self.obj_list = [self.org, self.chr, self.scaff, self.marker, self.meaning, self.seqGff, self.seqFasta]
+        #wazna kolejnosc dla imports bo przekazuje dalej sobie slowniki utworzone
+        self.obj_list = [self.org, self.chr, self.scaff, self.seqGff, self.seqFasta, self.marker, self.meaning]
 
     def check(self, file_list, obj_list= None):
         if obj_list == None:
@@ -30,7 +32,8 @@ class DataMigrations(object):
     def imports(self, file_list, obj_list= None):
         if obj_list == None:
             obj_list = self.obj_list
-        slownik = {}
+        slownik_import = namedtuple('Slownik_import', ['org', 'chr', 'scfld', 'seq', 'mrkr', 'mean'])
+        slownik = slownik_import(org={}, chr={}, scfld={}, seq={}, mrkr={}, mean={})
         for obj in zip(obj_list, file_list):
             new_slownik = obj[0].import_records_from_file_to_db(obj[1], slownik)
             slownik = new_slownik
@@ -103,7 +106,7 @@ class DataMigrations(object):
 if __name__ == "__main__":
     data = DataMigrations()
     # exp.export([54,55])
-    data.export([54])
+    data.export([92])
 
     # chrms, mean = exp._prepare_lists_id([54])
     # print chrms

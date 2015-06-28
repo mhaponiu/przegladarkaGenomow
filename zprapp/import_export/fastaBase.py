@@ -1,12 +1,21 @@
 from formatInterface import FormatInterface
 from functools import partial
 import io
+from zprapp.import_export.wyjatki import CheckError
 
 class Fasta(FormatInterface):
 
     def check(self, filename):
+        # for r in self._gen_record_from_file(filename):
+        #     self._check_handle(r)
+        n_record = 1;
         for r in self._gen_record_from_file(filename):
-            self._check_handle(r)
+            try:
+                self._check_handle(r)
+            except CheckError as error:
+                error.n_record = n_record
+                raise error
+            n_record+=1
 
     def _gen_record_from_file(self, filename):
         #FastaRecord = namedtuple('FastaRecord', ['id', 'sequence'])

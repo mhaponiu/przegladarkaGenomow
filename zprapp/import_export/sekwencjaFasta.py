@@ -17,10 +17,21 @@ class SekwencjaFastaImpExp(Fasta):
         super(SekwencjaFastaImpExp, self).__init__(namedtuple('SeqFasta', ['id', 'sequence']))
         self.regex = re.compile('[ATGCN]*$')
 
-    def import_records_from_file_to_db(self, filename):
-        for record in self._gen_record_from_file(filename):
-            print record.id, record.sequence[:30], ". . . . .", record.sequence[-30:]
-            #TODO zapisac record do bazy
+    # def import_records_from_file_to_db(self, file, slownik):
+    #     for record in self._gen_record_from_file(file):
+    #         print record.id, record.sequence[:30], ". . . . .", record.sequence[-30:]
+    #         return slownik
+    #         #TODO zapisac record do bazy
+
+    def import_records_from_file_to_db(self, file, slownik):
+        ret_slownik = {}
+        for record in self._gen_record_from_file(file):
+            seq = Sequence(sequence=record.sequence, scaffold_id=slownik.seq[str(record.id)])
+            seq.save()
+            # nigdzie nie przekazuje tego slownika tak naprawde!
+            ret_slownik[str(record.id)] = seq.id
+        return slownik
+
 
     def _check_handle(self, record):
         try:
@@ -53,7 +64,6 @@ if __name__ == "__main__":
     # for b in a._gen_record_from_file("exported_data/sekwencja.fasta"):
     #     print b;
     # a.import_records_from_file_to_db('exported_data/seq.fasta')
-    import time
-    t0 = time.clock()
     a.check("exported_data/seq.fasta")
-    print time.clock() - t0
+    # for record in a._gen_record_from_file('exported_data/seq.fasta'):
+    #     print record.id, record.sequence[:30], ". . . . .", record.sequence[-30:]

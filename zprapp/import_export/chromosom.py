@@ -36,10 +36,11 @@ class Chromosom(Gff):
     def import_records_from_file_to_db(self, file, slownik):
         ret_slownik={}
         for record in self._gen_record_from_file(file):
-            chr = Chromosome(number= int(record.number), length=int(record.length), organism_id=int(slownik[str(record.organism_id)]))
+            chr = Chromosome(number= int(record.number), length=int(record.length), organism_id=int(slownik.org[str(record.organism_id)]))
             chr.save()
             ret_slownik[str(record.id)] = chr.id
-        return ret_slownik
+        # return ret_slownik
+        return slownik._replace(chr=ret_slownik)
 
 if __name__ == "__main__":
     a = Chromosom()

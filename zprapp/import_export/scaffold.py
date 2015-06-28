@@ -42,11 +42,12 @@ class ScaffoldImpExp(Gff):
             except ValueError:
                 pass #niektore id maja litery i nie da sie ich na inta przerobic
         for record in self._gen_record_from_file(file):
-            scfld = Scaffold(id=str(max), length=int(record.length), order=int(record.order), start=int(record.start), chromosome_id=slownik[str(record.chromosome_id)])
+            scfld = Scaffold(id=str(max), length=int(record.length), order=int(record.order), start=int(record.start), chromosome_id=slownik.chr[str(record.chromosome_id)])
             scfld.save()
             ret_slownik[str(record.id)] = scfld.id
             max=max+1
-        return ret_slownik
+        # return ret_slownik
+        return slownik._replace(scfld=ret_slownik)
 
 
 if __name__ == "__main__":
