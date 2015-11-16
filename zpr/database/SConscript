@@ -2,8 +2,21 @@ from baza import DatabaseGenome
 import os
 
 Import('env')
+Import('DATABASE_ROOT_FILES')
 
-baza = DatabaseGenome()
+NAME_USER_DB = 'zpr'
+NAME_DB = 'zpr'
+PASSWD_DB = 'zpr'
+ROBOCZY_DB = 'ogorek_roboczy'
+MARKER_XLS = 'Cucumber_scaffold_markers.xls'
+OGOREK_ROBOCZY_BACKUP = '17.11.2012-cucumber_plain.backup'
+
+marker_xls_path = os.path.join(DATABASE_ROOT_FILES, MARKER_XLS)
+connect_string = "dbname='{}' user='{}' host='localhost' password='{}'".format(ROBOCZY_DB, NAME_USER_DB, PASSWD_DB)
+#"dbname='ogorek_roboczy' user='zpr' host='localhost' password='zpr'"
+
+baza = DatabaseGenome(connect_string, marker_xls_path)
+#baza = DatabaseGenome()
 
 if env['build_db'] == 1:
     print 'BUILD_DB'
@@ -15,19 +28,19 @@ elif env['clear_db'] == 1:
 
 elif env['restore_ogorek_roboczy'] == 1:
     print 'RESTORE_OGOREK_ROBOCZY'
-    if '17.11.2012-cucumber_plain.backup' in os.listdir(os.path.abspath('data')):
-        os.system('psql -U zpr -d ogorek_roboczy -f data/17.11.2012-cucumber_plain.backup')
-    else:
-        print "ERROR : brak potrzebnego backupu '17.11.2012-cucumber_plain.backup' w ", os.path.abspath('data')
+    backup_path = os.path.join(DATABASE_ROOT_FILES, OGOREK_ROBOCZY_BACKUP)
 
-#elif env['restore_db'] == 1:
-#    print 'RESTORE_DB'
-#    #TODO sprawdzac czy istnieje plik backupzpr
-#    os.system('psql -U zpr -d zpr -f data/backupzpr.backup')
+    if OGOREK_ROBOCZY_BACKUP in os.listdir(DATABASE_ROOT_FILES):
+        os.system('psql -U {} -d {} -f {}'.format(NAME_USER_DB, ROBOCZY_DB, backup_path))
+    else:
+        print "ERROR : brak potrzebnego backupu {} w ".format(OGOREK_ROBOCZY_BACKUP), DATABASE_ROOT_FILES
+
 
 elif env['test'] == 1:
-    if '17.11.2012-cucumber_plain.backup' in os.listdir(os.path.abspath('data')):
-        print 'JEA'
+    if OGOREK_ROBOCZY_BACKUP in os.listdir(DATABASE_ROOT_FILES):
+        print 'JEA', baza.CONNECT_STRING, baza.MARKER_FILE_LOCATION
     else:
-        print "ERROR: brak backupu '17.11.2012-cucumber_plain.backup' w ", os.path.abspath('data')
-
+        print "ERROR: brak backupu {} w ".format(OGOREK_ROBOCZY_BACKUP), DATABASE_ROOT_FILES
+        backup_path = os.path.join(DATABASE_ROOT_FILES, OGOREK_ROBOCZY_BACKUP)
+        marker_path = os.path.join(DATABASE_ROOT_FILES, MARKER_XLS)
+        print 'AAA', baza.CONNECT_STRING, baza.MARKER_FILE_LOCATION

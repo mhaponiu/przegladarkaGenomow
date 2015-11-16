@@ -22,4 +22,4 @@ http://www.thegeekstuff.com/2009/01/how-to-backup-and-restore-postgres-database-
 $ pg_dump -U {user-name} {source_db} -f {dumpfilename.sql}
 
 [restore backup]
-$ psql -U {user-name} -d {desintation_db}-f {dumpfilename.sql}
+$ psql -U {user-name} -d {desintation_db} -f {dumpfilename.sql}

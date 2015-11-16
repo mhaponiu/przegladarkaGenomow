@@ -1,5 +1,6 @@
 # -*- mode: Python; -*-
 import sys, os, platform
+from zpr.settings import BASE_DIR
 
 #web
 WWW_BROWSER_WINDOWS='chrome'
@@ -10,15 +11,18 @@ WEB_CLIENT_HOST = '127.0.0.1'
 WEB_CLIENT_PORT = '8000'
 WEB_CLIENT_START_PATH ='/zprapp/'
 
+#database files, backups
+DATABASE_ROOT_FILES = os.path.abspath(os.path.join(BASE_DIR, '../database'))
+
 Export('WWW_BROWSER_WINDOWS WWW_BROWSER_LINUX')
 Export('WEB_CLIENT_HOST WEB_CLIENT_PORT')
+Export('DATABASE_ROOT_FILES')
 
 # mozliwosci uruchomienia
 vars = Variables('custom.py')
 vars.Add(BoolVariable('run','Ustaw na 1 aby uruchomic serwer', False) )
 vars.Add(BoolVariable('build_db','Ustaw na 1 aby zbudowac baze od zera',False) )
 vars.Add(BoolVariable('clear_db','Ustaw na 1 aby usunac dane ze wszystkich tabel',False) )
-vars.Add(BoolVariable('restore_db','Ustaw na 1 aby wczytac backup bazy',False) )
 vars.Add(BoolVariable('restore_ogorek_roboczy','Ustaw na 1 aby wczytac backup bazy ogorek_roboczy',False) )
 vars.Add(BoolVariable('test','Ustaw na 1 aby odpalic jakas testowa operacje',False) )
 
@@ -39,9 +43,8 @@ if env['run'] == 1:
     os.system(BROWSER_CMD)
     os.system('python manage.py runserver')
 
-elif ( env['build_db'] == 1 or env['clear_db'] == 1 or
-       env['restore_db'] == 1 or env['test'] == 1 or
-       env['restore_ogorek_roboczy'] == 1):
+
+elif ( 1 in [ env['build_db'], env['clear_db'], env['test'], env['restore_ogorek_roboczy'] ]):
 
     if env['build_db'] == 1 or env['clear_db'] == 1:
         os.system('python manage.py migrate')
