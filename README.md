@@ -2,27 +2,27 @@
 <hr>
 <h2>Wymagania:</h2>
 <ul>
-    <li>
-        <b>pip:</b>(do instalacji django, psycopg2)<br>
-        sudo apt-get install python-pip
+    <li><b>libpq-dev python-dev</b><br>
     </li>
     <li>
-        <b>django:</b><br>
-        sudo pip install django==1.7
+        <b>pip + virtualenv</b><br>
     </li>
     <li>
-        <b>psycopg2:</b> <br>
-        (sudo apt-get update) <br>
-        sudo apt-get install libpq-dev python-dev <br>
-        sudo pip install psycopg2==2.4.5
+        <b>scons</b>
     </li>
     <li>
-        <b>scons:</b> <br>
-        sudo apt-get install scons <br>
+        <b>postgresql</b>
     </li>
     <li>
-        <b>postgresql:</b> <br>
-        sudo apt-get install postgresql <br>
+        <b>nginx</b>
+    </li>
+    <br>
+    sudo apt-get install libpq-dev python-dev python-pip scons postgresql nginx <br>
+    sudo pip2 install virtualenv
+    <br><br>
+    <li>
+    używane narzędzia, biblioteki (zostaną doinstalowane przy pierwszym budowaniu):<br>
+    <i>django, gunicorn, psycopg2</i> <br>
     </li>
 </ul>
 

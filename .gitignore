@@ -10,3 +10,6 @@
 *.pyc
 /.idea
 *.xml
+/.sconsign.dblite
+/build_tools/build_conf.json
+*~
