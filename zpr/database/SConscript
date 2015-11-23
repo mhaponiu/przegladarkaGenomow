@@ -1,4 +1,5 @@
 from baza import DatabaseGenome
+from build_tools.build import AppBuilder
 import os
 
 Import('env')
@@ -20,6 +21,9 @@ baza = DatabaseGenome(connect_string, marker_xls_path)
 if env['build_db'] == 1:
     print 'BUILD_DB'
     baza.create()
+    conf = AppBuilder.load_conf()
+    conf['db']['built'] = 1
+    AppBuilder.save_conf(conf)
 
 elif env['clear_db'] == 1:
     print 'CLEAR_DB'
@@ -31,15 +35,14 @@ elif env['restore_ogorek_roboczy'] == 1:
 
     if OGOREK_ROBOCZY_BACKUP in os.listdir(DATABASE_ROOT_FILES):
         os.system('psql -U {} -d {} -f {}'.format(NAME_USER_DB, ROBOCZY_DB, backup_path))
+        conf = AppBuilder.load_conf()
+        conf['db']['restored_ogorek_roboczy'] = 1
+        AppBuilder.save_conf(conf)
     else:
         print "ERROR : brak potrzebnego backupu {} w ".format(OGOREK_ROBOCZY_BACKUP), DATABASE_ROOT_FILES
 
 
 elif env['test'] == 1:
-    if OGOREK_ROBOCZY_BACKUP in os.listdir(DATABASE_ROOT_FILES):
-        print 'JEA', baza.CONNECT_STRING, baza.MARKER_FILE_LOCATION
-    else:
-        print "ERROR: brak backupu {} w ".format(OGOREK_ROBOCZY_BACKUP), DATABASE_ROOT_FILES
-        backup_path = os.path.join(DATABASE_ROOT_FILES, OGOREK_ROBOCZY_BACKUP)
-        marker_path = os.path.join(DATABASE_ROOT_FILES, MARKER_XLS)
-        print 'AAA', baza.CONNECT_STRING, baza.MARKER_FILE_LOCATION
+    conf = AppBuilder.load_conf()
+    conf['db']['built'] = 34543
+    AppBuilder.save_conf(conf)
