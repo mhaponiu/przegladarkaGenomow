@@ -2,15 +2,30 @@
 import sys, os, platform
 from zpr.settings import BASE_DIR, STATIC_ROOT
 from build_tools.build import AppBuilder
+from build_tools.deploy import Deployer
 
 #web
 WWW_BROWSER_WINDOWS='chrome'
 WWW_BROWSER_LINUX='google-chrome'
-WEB_SRV_HOST = '127.0.0.1'
-WEB_SRV_PORT = '8000'
-WEB_CLIENT_HOST = '127.0.0.1'
-WEB_CLIENT_PORT = '8000'
+
 WEB_CLIENT_START_PATH ='/zprapp/'
+
+PROJECT_NAME = 'przegladarkaGenomow'
+
+#nginx
+WWW_SRV_HOST='89.76.222.16'
+WWW_SRV_PORT='80'
+
+WEB_CLIENT_PROD_HOST = WWW_SRV_HOST
+WEB_CLIENT_PORT_PROD = '80'
+
+WEB_SRV_PORT_LOCAL = '8000'
+
+WEB_CLIENT_LOCAL_HOST = '127.0.0.1'
+WEB_CLIENT_PORT_LOCAL = WEB_SRV_PORT_LOCAL
+
+UNIX_SOCKET = 'unix:/tmp/{name}.socket'.format(name=PROJECT_NAME)
+
 
 #database files, backups
 DATABASE_ROOT_FILES = os.path.abspath(os.path.join(BASE_DIR, '../database'))
@@ -19,16 +34,18 @@ DB_FILES_URL = 'https://www.dropbox.com/sh/r8ihnkc5jenzc37/AACcauRmkCPz1qbxQBqhN
 VIRTUALENV_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../virtualenv'))
 VIRTUALENV_PYTHON = os.path.join(VIRTUALENV_ROOT, 'bin', 'python')
 
-Export('WWW_BROWSER_WINDOWS WWW_BROWSER_LINUX')
-Export('WEB_CLIENT_HOST WEB_CLIENT_PORT')
+#Export('WEB_CLIENT_HOST WEB_CLIENT_PORT')
 Export('DATABASE_ROOT_FILES')
 
 # mozliwosci uruchomienia
 vars = Variables('custom.py')
-vars.Add(BoolVariable('run','Ustaw na 1 aby uruchomic serwer', False) )
+vars.Add(EnumVariable('run','Uruchom serwer, l: lokalny, p: produkcyjny', 'no', allowed_values = ('l', 'p', 'no'), map={}, ignorecase=2) )
 vars.Add(BoolVariable('build_db','Ustaw na 1 aby zbudowac baze od zera',False) )
 vars.Add(BoolVariable('clear_db','Ustaw na 1 aby usunac dane ze wszystkich tabel',False) )
 vars.Add(BoolVariable('restore_ogorek_roboczy','Ustaw na 1 aby wczytac backup bazy ogorek_roboczy',False) )
+vars.Add(BoolVariable('build_deploy','[SUDO potrzebne] Ustaw na 1 aby skonfigurowac serwer www (nginx) i django do wdrozenia',False) )
+vars.Add(BoolVariable('new_secret_key','Ustaw na 1 aby wygenerowac nowy klucz',False) )
+
 vars.Add(BoolVariable('test','Ustaw na 1 aby odpalic jakas testowa operacje',False) )
 
 # srodowisko
@@ -39,15 +56,21 @@ Help(vars.GenerateHelpText(env))
 
 if (platform.system() == "Linux"):
     WWW_BROWSER = WWW_BROWSER_LINUX
-    BROWSER_CMD = WWW_BROWSER_LINUX + ' http://' + WEB_CLIENT_HOST + ':' + WEB_CLIENT_PORT + WEB_CLIENT_START_PATH + ' &'
+    if env['run'] == 'l':
+        BROWSER_CMD = WWW_BROWSER_LINUX + ' http://' + WEB_CLIENT_LOCAL_HOST + ':' + WEB_CLIENT_PORT_LOCAL + WEB_CLIENT_START_PATH + ' &'
+    elif env['run'] == 'p':
+        BROWSER_CMD = WWW_BROWSER_LINUX + ' http://' + WEB_CLIENT_PROD_HOST + ':' + WEB_CLIENT_PORT_PROD + WEB_CLIENT_START_PATH + ' &'
 else:
     WWW_BROWSER = WWW_BROWSER_WINDOWS
     BROWSER_CMD = 'start "" ' + WWW_BROWSER_WINDOWS + ' http://' + WEB_CLIENT_HOST + ':' + WEB_CLIENT_PORT + WEB_CLIENT_START_PATH
 
-if env['run'] == 1:
+if env['run'] == 'l':
     os.system(BROWSER_CMD)
-    os.system('{python} manage.py runserver'.format(python= VIRTUALENV_PYTHON))
+    os.system('{python} manage.py runserver {port}'.format(python=VIRTUALENV_PYTHON, port=WEB_SRV_PORT_LOCAL))
 
+elif env['run'] == 'p':
+    os.system(BROWSER_CMD)
+    os.system('{gunicorn} --bind {unix_socket} zpr.wsgi:application'.format(gunicorn= os.path.join(VIRTUALENV_ROOT, 'bin', 'gunicorn'), unix_socket=UNIX_SOCKET))
 
 elif ( 1 in [ env['build_db'], env['clear_db'], env['test'], env['restore_ogorek_roboczy'] ]):
 
@@ -63,9 +86,31 @@ elif ( 1 in [ env['build_db'], env['clear_db'], env['test'], env['restore_ogorek
     django.setup() #bez tego AppRegistryNotReady: Models aren't loaded yet.
     SConscript(['zpr/database/SConscript'], exports=['env']);
 
+elif env['build_deploy'] == 1:
+    if not os.path.exists(os.path.join(AppBuilder.JSON_DIR, AppBuilder.JSON_NAME)):
+        print "Najpierw wykonaj budowanie programu poleceniem 'scons'"
+    else:
+        AppBuilder.django_debug(bool=False)
+        Deployer.django_allowed_host_add(WWW_SRV_HOST)
+        nginx_conf =  Deployer.gen_nginx_conf_string(WWW_SRV_PORT, WWW_SRV_HOST, STATIC_ROOT, UNIX_SOCKET)
+        nginx_conf_target_path = '/etc/nginx/sites-available/{name}'.format(name=PROJECT_NAME)
+
+        conf_json = AppBuilder.load_conf()
+        if conf_json['deploy']['nginx_configurated'] == 0:
+            os.system("echo '{conf}' > {target}".format(conf=nginx_conf, target=nginx_conf_target_path))
+            os.system("ln -s {} /etc/nginx/sites-enabled".format(nginx_conf_target_path))
+            os.system('service nginx reload')
+            conf_json['deploy']['nginx_configurated'] = 1
+            AppBuilder.save_conf(conf_json)
+        else:
+            print 'build_conf.json: Nginx juz zostal wczesniej skonfigurowany'
+
+elif env['new_secret_key'] == 1:
+    Deployer.new_secret_key_django()
+
 
 else:
-    print "PUSTY SCONS"
+    print "******* Podstawowe budowanie aplikacji: *******"
     builder = AppBuilder(db_files_dir=DATABASE_ROOT_FILES,
                          virtenv_root=VIRTUALENV_ROOT,
                          static_root=STATIC_ROOT)
@@ -73,4 +118,10 @@ else:
     builder.download_and_unzip_db_files(url=DB_FILES_URL)
     builder.create_virtualenv()
     builder.install_pip_req()
+
+    AppBuilder.django_debug(bool=True)
+    Deployer.django_allowed_host_add()
+
+    os.system('python manage.py collectstatic --noinput')
+    print "******* Koniec podstawowego budowania aplikacji: *******"
 

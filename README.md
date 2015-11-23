@@ -49,10 +49,33 @@
         </i>
     </li>
     <li>
+        zbuduj program (oraz środowisko) poleceniem <b><i>scons</i></b>
+        (do uruchamiania lokalnego)
+    </li>
+    <li>
         wczytaj baze danych ogorek_roboczy poleceniem <b><i>scons restore_ogorek_roboczy=1</i></b>
     </li>
     <li>
         zbuduj baze od zera poleceniem <b><i>scons build_db=1</i></b>
+    </li>
+    <li>
+         w celu konfiguracji aplikacji oraz serwera www nginx do produkcji <b><i>sudo scons build_deploy=1</i></b>
+         uwaga: <i>sudo</i> potrzebne do konfiguracji nginx'a
+    </li>
+    <li>
+         przy pierwszym uruchomieniu zaleca się wygenerowanie nowego klucza zabezpieczeń poleceniem
+         <b><i>scons new_secret_key=1</i></b>, natomiast powinien on pozostać taki sam w poszczególnych
+         wdrożeniach
+    </li>
+</ul>
+
+<h2>Uruchomienie</h2>
+<ul>
+    <li>
+        uruchom lokalnie aplikacje <b><i>scons run=l</i></b>
+    </li>
+    <li>
+        uruchom w produkcji <b><i>scons run=p</i></b>
     </li>
 </ul>
 

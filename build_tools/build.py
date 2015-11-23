@@ -2,6 +2,9 @@ import json
 import os
 import urllib
 import zipfile
+import re
+
+from zpr.settings import BASE_DIR
 
 
 class AppBuilder(object):
@@ -29,15 +32,10 @@ class AppBuilder(object):
                 'built': 0,
             },
             'deploy': {
-                'built': 0,
-                'generated_files': 0,
-                'generated_new_secret_key': 0,
-                'debug_mode': 0,
-                'allowed_hosts_added': 0,
+                'nginx_configurated': 0,
             },
             'instaled_pip_req': 0,
             'virtualenv': 0,
-            'collected_static': 0
         }
         AppBuilder.save_conf(conf)
 
@@ -50,6 +48,15 @@ class AppBuilder(object):
     def save_conf(save_dict, name=JSON_NAME):
         with open(os.path.join(AppBuilder.JSON_DIR, name), 'wt') as outfile:
             json.dump(save_dict, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+    @staticmethod
+    def django_debug(bool):
+        set_path = os.path.join(BASE_DIR,'zpr','settings.py')
+        with open(set_path, 'rt') as file:
+            old_settings = file.read()
+        new_settings = re.sub('(?<=DEBUG = )\w+', str(bool), old_settings, count=1)
+        with open(set_path, 'wt') as file:
+            file.write(new_settings)
 
     def _save(self):
         AppBuilder.save_conf(self.conf)
@@ -100,3 +107,4 @@ class AppBuilder(object):
             self._save()
         else:
             print self.JSON_NAME + ': Paczki pip juz wczesniej zainstalowane'
+
