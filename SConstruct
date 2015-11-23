@@ -81,7 +81,7 @@ elif ( 1 in [ env['build_db'], env['clear_db'], env['test'], env['restore_ogorek
     # bez wywolywania django shell, tylko z poziomu np terminala
     sys.path.append([os.path.abspath('')])
     os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
-    from django.conf import settings
+    #from django.conf import settings
     sys.path.extend([os.path.join(VIRTUALENV_ROOT,'lib', 'python2.7', 'site-packages')])
     import django
     django.setup() #bez tego AppRegistryNotReady: Models aren't loaded yet.
