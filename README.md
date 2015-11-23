@@ -31,7 +31,7 @@
     <li>
         postgres: utworzenie uzytkownika <i><b>zpr</b></i>
         o haśle <i><b>zpr</b></i> <br>
-        sudo -u postgres createuser --no-superuser --createdb --no-createrole zpr <br>
+        sudo -u postgres createuser --superuser --createdb --createrole zpr <br>
         sudo -u postgres psql -c "alter user zpr with encrypted password 'zpr';"        
     </li>
     <li>
