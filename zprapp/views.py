@@ -1,19 +1,18 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, JsonResponse
-from zprapp.models import Marker, Chromosome, Scaffold, Sequence, Organism, Meaning;
-from django.http import QueryDict
-from django.core import serializers
-from django.views.decorators.csrf import csrf_exempt
 import json
 
-from zprapp.import_export.meaningImpExp import MeaningImpExp
+from django.core import serializers
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+
+from zprapp.import_export.chromosom import Chromosom
+from zprapp.import_export.dataMigrations import DataMigrations
 from zprapp.import_export.organizm import Organizm
+from zprapp.import_export.scaffold import ScaffoldImpExp
 from zprapp.import_export.sekwencjaFasta import SekwencjaFastaImpExp
 from zprapp.import_export.sekwencjaGff import SekwencjaGff
-from zprapp.import_export.chromosom import Chromosom
-from zprapp.import_export.scaffold import ScaffoldImpExp
 from zprapp.import_export.wyjatki import CheckError
-from zprapp.import_export.dataMigrations import DataMigrations
+from zprapp.models import Chromosome, Organism, Meaning;
+
 
 def index(request):
     return render(request, 'zprapp/index.html')
@@ -29,10 +28,10 @@ def index(request):
 
 def ajaxChromosomy(request):
     print "daje chromosomy"
-    if 'id_chr_len' in request.REQUEST:
-        chall = [Chromosome.objects.get(id = request.REQUEST['id_chr_len'])]
+    if 'id_chr_len' in request.GET:
+        chall = [Chromosome.objects.get(id = request.GET['id_chr_len'])]
     else:
-        o = Organism.objects.get(id=request.REQUEST['id_org'])
+        o = Organism.objects.get(id=request.GET['id_org'])
         #chall = Chromosome.objects.all();
         chall = o.chromosome_set.all();
     chall_json = serializers.serialize("json", chall);
@@ -45,9 +44,9 @@ def ajaxChromosomy(request):
 
 
 def ajaxScaffoldy(request):
-    print "daje scaffoldy chromosomu ", request.REQUEST['id_chr'];
-    o = Organism.objects.get(id=request.REQUEST['id_org']);
-    ch = o.chromosome_set.get(id=request.REQUEST['id_chr']);
+    print "daje scaffoldy chromosomu ", request.GET['id_chr'];
+    o = Organism.objects.get(id=request.GET['id_org']);
+    ch = o.chromosome_set.get(id=request.GET['id_chr']);
     scflds = ch.scaffold_set.all();
     #ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
     # scflds = ch.scaffold_set.all();
@@ -57,10 +56,10 @@ def ajaxScaffoldy(request):
 
 
 def ajaxSekwencja(request):
-    print "daje sekwencje chr:", request.REQUEST['id_chr']," scaff: ", request.REQUEST['id_sc'];
-    o = Organism.objects.get(id=request.REQUEST['id_org'])
-    ch = o.chromosome_set.get(id=request.REQUEST['id_chr'])
-    scfld = ch.scaffold_set.get(id=request.REQUEST['id_sc'])
+    print "daje sekwencje chr:", request.GET['id_chr']," scaff: ", request.GET['id_sc'];
+    o = Organism.objects.get(id=request.GET['id_org'])
+    ch = o.chromosome_set.get(id=request.GET['id_chr'])
+    scfld = ch.scaffold_set.get(id=request.GET['id_sc'])
     # ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
     # scfld = ch.scaffold_set.get(id=request.REQUEST['id_sc']);
     seq = scfld.sequence_set.all()[0];# liscie sekwencji i tak jest jedna tylko
@@ -68,7 +67,7 @@ def ajaxSekwencja(request):
     #seq_json = serializers.serialize("json", seq)
     #print seq_json;
     return HttpResponse(seq.sequence);
-    return HttpResponse(seq_json, content_type="application/json");
+    # return HttpResponse(seq_json, content_type="application/json");
 
 def ajaxOrganizmy(request):
     print "daje organizmy"
@@ -84,8 +83,8 @@ def ajaxMeanings(request):
 
 def ajaxMarkers(request):
     print "daje markery"
-    o = Organism.objects.get(id=request.REQUEST['id_org'])
-    ch = o.chromosome_set.get(id=request.REQUEST['id_chr'])
+    o = Organism.objects.get(id=request.GET['id_org'])
+    ch = o.chromosome_set.get(id=request.GET['id_chr'])
     mrkrs = ch.marker_set.all()
     mrkrs_json = serializers.serialize("json", mrkrs)
     return HttpResponse(mrkrs_json, content_type="application/json");
@@ -138,6 +137,7 @@ def ajaxNewOrganism(request):
     return JsonResponse({'success': wynik, 'message': wiadomosc});
 
 # @csrf_exempt
+#do celow testowych
 def ajaxPost(request):
     print "request method: ", request.method;
     print "is_ajax: ", request.is_ajax();

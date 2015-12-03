@@ -59,13 +59,14 @@
         zbuduj baze od zera poleceniem <b><i>scons build_db=1</i></b>
     </li>
     <li>
-         w celu konfiguracji aplikacji oraz serwera www nginx do produkcji <b><i>sudo scons build_deploy=1</i></b>
-         uwaga: <i>sudo</i> potrzebne do konfiguracji nginx'a
+         w celu konfiguracji aplikacji oraz serwera www nginx do produkcji <b><i>sudo scons build_deploy=1</i></b> <br>
+         uwaga: <i>sudo</i> potrzebne do konfiguracji nginx'a. <br>
+         Nalezy wpisac nazwe hosta w polu WWW_SRV_HOST w SConstruct
     </li>
     <li>
          przy pierwszym uruchomieniu zaleca się wygenerowanie nowego klucza zabezpieczeń poleceniem
-         <b><i>scons new_secret_key=1</i></b>, natomiast powinien on pozostać taki sam w poszczególnych
-         wdrożeniach
+         <b><i>scons new_secret_key=1</i></b> <br>
+         natomiast powinien on pozostać taki sam w poszczególnych wdrożeniach
     </li>
 </ul>
 
@@ -78,6 +79,7 @@
         uruchom w produkcji <b><i>scons run=p</i></b>
     </li>
 </ul>
+w przegladarce: <i>host:port<b>/zprapp</b></i>
 
 <h2>Polecenia:</h2>
 Aby uzyskać pomoc w budowaniu:  <b><i>scons -h</i></b>
