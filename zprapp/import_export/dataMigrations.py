@@ -39,7 +39,6 @@ class DataMigrations(object):
             slownik = new_slownik
 
     def _prepare_lists_id(self, lista_id_org=None):
-        # zwraca lista_id_chrms, lista_id_meaning
         if lista_id_org is not None:
             lista_id_chrms = []
             chrms = Chromosome.objects.filter(organism_id__in = lista_id_org)
