@@ -12,7 +12,7 @@ angular.module('CucModule').controller('NewOrganizmModalCtrl', function($scope, 
             controller: 'NewOrganizmModalInstance',
             backdrop: 'static',
             scope: $scope,
-            size: ""
+            size: "" //sm lg
         });
         modalIntance.opened.then(function(){
             console.log("OPENED");

@@ -136,6 +136,18 @@ def ajaxNewOrganism(request):
 
     return JsonResponse({'success': wynik, 'message': wiadomosc});
 
+def ajaxDeleteOrganism(request):
+    print "usuwanie organizmu ",
+    body = json.loads(request.body)
+    print body['id_org']
+    org_name = Organism.objects.get(id=body['id_org']).name
+
+    print 'odkomentuj mnie to usune organizm ', org_name
+    # TODO odkomentowac to bedzie usuwanie
+    # DataMigrations().delete_organism_full([body['id_org']])
+
+    return HttpResponse(org_name)
+
 # @csrf_exempt
 #do celow testowych
 def ajaxPost(request):

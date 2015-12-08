@@ -17,4 +17,18 @@ function OrganizmKontroler($scope, $http) {
             });
     }
     $scope.promiseLoadOrganisms = $scope.loadOrganisms();
+
+    $scope.deleteOrganism = function(index_in_table){
+        var request = {
+            method: 'POST',
+            url: 'ajax_deleteOrganism',
+            data: {id_org: $scope.orgs[index_in_table]['pk']}
+
+        };
+        return $http(request)
+            .success(function (data) {
+                //pobierz nowe organizmy
+                $scope.promiseLoadOrganisms = $scope.loadOrganisms();
+            });
+    }
 }

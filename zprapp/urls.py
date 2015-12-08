@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
-from zprapp import views
 from django.shortcuts import render_to_response
-from django.http import HttpResponse
+
+from zprapp import views
 
 urlpatterns = patterns('',
     url(r'^$', views.index),
@@ -19,6 +19,7 @@ urlpatterns = patterns('',
     url(r'ajax_post', views.ajaxPost),
     url(r'templates/(?P<template>[a-z]*\.html)', lambda request, template: render_to_response('zprapp/'+template)),
     url(r'ajax_newOrganism', views.ajaxNewOrganism),
+    url(r'ajax_deleteOrganism', views.ajaxDeleteOrganism),
     # url(r'^$', views.index),
     # url(r'organizmy', views.organizmy),
     # url(r'organizm/chromosomy', views.chromosomy),
