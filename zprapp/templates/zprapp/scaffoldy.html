@@ -190,7 +190,7 @@
             </tr>
             </thead>
 {#            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">#}
-            <tr ng-repeat="scf in canvas.data |orderBy: 'fields.order'">
+            <tr ng-repeat="scf in canvas.data |orderBy: 'fields.order'" class="fx-bounce-left fx-speed-200">
                 <td><a ng-href="#/organizm/{[id_org]}/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">scaffold {[scf.pk]}</a></td>
                 <td>{[scf.fields.length]}</td>
                 <td>{[scf.fields.start]}</td>

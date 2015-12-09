@@ -1,106 +1,103 @@
 <!DOCTYPE html>
 <html ng-app="CucModule">
-<head lang="en">
-    <link href="/static/zprapp/css/bootstrap.css" rel="stylesheet"/>
-    <link href="/static/zprapp/css/bootstrap-theme.css" rel="stylesheet"/>
-    {#    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.js"></script>#}
-{#    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.js"></script>#}
-    <script src="/static/zprapp/angularjs/angular.js"></script>
-    <script src="/static/zprapp/angularjs/angular-route.js"></script>
-    <script src="/static/zprapp/angularjs/angular-cookies.js"></script>
-    <script src="/static/zprapp/js/ui-bootstrap-tpls-0.12.1.min.js"></script>
-    <script src="/static/zprapp/angularjs/events.js"></script>
-    <script src="/static/zprapp/ogolne.js"></script>
-    <script src="/static/zprapp/organizmCtrl.js"></script>
-    <script src="/static/zprapp/sekwencjaKontroller.js"></script>
-    <script src="/static/zprapp/scaffoldKontroler.js"></script>
-    <script src="/static/zprapp/chromosomKontroler.js"></script>
-    <script src="/static/zprapp/chrCanvasCtrl.js"></script>
-    <script src="/static/zprapp/scaffCanvasCtrl.js"></script>
-    <script src="/static/zprapp/scaffModal.js"></script>
-    <script src="/static/zprapp/newOrganizmModal.js"></script>
-    <script src="/static/zprapp/js/ng-file-upload.js"></script>
-{#    <script src="/static/zprapp/angularjs/bootstrap.js"></script>#}
-{#    <script src="/static/zprapp/angularjs/jquery.js"></script>#}
-{#    <script src="/static/zprapp/angularjs/bootstrap-theme.css.map"></script>#}
-{#    <script src="/static/zprapp/angularjs/bootstrap.css.map"></script>#}
+    <head lang="en">
+        <link href="/static/zprapp/css/bootstrap.css" rel="stylesheet"/>
+        <link href="/static/zprapp/css/bootstrap-theme.css" rel="stylesheet"/>
+        <link href="/static/zprapp/css/animate.css" rel="stylesheet"/>
+        {#    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.js"></script>#}
+        <script src="/static/zprapp/angularjs/angular.js"></script>
+        <script src="/static/zprapp/angularjs/angular-route.js"></script>
+        <script src="/static/zprapp/angularjs/angular-cookies.js"></script>
+        {#    1.2.22#}
+        <script src="/static/zprapp/angularjs/angular-animate.js"></script>
+{#        <script src="/static/zprapp/js/ngfx/jquery-1.11.3.min.js"></script>#}
+        <script src="/static/zprapp/js/ngfx/TweenMax.min.js"></script>
+        <script src="/static/zprapp/js/ngfx/ngFx.js"></script>
 
-{#    chyba nigdzie nie uzywane#}
-    <style type="text/css">
-        .selected {
-            background-color: rgba(199, 240, 234, 0.55);
-        }
-    </style>
-    {#    <style>#}
-    {#        canvas {#}
-    {#            background-color: blue;#}
-    {#            width: 100%;#}
-    {#            height: auto;#}
-    {#        }#}
-    {#    </style>#}
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-{#<body ng-controller="OrganizmKontroler">#}
-<body>
-{#    <script src="/static/zprapp/js/jquery.js"></script>#}
-{#    <script src="/static/zprapp/js/bootstrap.js"></script>#}
+        <script src="/static/zprapp/js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+        <script src="/static/zprapp/angularjs/events.js"></script>
+        <script src="/static/zprapp/ogolne.js"></script>
+        <script src="/static/zprapp/organizmCtrl.js"></script>
+        <script src="/static/zprapp/sekwencjaKontroller.js"></script>
+        <script src="/static/zprapp/scaffoldKontroler.js"></script>
+        <script src="/static/zprapp/chromosomKontroler.js"></script>
+        <script src="/static/zprapp/chrCanvasCtrl.js"></script>
+        <script src="/static/zprapp/scaffCanvasCtrl.js"></script>
+        <script src="/static/zprapp/scaffModal.js"></script>
+        <script src="/static/zprapp/newOrganizmModal.js"></script>
+        <script src="/static/zprapp/js/ng-file-upload.js"></script>
+        {#    <script src="/static/zprapp/angularjs/bootstrap.js"></script>#}
+        {#    <script src="/static/zprapp/angularjs/jquery.js"></script>#}
+        {#    <script src="/static/zprapp/angularjs/bootstrap-theme.css.map"></script>#}
+        {#    <script src="/static/zprapp/angularjs/bootstrap.css.map"></script>#}
 
+        {#    chyba nigdzie nie uzywane#}
+        <style type="text/css">
+            .selected {
+                background-color: rgba(199, 240, 234, 0.55);
+            }
+        </style>
+        {#    <style>#}
+        {#        canvas {#}
+        {#            background-color: blue;#}
+        {#            width: 100%;#}
+        {#            height: auto;#}
+        {#        }#}
+        {#    </style>#}
+        <meta charset="UTF-8">
+        <title></title>
+    </head>
 
-{#<div ng-controller="chrCanvasCtrl" class="container-fluid">#}
-{#    <div class="row">#}
-{#        <div class="col-lg-10 col-lg-offset-1">#}
-{#            <canvas id="canvasChromosom" width="720" height="400"></canvas>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}
+    <body>
 
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-lg-10 col-lg-offset-1">
-            <div class="navbar navbar-inverse">
-                <a class="navbar-brand" href="#/organizmy">PRZEGLĄDARKA GENOMU OGÓRKA</a>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <div class="navbar navbar-inverse">
+                        <a class="navbar-brand" href="#/organizmy">PRZEGLĄDARKA GENOMU OGÓRKA</a>
+                    </div>
+                    <style>
+                        div[ng-view].ng-enter {
+                            -webkit-animation: fadeInRight 0.5s;
+                            animation: fadeInRight 0.5s;
+                        }
+                    </style>
+                    <div ng-view id="view"></div>
+                </div>
             </div>
-            <div ng-view></div>
 
         </div>
-    </div>
-
-</div>
 
 
-
-{# mimo ze uzywam modala w scaffoldy.html to modal musi byc poza wszystkimi div'ami wiec jest tutaj #}
-<div class="modal fade" id="sequenceWarningModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <!-- Nagłówek -->
-            <div class="modal-header">
-{#                <button type="button" class="close" data-dismiss="modal">&times;</button>#}
-                <h4 class="modal-title">Uwaga!</h4>
-            </div>
-            <!-- Treść -->
-            <div class="modal-body" id="dupa">
-                <h1>Drodzy Czytelnicy!</h1>
-            </div>
-            <!-- Stopka -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-                <button type="button" class="btn btn-primary">Zapisz zmiany</button>
+        {# mimo ze uzywam modala w scaffoldy.html to modal musi byc poza wszystkimi div'ami wiec jest tutaj #}
+        <div class="modal fade" id="sequenceWarningModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- Nagłówek -->
+                    <div class="modal-header">
+                        {#                <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+                        <h4 class="modal-title">Uwaga!</h4>
+                    </div>
+                    <!-- Treść -->
+                    <div class="modal-body" id="dupa">
+                        <h1>Drodzy Czytelnicy!</h1>
+                    </div>
+                    <!-- Stopka -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                        <button type="button" class="btn btn-primary">Zapisz zmiany</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    </div>
-{#    <script>#}
-{#    var opt = {#}
-{#                backdrop: "static",#}
-{#                show: false,#}
-{#                remote: true#}
-{#            };#}
-{#        $("#myModal").modal(opt);#}
-{#    </script>#}
+        {#    <script>#}
+        {#    var opt = {#}
+        {#                backdrop: "static",#}
+        {#                show: false,#}
+        {#                remote: true#}
+        {#            };#}
+        {#        $("#myModal").modal(opt);#}
+        {#    </script>#}
 
-</body>
+    </body>
 </html>

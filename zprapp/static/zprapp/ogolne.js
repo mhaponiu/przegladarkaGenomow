@@ -2,7 +2,7 @@
  * Created by mhaponiu on 25.02.15.
  */
 
-var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap', 'ngCookies', 'ngFileUpload']);
+var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap', 'ngCookies', 'ngFileUpload', 'ngAnimate', 'ngFx']);
 
 //w configu moga byc tylko providery, service'y trzeba do run dawac
 cucModule.config(function ($interpolateProvider) {
