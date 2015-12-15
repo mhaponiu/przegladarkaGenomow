@@ -21,7 +21,7 @@ angular.module('CucModule').controller('ScaffModalCtrl', function($scope, $modal
     $scope.toggleTextArea = function(){
         if(!$scope.textarea.visible){
             $scope.roznica = $scope.settings.widok_do - $scope.settings.widok_od;
-            var limit = 1000;
+            var limit = 25000;
             if ($scope.roznica > limit) {
                 $scope.open()
             }

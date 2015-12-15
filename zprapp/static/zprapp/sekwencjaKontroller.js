@@ -2,7 +2,7 @@
  * Created by mhaponiu on 26.02.15.
  */
 
-function SekwencjaKontroler($scope, $routeParams, $http) {
+function SekwencjaKontroler($scope, $routeParams, $http, clipboard) {
     //nieuzywane?
     $scope.chr_id = $routeParams.id_chr;
     $scope.sc_id = $routeParams.id_sc;
@@ -20,4 +20,20 @@ function SekwencjaKontroler($scope, $routeParams, $http) {
     };
     $scope.loadSequence($routeParams.id_org, $routeParams.id_chr, $routeParams.id_sc);
     //$scope.scs = Items.sekwencja($routeParams.id_chr, $routeParams.id_sc);
+    $scope.alert={}
+    $scope.alert.show = true
+    $scope.alert.toggleShow = function(){
+        $scope.alert.show = !$scope.alert.show
+    }
+    //$scope.copySeq = function(){
+    //    clipboard.copyText($scope.scs)
+    //}
+    $scope.alert.msg = "ERROR"
+    $scope.ok = function(){
+        console.log("OK")
+    }
+    $scope.fail = function(err) {
+        $scope.alert.msg = err + ":    za dużo znaków do skopiowania"
+        $scope.alert.show=false
+    }
 }

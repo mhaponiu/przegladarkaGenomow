@@ -1,8 +1,25 @@
 <div class="panel">
-    <h3 class="panel-heading">SEKWENCJA chromosomu {[ chr_id ]}, scaffoldu {[ sc_id ]}</h3>
+    <h3 class="panel-heading">
+        SEKWENCJA chromosomu {[ chr_id ]}, scaffoldu {[ sc_id ]}
+    </h3>
+
+{#    clipboard text="scs"#}
+{#    <button class="btn btn-primary">#}
+{#        <span class="glyphicon glyphicon-bitcoin"></span>#}
+{#    </button>#}
+
 </div>
 <div class="panel-body">
+    <alert type="danger" collapse="alert.show">
+        {[alert.msg]}
+    </alert>
+    <button clipboard text="scs" on-error="fail(err)"
+            class="btn btn-primary btn-block center">
+        <span class="glyphicon glyphicon-save"></span>
+        KOPIUJ SEKWENCJĘ
+    </button>
     <div class="well well-lg" style="word-wrap: break-word">
         {[ scs ]}
     </div>
 </div>
+
