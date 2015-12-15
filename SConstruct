@@ -8,7 +8,7 @@ from build_tools.deploy import Deployer
 WWW_BROWSER_WINDOWS='chrome'
 WWW_BROWSER_LINUX='google-chrome'
 
-WEB_CLIENT_START_PATH ='/zprapp/'
+WEB_CLIENT_START_PATH =''
 
 PROJECT_NAME = 'przegladarkaGenomow'
 

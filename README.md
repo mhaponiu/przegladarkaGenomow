@@ -79,7 +79,6 @@
         uruchom w produkcji <b><i>scons run=p</i></b>
     </li>
 </ul>
-w przegladarce: <i>host:port<b>/zprapp</b></i>
 
 <h2>Polecenia:</h2>
 Aby uzyskać pomoc w budowaniu:  <b><i>scons -h</i></b>
