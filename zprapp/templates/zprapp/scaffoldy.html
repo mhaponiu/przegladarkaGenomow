@@ -74,7 +74,7 @@
         <br>
 
 
-            <div class="row">
+        <div class="row">
             <div class="col-sm-6">
                 <label>
                     <input type="checkbox" ng-model="markery.visible"> MARKERY
@@ -90,17 +90,17 @@
 
         </div>
 
-{#        wszystkie meanings wyswietla#}
-{#        <div class="panel" collapse="!markery.visible">#}
-{#            <div class="row">#}
-{#                <div class="col-sm-4 col-md-3" ng-repeat="mean in meanings">#}
-{#                    <label>#}
-{#                        <input type="checkbox"> {[mean.fields.mean]}#}
-{#                    </label>#}
-{#                </div>#}
-{##}
-{#            </div>#}
-{#        </div>#}
+        {#        wszystkie meanings wyswietla#}
+        {#        <div class="panel" collapse="!markery.visible">#}
+        {#            <div class="row">#}
+        {#                <div class="col-sm-4 col-md-3" ng-repeat="mean in meanings">#}
+        {#                    <label>#}
+        {#                        <input type="checkbox"> {[mean.fields.mean]}#}
+        {#                    </label>#}
+        {#                </div>#}
+        {##}
+        {#            </div>#}
+        {#        </div>#}
         <div class="panel" collapse="!markery.visible">
             <div class="row">
                 <div class="col-sm-4 col-md-3" ng-repeat="mean in canvas.meanings.data">
@@ -128,58 +128,65 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-warning" ng-click="ok()">TAK</button>
-                <button class="btn btn-success" ng-click="cancel()">NIE</button>
+                <button id="btn__scf_modal_no" class="btn btn-success btn-lg animated pulse" ng-click="cancel()">NIE</button>
+                <style>
+                    #btn__scf_modal_no {
+                        -webkit-animation-duration: .85s;
+                        -webkit-animation-iteration-count: infinite;
+                    }
+                </style>
+
             </div>
         </script>
-{#        <button class="btn btn-primary" ng-click="open()">MODAL</button>#}
+        {#        <button class="btn btn-primary" ng-click="open()">MODAL</button>#}
     </div>
 
 
-{#    <div class="row">#}
-{#        <div class="col-sm-6">#}
-{#            <accordion>#}
-{#                <accordion-group heading="FILTRY">#}
-{#                    sdadsadsa#}
-{#                </accordion-group>#}
-{#            </accordion>#}
-{#        </div>#}
-{#    </div>#}
-
+    {#    <div class="row">#}
+    {#        <div class="col-sm-6">#}
+    {#            <accordion>#}
+    {#                <accordion-group heading="FILTRY">#}
+    {#                    sdadsadsa#}
+    {#                </accordion-group>#}
+    {#            </accordion>#}
+    {#        </div>#}
+    {#    </div>#}
 
 
     {############################# POMOCNICZE BEGIN ##########################}
-{#    {[ settings.widok_do - settings.widok_od ]}#}
-{#    <input ng-model="aaa">#}
-{#    {[ aaa | roundAndFormatBP:2  ]}#}
-{#    <br><br>#}
+    {#    {[ settings.widok_do - settings.widok_od ]}#}
+    {#    <input ng-model="aaa">#}
+    {#    {[ aaa | roundAndFormatBP:2  ]}#}
+    {#    <br><br>#}
 
-{#    <div class="row btn-group">#}
-{#        <button class="btn btn-lg btn-danger" ng-click="klik()">#}
-{#            KLIK &#37#}
-{#        </button>#}
-{#        <button class="btn btn-lg btn-primary" ng-click="guzik()">GUZIK</button>#}
-{#    </div>#}
-{##}
-{#    <table class="table table-bordered table-striped table-hover">#}
-{#        <thead>#}
-{#            <tr>#}
-{#                <th>nazwa</th>#}
-{#                <th>start</th>#}
-{#                <th>length</th>#}
-{#                <th>id_meaning</th>#}
-{#            </tr>#}
-{#        </thead>#}
-{#        <tr ng-repeat="m in canvas.mrkrs">#}
-{#            <td>{[m.fields.name]}</td>#}
-{#            <td>{[m.fields.start]}</td>#}
-{#            <td>{[m.fields.length]}</td>#}
-{#            <td>{[m.fields.meaning]}</td>#}
-{#        </tr>#}
-{#    </table>#}
-{############################# POMOCNICZE END ##########################}
+    {#    <div class="row btn-group">#}
+    {#        <button class="btn btn-lg btn-danger" ng-click="klik()">#}
+    {#            KLIK &#37#}
+    {#        </button>#}
+    {#        <button class="btn btn-lg btn-primary" ng-click="guzik()">GUZIK</button>#}
+    {#    </div>#}
+    {##}
+    {#    <table class="table table-bordered table-striped table-hover">#}
+    {#        <thead>#}
+    {#            <tr>#}
+    {#                <th>nazwa</th>#}
+    {#                <th>start</th>#}
+    {#                <th>length</th>#}
+    {#                <th>id_meaning</th>#}
+    {#            </tr>#}
+    {#        </thead>#}
+    {#        <tr ng-repeat="m in canvas.mrkrs">#}
+    {#            <td>{[m.fields.name]}</td>#}
+    {#            <td>{[m.fields.start]}</td>#}
+    {#            <td>{[m.fields.length]}</td>#}
+    {#            <td>{[m.fields.meaning]}</td>#}
+    {#        </tr>#}
+    {#    </table>#}
+    {############################# POMOCNICZE END ##########################}
 
     <div class="panel">
-        <h3 class="panel-heading">SCAFFOLDY (id_chr {[chr_id]}) (łącznie {[scflds.length]}; wyświetlone {[canvas.data.length]}): </h3>
+        <h3 class="panel-heading">SCAFFOLDY (id_chr {[chr_id]}) (łącznie {[scflds.length]}; wyświetlone
+            {[canvas.data.length]}): </h3>
         <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
@@ -189,9 +196,10 @@
                 <th>Order</th>
             </tr>
             </thead>
-{#            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">#}
+            {#            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">#}
             <tr ng-repeat="scf in canvas.data |orderBy: 'fields.order'" class="fx-bounce-left fx-speed-200">
-                <td><a ng-href="#/organizm/{[id_org]}/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">scaffold {[scf.pk]}</a></td>
+                <td><a ng-href="#/organizm/{[id_org]}/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">scaffold
+                    {[scf.pk]}</a></td>
                 <td>{[scf.fields.length]}</td>
                 <td>{[scf.fields.start]}</td>
                 <td>{[scf.fields.order]}</td>
