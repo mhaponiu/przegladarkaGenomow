@@ -1,6 +1,7 @@
 import json
 
 from django.core import serializers
+from django.db.models.expressions import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
@@ -88,6 +89,115 @@ def ajaxMarkers(request):
     mrkrs = ch.marker_set.all()
     mrkrs_json = serializers.serialize("json", mrkrs)
     return HttpResponse(mrkrs_json, content_type="application/json");
+
+def ajaxSeqSection(request):
+    # print request.GET['id_chr'], request.GET['widok_od'],request.GET['widok_do']
+    # TODO odeslac poprawny wycinek
+    id_chr = request.GET['id_chr']
+    widok_od = int(request.GET['widok_od'])
+    widok_do = int(request.GET['widok_do'])
+    chr = Chromosome.objects.get(id=id_chr)
+    chr_len = chr.length
+    selected_scflds = chr.scaffold_set.annotate(end=F('start')+F('length')) \
+        .filter(start__lt=widok_do, end__gt=widok_od) \
+        .order_by('order')
+
+    ret_string = bytearray('N'*(widok_do-widok_od))
+    # print "empty_ret_string", ret_string
+
+    if selected_scflds.__len__() == 0:
+        return HttpResponse(ret_string.decode())
+
+    def zeroToNone(arg):
+        if arg == 0:
+            return None
+        else:
+            return int(arg)
+
+    def noneToZero(arg):
+        if arg == None:
+            return 0
+        else:
+            return int(arg)
+
+    for sc in selected_scflds:
+        string_od = None
+        string_do = None
+        if widok_od > sc.start:
+            seq_od = int(widok_od - sc.start)
+            string_od = None
+        elif widok_od <= sc.start:
+            seq_od = None
+            string_od = zeroToNone(int(abs(sc.start - widok_od)))
+        if widok_do < sc.end:
+            seq_do = int(widok_do - sc.start)
+            string_do = None
+        elif widok_do >= sc.end:
+            seq_do = None
+            # string_do zdefiniowany pozniej -> musze znac dlugosc_write_seq
+
+        write_seq = sc.sequence_set.first().sequence[seq_od:seq_do]
+
+        if widok_do >= sc.end:
+            string_do = noneToZero(string_od) + write_seq.__len__()
+
+        ret_string[string_od:string_do] = str(write_seq)
+        # print "seq_od", seq_od
+        # print "seq_do", seq_do
+        # print "write_seq", write_seq
+        # print "write_seq_len", write_seq.__len__()
+        # print "string_od ",string_od
+        # print "string_do ",string_do
+        # print "ret_string", ret_string
+    return HttpResponse(ret_string.decode())
+
+
+
+    # if selected_scflds.__len__() == 0:
+    #     # raise Exception("PUSTA TABLICA SCAFFOLDOW")
+    #     return HttpResponse("ERROR")
+    #
+    # elif selected_scflds.__len__() == 1 :
+    #     sc_one = selected_scflds[0]
+    #     # od___####___do
+    #     if sc_one.start > widok_od and sc_one.end < widok_do:
+    #         # TODO wypelnic luka
+    #         seq_list.append(sc_one.sequence_set.first().sequence)
+    #         # TODO wypelnic luka
+    #         return HttpResponse(seq_list)
+    #     # ###OD###___DO
+    #     elif sc_one.start <= widok_od and sc_one.end < widok_do:
+    #         seq_list.append(sc_one.sequence_set.first().sequence[widok_od:])
+    #         # TODO luka
+    #     # ###OD###DO###
+    #     elif sc_one.start <= widok_od and sc_one.end >= widok_do:
+    #         seq_list.append(sc_one.sequence_set.first().sequence[widok_od:widok_do])
+    #     # OD__###DO###
+    #     elif sc_one.start > widok_od and sc_one.end >= widok_do:
+    #         # TODO luka
+    #         seq_list.append(sc_one.sequence_set.first().sequence[:widok_do])
+    #
+    #
+    # # TODO  pierwsza ucieta sekwencja
+    # # poczatek wyswietlanego widoku jest w luce przed pierwszym scaffoldem
+    # if selected_scflds[0].start > widok_od:
+    #     seq_list.append(selected_scflds[0].sequence_set.first().sequence)
+    # else:
+    #     seq_list.append(selected_scflds[0].sequence_set.first().sequence[widok_od:])
+    #
+    # if selected_scflds.__len__() >= 2:
+    #     # TODO srodek sekwencji
+    #     for sc in selected_scflds[1:-1]:
+    #         seq_list.append(sc.sequence_set.first().sequence)
+    #
+    # # TODO ostatnia ucieta sekwencja
+    # # koniec wyswietlanego widoku jest w luce za ostatnim scaffoldem
+    # if selected_scflds[-1].end < widok_do:
+    #     seq_list.append(selected_scflds[-1].sequence_set.first().sequence)
+    # else:
+    #     seq_list.append(selected_scflds[-1].sequence_set.first().sequence[:widok_do])
+
+    return HttpResponse("DSFADS")
 
 def test(request):
     #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja
