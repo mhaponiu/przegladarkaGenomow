@@ -1,9 +1,10 @@
-# TODO wywalic ten blok importow
-import sys
 import os
+import sys
+
 sys.path.append([os.path.abspath('')])
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
 import django
+
 django.setup()
 
 from fastaBase import Fasta
@@ -11,6 +12,7 @@ from collections import namedtuple
 from zprapp.models import Sequence
 from wyjatki import CheckError
 import re
+
 
 class SekwencjaFastaImpExp(Fasta):
     def __init__(self):
@@ -32,7 +34,6 @@ class SekwencjaFastaImpExp(Fasta):
             ret_slownik[str(record.id)] = seq.id
         return slownik
 
-
     def _check_handle(self, record):
         try:
             int(record.id)
@@ -53,9 +54,10 @@ class SekwencjaFastaImpExp(Fasta):
         if lista_master_id == None:
             seqs = Sequence.objects.all()
         else:
-            seqs = Sequence.objects.filter(scaffold_id__in = lista_master_id)
+            seqs = Sequence.objects.filter(scaffold_id__in=lista_master_id)
         for s in seqs.iterator():
             yield self.FormatRecord(s.id, s.sequence)
+
 
 if __name__ == "__main__":
     a = SekwencjaFastaImpExp()

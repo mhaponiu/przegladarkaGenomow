@@ -1,6 +1,6 @@
-# TODO wywalic ten blok importow
-import sys
 import os
+import sys
+
 sys.path.append([os.path.abspath('')])
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
 import django

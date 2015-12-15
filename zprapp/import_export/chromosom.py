@@ -1,16 +1,17 @@
-# TODO wywalic ten blok importow
-import sys
 import os
+import sys
 
 sys.path.append([os.path.abspath('')])
 os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
 import django
+
 django.setup()
 
 from gffBase import Gff
 from collections import namedtuple
-from zprapp.models import Organism, Chromosome
+from zprapp.models import Chromosome
 from wyjatki import CheckError
+
 
 class Chromosom(Gff):
     def __init__(self):
@@ -29,18 +30,20 @@ class Chromosom(Gff):
         if lista_master_id == None:
             chrms = Chromosome.objects.all()
         else:
-            chrms = Chromosome.objects.filter(organism_id__in = lista_master_id)
+            chrms = Chromosome.objects.filter(organism_id__in=lista_master_id)
         for ch in chrms.iterator():
             yield self.FormatRecord(ch.id, ch.number, int(ch.length), ch.organism_id)
 
     def import_records_from_file_to_db(self, file, slownik):
-        ret_slownik={}
+        ret_slownik = {}
         for record in self._gen_record_from_file(file):
-            chr = Chromosome(number= int(record.number), length=int(record.length), organism_id=int(slownik.org[str(record.organism_id)]))
+            chr = Chromosome(number=int(record.number), length=int(record.length),
+                             organism_id=int(slownik.org[str(record.organism_id)]))
             chr.save()
             ret_slownik[str(record.id)] = chr.id
         # return ret_slownik
         return slownik._replace(chr=ret_slownik)
+
 
 if __name__ == "__main__":
     a = Chromosom()
