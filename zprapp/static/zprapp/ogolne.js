@@ -15,7 +15,7 @@ cucModule.config(function ($interpolateProvider) {
     //$httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }).run(function($http, $cookies){
-    $http.defaults.headers.post['X-CSRFToken'] = $cookies.csrftoken;
+    $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 });
 
 //function cucRouteConfig($routeProvider) {
