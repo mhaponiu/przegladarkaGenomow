@@ -1,11 +1,13 @@
-from dbbase import DBBase
-from zprapp.models import Chromosome, Scaffold
 import psycopg2
 import psycopg2.extras
 
+from dbbase import DBBase
+from zprapp.models import Chromosome, Scaffold
+
+
 class Sequences(DBBase):
-    def glos(self):
-        print 'Sekwencje! '
+    # def glos(self):
+    #     print 'Sekwencje! '
 
     def create(self):
         print "tworze sekwencje"

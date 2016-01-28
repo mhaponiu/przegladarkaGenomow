@@ -1,11 +1,9 @@
 # from dbbase import DBBase
-from organizmy import *
 from chromosomy import *
-from scaffoldy import *
-from sekwencje import *
 from markery import *
+from organizmy import *
+from sekwencje import *
 from znaczenia import *
-
 
 '''
     nalezy wczytac backup bazy danych '17.11.2012-cucumber_plain.backup'
@@ -26,16 +24,16 @@ class DatabaseGenome(DBBase):
         self._markery = Markery()
         self._znaczenia = Meanings()
 
-    def glos(self):
-        print 'DataBaseGenome'
-        print 'MARKER_FILE_LOCATION: ', self.MARKER_FILE_LOCATION
-        print 'CONNECT_STRING: ', self.CONNECT_STRING
-        self._organizmy.glos()
-        self._chromosomy.glos()
-        self._scaffoldy.glos()
-        self._sekwencje.glos()
-        self._markery.glos()
-        self._znaczenia.glos()
+    # def glos(self):
+    #     print 'DataBaseGenome'
+    #     print 'MARKER_FILE_LOCATION: ', self.MARKER_FILE_LOCATION
+    #     print 'CONNECT_STRING: ', self.CONNECT_STRING
+    #     self._organizmy.glos()
+    #     self._chromosomy.glos()
+    #     self._scaffoldy.glos()
+    #     self._sekwencje.glos()
+    #     self._markery.glos()
+    #     self._znaczenia.glos()
 
     def create(self):
         print "trwa tworzenie danych..."

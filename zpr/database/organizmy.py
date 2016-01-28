@@ -1,11 +1,10 @@
 from dbbase import *
 from zprapp.models import Organism
-import psycopg2
-import psycopg2.extras
+
 
 class Organisms(DBBase):
-    def glos(self):
-        print 'Organizmy! '
+    # def glos(self):
+    #     print 'Organizmy! '
 
     def create(self):
         for i in range(1, 4):

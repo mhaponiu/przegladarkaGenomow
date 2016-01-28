@@ -10,10 +10,10 @@
 
 </div>
 <div class="panel-body">
-    <alert type={[alert.type]} collapse="alert.show">
+    <alert id="alert_copy" type={[alert.type]} collapse="alert.show">
         {[alert.msg]}
     </alert>
-    <button ng-click="copySeq()"
+    <button id="button_copy" ng-click="copySeq()"
             class="btn btn-primary btn-block center">
         <span class="glyphicon glyphicon-save"></span>
         KOPIUJ SEKWENCJĘ

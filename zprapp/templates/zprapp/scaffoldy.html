@@ -61,11 +61,11 @@
 
         <div class="input-group input-group-lg">
             <span class="input-group-addon" id="span_od">od</span>
-            <input ng-model="settings.tmp.widok_od" type="number" class="form-control" placeholder="widok od">
+            <input id="view_from" ng-model="settings.tmp.widok_od" type="number" class="form-control" placeholder="widok od">
             <span class="input-group-addon" id="span_do">do</span>
-            <input ng-model="settings.tmp.widok_do" type="number" class="form-control" placeholder="widok do">
+            <input id="view_to" ng-model="settings.tmp.widok_do" type="number" class="form-control" placeholder="widok do">
             <span class="input-group-btn">
-                <button class="btn btn-primary" ng-click="logIn()">
+                <button id="button_insert_data" class="btn btn-primary" ng-click="logIn()">
                     <span class="glyphicon glyphicon-log-in"></span>
                 </button>
             </span>

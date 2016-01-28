@@ -1,12 +1,11 @@
 from dbbase import DBBase
 from scaffoldy import Scaffolds
 from zprapp.models import Organism, Meaning, Marker, Chromosome
-import psycopg2
-import psycopg2.extras
+
 
 class Markery(DBBase):
-    def glos(self):
-        print 'Markery! '
+    # def glos(self):
+    #     print 'Markery! '
 
     def create(self):
         #wszystkie markery tworze jako atrapy dla pierwszego chromosomu

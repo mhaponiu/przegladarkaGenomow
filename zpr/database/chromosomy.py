@@ -1,11 +1,13 @@
-from dbbase import DBBase
-from zprapp.models import Organism, Chromosome
 import psycopg2
 import psycopg2.extras
 
+from dbbase import DBBase
+from zprapp.models import Organism, Chromosome
+
+
 class Chromosomes(DBBase):
-    def glos(self):
-        print 'Chromosomy '
+    # def glos(self):
+    #     print 'Chromosomy '
 
     def create(self):
         print 'utworzono chromosomy'

@@ -27,6 +27,7 @@ from django.db import models
 #OLD
 ##########################################################################
 #NEW
+
 class Organism(models.Model):
     name = models.TextField()
 
@@ -41,8 +42,6 @@ class Scaffold(models.Model):
     length = models.FloatField()
     order = models.IntegerField()
     start = models.FloatField()
-    #start = models.FloatField()
-    #end = models.FloatField()
 
 class Meaning(models.Model):
     mean = models.TextField()

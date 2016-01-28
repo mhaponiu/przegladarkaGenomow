@@ -1,11 +1,13 @@
-from dbbase import DBBase
-from zprapp.models import Chromosome
 import psycopg2
 import psycopg2.extras
 
+from dbbase import DBBase
+from zprapp.models import Chromosome
+
+
 class Scaffolds(DBBase):
-    def glos(self):
-        print 'Scaffoldy! '
+    # def glos(self):
+    #     print 'Scaffoldy! '
 
     def create(self):
         self._create_scaffolds_from_webomics_db()

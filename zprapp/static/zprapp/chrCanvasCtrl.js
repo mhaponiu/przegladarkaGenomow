@@ -145,63 +145,6 @@ function chrCanvasCtrl($scope, $http, $location, DataBufor, $routeParams) {
     }
 
 
-    //var events = new Events('canvasChromosom');
-    ////var canvas = document.getElementById('canvasChromosom');
-    //var canvas = events.getCanvas();
-    //canvas.width = 800;
-    //canvas.height = 400;
-    //with(canvas.style){
-    //    backgroundColor="#f5f5f5";
-    //    width="100%";
-    //    height="auto"
-    //}
-    ////var context = canvas.getContext('2d');
-    //var context = events.getContext();
-    //context.fillStyle = "#5cb85c";
-    //
-    //
-    //function drawChromosom(x_down, y_down, w, h){
-    //    //context.fillRect(x_down, y_down - h, w, h)
-    //    context.beginPath();
-    //    context.rect(x_down, y_down -h, w, h);
-    //    context.fill();
-    //}
-    //var chr_tab = [29150775, 26165221, 40056285, 29601718, 30950768, 34089568, 20250815]
-    //
-    //var drawChromosomCavas = function (tablica_chromosomow){
-    //    var liczba_przerw = tablica_chromosomow.length + 1
-    //    var szer_przerwy = canvas.width * 0.078947
-    //    var szer_chr = canvas.width * 0.052632
-    //    var y_line_start = canvas.height * 0.8;
-    //    var y_line_end = canvas.height * 0.1;
-    //    var x_line_start = szer_przerwy
-    //    var tab_max = Math.max.apply(Math, tablica_chromosomow)
-    //    var max_len_chr = canvas.height * 0.7;
-    //    var delta_x = 0
-    //    var h, x, y, x_text, y_text;
-    //    var napis = 1;
-    //    var h_napis = Math.round(0.5 * (canvas.height - y_line_start))
-    //    angular.forEach(tablica_chromosomow, function(chr){
-    //        h = (chr * max_len_chr)/tab_max;
-    //        x = szer_przerwy + delta_x
-    //        y = y_line_start
-    //        drawChromosom(x, y, szer_chr, h)
-    //        delta_x += szer_chr + szer_przerwy
-    //        context.save()
-    //        //context.font = h_napis.toString()+"pt Calibri"
-    //        context.font = "40pt Helvetica"
-    //        context.fillStyle = "black"
-    //        context.textAlign = "center"
-    //        context.textBaseline = "middle"
-    //        x_text = x + 0.5*szer_chr
-    //        y_text = y + 0.5 * (canvas.height - y_line_start)
-    //        context.fillText(napis.toString(), x_text, y_text)
-    //        context.restore()
-    //        napis+=1;
-    //    })
-    //}
-    //drawChromosomCavas(chr_tab);
-
     $scope.guzik = function(){
         console.log("guzik")
 

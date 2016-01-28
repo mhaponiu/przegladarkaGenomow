@@ -3,8 +3,8 @@ from zprapp.models import Meaning
 
 
 class Meanings(DBBase):
-    def glos(self):
-        print 'Znaczenia! '
+    # def glos(self):
+    #     print 'Znaczenia! '
 
     def create(self):
         means = ["poczatek genu", "koniec genu", "znaczenie 3", "znaczenie 4", "znaczenie 5", "znaczenie 6", "znaczenie 7", "znaczenie 8"]
