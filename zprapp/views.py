@@ -4,6 +4,7 @@ from django.core import serializers
 from django.db.models.expressions import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
 
 from zprapp.import_export.chromosom import Chromosom
 from zprapp.import_export.dataMigrations import DataMigrations
@@ -246,16 +247,19 @@ def ajaxNewOrganism(request):
 
     return JsonResponse({'success': wynik, 'message': wiadomosc});
 
+@csrf_exempt #nie zawsze angular dodaje ciasteczko do responsa z tokenem - cos dziwnego
 def ajaxDeleteOrganism(request):
+    print "proba usuniecia"
     if request.method == "DELETE":
         print "usuwanie organizmu ",
         body = json.loads(request.body)
         print body['id_org']
         org_name = Organism.objects.get(id=body['id_org']).name
 
-        print 'odkomentuj mnie to usune organizm ', org_name
+        # print 'odkomentuj mnie to usune organizm ', org_name
         # TODO odkomentowac to bedzie usuwanie
-        # DataMigrations().delete_organism_full([body['id_org']])
+        DataMigrations().delete_organism_full([body['id_org']])
+
         return HttpResponse(org_name)
     else:
         return HttpResponse(status=405)

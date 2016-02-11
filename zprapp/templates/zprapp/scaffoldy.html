@@ -23,36 +23,36 @@
             <div class="col-sm-4">
                 <div class="input-group input-group-lg">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" ng-click="zoomOut()">
+                        <button id="zoomOut" class="btn btn-primary" ng-click="zoomOut()">
                             <span class="glyphicon glyphicon-zoom-out"></span>
                         </button>
-                        <button class="btn btn-primary" ng-click="zoomIn()">
+                        <button id="zoomIn" class="btn btn-primary" ng-click="zoomIn()">
                             <span class="glyphicon glyphicon-zoom-in"></span>
                         </button>
                     </span>
-                    <input ng-model="settings.zoom" class="form-control" placeholder="zoom">
+                    <input id="inputZoom" ng-model="settings.zoom" class="form-control" placeholder="zoom">
                     <span class="input-group-addon" id="zoom_procent">&#37</span>
                 </div>
             </div>
             <div class="col-sm-5">
                 <div class="input-group input-group-lg">
                     <span class="input-group-btn">
-                        <button class="btn btn-primary" ng-click="skokLewo()">
+                        <button id="leftArrow" class="btn btn-primary" ng-click="skokLewo()">
                             <span class="glyphicon glyphicon-chevron-left"></span>
                         </button>
-                    <button class="btn btn-primary" ng-click="skokPrawo()">
+                    <button id="rightArrow" class="btn btn-primary" ng-click="skokPrawo()">
                         <span class="glyphicon glyphicon-chevron-right"></span>
                     </button>
                         </span>
-                    <input ng-model="settings.skok" class="form-control" min="1" type="number" placeholder="skok">
+                    <input id="inputSkok" ng-model="settings.skok" class="form-control" min="1" type="number" placeholder="skok">
                 </div>
             </div>
 
             <div class="col-sm-3">
                 <div class="btn-group btn-group-lg" ng-controller="ScaffModalCtrl">
-                    <button class="btn btn-primary" ng-click="toggleTextArea()"><span ng-class="textarea.ikona"></span>
+                    <button id="toggleTextArea" class="btn btn-primary" ng-click="toggleTextArea()"><span ng-class="textarea.ikona"></span>
                     </button>
-                    <button class="btn btn-warning" ng-click="settings.reset()">Reset</button>
+                    <button id="reset" class="btn btn-warning" ng-click="settings.reset()">Reset</button>
                 </div>
             </div>
         </div>
