@@ -1,0 +1,9 @@
+dodać algorytmy wyszukiwania sekwencji podobnych.
+
+a) dodać możliwość wyszukiwania sekwencji, w warstwie prezentacji funkcja 'find', żądanie do serwera, w wyniku działania zbiór pozycji, po kliknięciu na pozycję wizualizowane miejsce z odnalezioną sekwencją
+
+b) po stronie serwera żądanie przekazywane do modułu w C++ (żądanie tzn. sekwencja szukana, sekwencja lub zbiór sekwencji w której się wyszukuje (np. zbiór skafoldów)
+Biblioteka w C++ nie komunikuje się z bazą danych. Całość danych potrzebna do obliczeń jest podawana jako argumenty wołania funkcji lub metody.
+
+
+c) wykorzystać algorytm Knuta-Morrisa-Prata
