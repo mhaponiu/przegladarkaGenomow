@@ -6,6 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
+from zprapp.calc import calc;
 from zprapp.import_export.chromosom import Chromosom
 from zprapp.import_export.dataMigrations import DataMigrations
 from zprapp.import_export.organizm import Organizm
@@ -264,14 +265,41 @@ def ajaxDeleteOrganism(request):
     else:
         return HttpResponse(status=405)
 
+
+def ajaxSearchSeq(request):
+    if request.method == "POST":
+        body = json.loads(request.body);
+        wzorzec = str(body['wzorzec']);
+        cel = str(body['cel'])
+        wynik = calc.kmp(cel, wzorzec)
+        # print wzorzec, cel;
+        return JsonResponse(wynik, safe=False)
+
+
 # @csrf_exempt
 #do celow testowych
 def ajaxPost(request):
     print "request method: ", request.method;
     print "is_ajax: ", request.is_ajax();
-    print "request.REQUEST: ", request.POST;
+    print "request.POST: ", request.POST;
     print "request.body: ", request.body;
     body = json.loads(request.body);
     print "body['data1']: ", body['data1'];
-    print "request.REQUEST['param1']: ", request.REQUEST['param1'];
+    print "request.GET['param1']: ", request.GET['param1'];
     return HttpResponse("JAKIS POST");
+# var ajaxRequest = function(){
+#         var request = {
+#             method: 'POST',
+#             url: 'ajax_post',
+#             params: {param1: "p1p1p1", param2: "p2p2p2"}, //query string parametr
+#             data: {data1: "d1d1d1", data2: "d2d2d2"} //ukryte data w poscie
+#             //headers: {'Content-Type': 'application/x-www-form-urlencoded', //musi tak byc zeby posta dobrze odebralo, wiekszosc bibliotek JS tak robi
+#             //            'X-Requested-With': 'XMLHttpRequest'} //zeby w django request.is_ajax dawalo true
+#         };
+#         $http(request)
+#             .success(function (data) {
+#                 console.log(data)
+#             });
+#     }
+
+

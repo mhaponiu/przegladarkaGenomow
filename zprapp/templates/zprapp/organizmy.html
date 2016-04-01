@@ -4,6 +4,7 @@
 <div class="panel">
     <h3 class="panel-heading panel">ORGANIZMY:
         <p class="text-right">
+            <button ng-controller="SearchSeqModalCtrl" class=" btn btn-primary" ng-click="open()">wyszukaj</button>
             <button ng-controller="NewOrganizmModalCtrl" class="btn btn-primary" ng-click="open()">dodaj nowy organizm</button>
         </p>
     </h3>
@@ -36,6 +37,8 @@
     </table>
 </div>
 
+
+{#########################################################################################################################}
 {#okno modalne z dodawaniem nowego organizmu#}
 <div ng-controller="NewOrganizmModalCtrl">
         <script type="text/ng-template" id="NewOrganizmModalContent.html">
@@ -43,17 +46,6 @@
                 <h3 class="modal-title">NOWY ORGANIZM</h3>
             </div>
             <div class="modal-body">
-
-{#                <form class="form-horizontal">#}
-{#                    <div class="form-group">#}
-{#                        <label class="control-label col-sm-4">Nazwa organizmu: </label>#}
-{#                        <div class="col-sm-6">#}
-{#                            <input class="form-control col-sm-8" placeholder="nazwa" ng-model="name">#}
-{#                        </div>#}
-{#                    </div>#}
-{##}
-{#                </form>#}
-
                 <table class="table table-hover">
                     <thead><strong>Podaj pliki nowego organizmu:</strong></thead>
                     <tr ng-repeat="opis in opisPlikow">
@@ -92,4 +84,44 @@
             </div>
         </script>
 {#        <button class="btn btn-primary" ng-click="open()">MODAL</button>#}
+</div>
+
+
+{##########################################################################################################################}
+{#okno modalne z wyszukiwaniem sekwencji#}
+<div ng-controller="SearchSeqModalCtrl">
+    <script type="text/ng-template" id="SearchSeqModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">wyszukiwanie sekwencji</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <select class="form-control" ng-model="wybranyAlg"
+                            ng-options="alg.name for alg in algorytmy"/></select>
+                </div>
+                <div class="col-md-4">
+                    {[wybranyAlg]}
+                </div>
+                <div class="col-md-4">
+                    <button class="btn btn-success btn-block" ng-click="searchSeq()">szukaj</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <input class="form-control" placeholder="cel" ng-model="cel">
+                    <input class="form-control" placeholder="wzorzec" ng-model="wzorzec">
+                    <div class="well">
+                        {[wynik]}
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+            <div>stopka</div>
+        </div>
+    </script>
 </div>

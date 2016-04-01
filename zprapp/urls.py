@@ -20,7 +20,8 @@ urlpatterns = patterns('',
     url(r'templates/(?P<template>[a-z]*\.html)', lambda request, template: render_to_response('zprapp/'+template)),
     url(r'ajax_newOrganism', views.ajaxNewOrganism),
     url(r'ajax_deleteOrganism', views.ajaxDeleteOrganism),
-    url(r'ajax_seqSection', views.ajaxSeqSection)
+    url(r'ajax_seqSection', views.ajaxSeqSection),
+    url(r'ajax_searchSeq', views.ajaxSearchSeq)
     # url(r'^$', views.index),
     # url(r'organizmy', views.organizmy),
     # url(r'organizm/chromosomy', views.chromosomy),
