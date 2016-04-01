@@ -13,3 +13,6 @@ Możemy się spotkać w celu wyjaśnienia co jest co, lub zdzwonić.
 
 
 
+Dane będą umieszczane na serwerze antakya.ise.pw.edu.pl
+
+/home/mhaponiu/genview-data
