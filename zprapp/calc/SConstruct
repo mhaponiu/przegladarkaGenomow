@@ -1,0 +1,43 @@
+#TODO zintegrowac z glownym sconsem jako SConscript
+
+import os, shutil, sys
+
+env = Environment()
+env.Append( ENV = {'PATH' : os.environ['PATH'] })
+
+def addToLD(path):
+    if "LD_LIBRARY_PATH" in os.environ:
+        os.environ["LD_LIBRARY_PATH"]= os.environ["LD_LIBRARY_PATH"] + ':' + os.path.abspath(path)
+    else:
+        os.environ["LD_LIBRARY_PATH"]= os.path.abspath(path)
+
+env.Append( CPPPATH = ['/usr/include/python2.7'] )
+env.Append( LIBS = [ 'boost_python'] )
+env.Append( CPPFLAGS = '--std=c++11' )
+#env.Append( LIBPATH = [Dir('/usr/lib/python2.7'), Dir('.') ] ) #dolepi -L[sciezka]
+#env.Append( CPPFLAGS = '-Wall -pedantic -pthread --std=c++11 ' )
+#env.Append( LINKFLAGS = '-Wall -pthread --std=c++11  ' )
+#g++ -o hello.os -c -fPIC -Wall -pedantic -pthread --std=c++11 -I/usr/include/python2.7 hello.cpp
+#g++ -o builded/libhello.so -Wall -pthread --std=c++11 -shared hello.os -L/usr/lib/python2.7 -L. -lboost_python
+
+#addToLD('.')
+
+#przedrostek budowanej biblioteki wspoldzielonej (domyslnie bylo 'lib'), poniewaz to interfejs python'a musi miec taka nazwe jak modul -> likwiduje przedrostki
+#env_python_cpp = env.Copy()
+env['SHLIBPREFIX'] = ''
+
+target = 'calc'
+target_dir = ''
+target_path = os.path.join(target_dir, target)
+
+cpplib = env.SharedLibrary(target = [target_path], source = ['kmp.cpp', 'calc_py.cpp'])
+
+#zeby modul byl widoczny trzeba dodac sciezke do niego w pythonie przed wywolaniem
+#sys.path.extend([target_dir])
+
+#nie usuwa targetu cpplib przy wywolaniu 'scons -c'
+#env.NoClean(cpplib)
+
+
+
+
