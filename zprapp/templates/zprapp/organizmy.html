@@ -2,10 +2,10 @@
 {#{[aaa]}#}
 
 <div class="panel">
-    <h3 class="panel-heading panel">ORGANIZMY:
+    <h3 class="panel-heading panel">{[ 'ORGANIZMY' | translate | uppercase]}:
         <p class="text-right">
-            <button ng-controller="SearchSeqModalCtrl" class=" btn btn-primary" ng-click="open()">wyszukaj</button>
-            <button ng-controller="NewOrganizmModalCtrl" class="btn btn-primary" ng-click="open()">dodaj nowy organizm</button>
+            <button ng-controller="SearchSeqModalCtrl" class=" btn btn-primary" ng-click="open()">{['WYSZUKAJ' | translate]}</button>
+            <button ng-controller="NewOrganizmModalCtrl" class="btn btn-primary" ng-click="open()"> {[ 'DODAJ_NOWY_ORG' | translate ]}</button>
         </p>
     </h3>
 {#        <button ng-controller="NewOrganizmModalCtrl" class="btn btn-primary" ng-click="open()">nowy</button></h3>#}
@@ -29,7 +29,7 @@
                 <button class="btn btn-danger btn-sm fx-fade-normal fx-speed-700"
                         ng-click="deleteOrganism($index)"
                         ng-show="showDeleteOrganism[$index]"
-                        popover-placement="left" popover="usuń organizm" popover-trigger="mouseenter">
+                        popover-placement="left" popover="{['USUN_ORG' | translate ]}" popover-trigger="mouseenter">
                     <span class="glyphicon glyphicon-ban-circle"></span>
                 </button>
             </td>

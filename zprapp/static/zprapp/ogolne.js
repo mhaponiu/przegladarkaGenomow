@@ -4,7 +4,7 @@
 
 var cucModule = angular.module('CucModule', ['ngRoute', 'ui.bootstrap', 'ngCookies',
                                              'ngFileUpload', 'ngAnimate', 'ngFx',
-                                             'angular-clipboard']);
+                                             'angular-clipboard', 'pascalprecht.translate']);
 
 //w configu moga byc tylko providery, service'y trzeba do run dawac
 cucModule.config(function ($interpolateProvider) {
@@ -16,7 +16,12 @@ cucModule.config(function ($interpolateProvider) {
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 }).run(function($http, $cookies){
     $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
-});
+}).config(['$translateProvider', function ($translateProvider) {
+    $translateProvider.useStaticFilesLoader({
+                      prefix: 'static/zprapp/lang/',
+                      suffix: '.json' });
+                 $translateProvider.preferredLanguage('pl');
+}]);
 
 //function cucRouteConfig($routeProvider) {
 //    $routeProvider.
@@ -63,6 +68,13 @@ function cucRouteConfig($routeProvider) {
             redirectTo: '/organizmy'
         });
 }
+
+cucModule.controller("OgolnyKontroller", function ($scope, $translate){
+    $scope.langs = ['en', 'pl'];
+    $scope.changeLanguage = function (lang) {
+        $translate.use(lang)
+    };
+})
 
 //po przeniesieniu do angular 1.2.X nie działa - przeniesione do kontrolerow
 // trzeba dane z $http odrazu do scope'a ladowac

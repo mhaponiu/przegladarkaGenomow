@@ -28,6 +28,8 @@
         <script src="/static/zprapp/searchSeqModal.js"></script>
         <script src="/static/zprapp/js/ng-file-upload.js"></script>
         <script src="/static/zprapp/js/angular-clipboard.js"></script>
+        <script src="/static/zprapp/angularjs/angular-translate.js"></script>
+        <script src="/static/zprapp/angularjs/angular-translate-loader-static-files.js"></script>
         {#    <script src="/static/zprapp/angularjs/bootstrap.js"></script>#}
         {#    <script src="/static/zprapp/angularjs/jquery.js"></script>#}
         {#    <script src="/static/zprapp/angularjs/bootstrap-theme.css.map"></script>#}
@@ -50,13 +52,15 @@
         <title></title>
     </head>
 
-    <body>
-
+    <body ng-controller="OgolnyKontroller">
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 col-lg-offset-1">
                     <div class="navbar navbar-inverse">
-                        <a class="navbar-brand" href="#/organizmy">PRZEGLĄDARKA GENOMÓW</a>
+                        <a class="navbar-brand" href="#/organizmy">{['PRZEGLADARKA_GENOMOW' | translate | uppercase]}</a>
+                        <span ng-repeat="lang in langs" id="a_lang_{[ lang ]}" ng-click="changeLanguage(lang)">
+                            <img ng-src="/static/zprapp/lang/pict/{[ lang ]}.png"/>
+                        </span>
                     </div>
                     <style>
                         div[ng-view].ng-enter {
