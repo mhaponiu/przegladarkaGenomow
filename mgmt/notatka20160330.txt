@@ -1,0 +1,18 @@
+- dodać wersję angielską interfejsu użytkownika
+- marker ma: typ, pozycję początku, pozycję końca, chromosom oraz NAZWĘ; należy dodać dodatkowe pole w bazie danych; nazwa może być pusta, nazwa nie musi być unikalana
+- dodać możliwość wyszukiwania markera po nazwie
+- zaimportować dane (2 pliki)
+
+1. Plik BAM (w tym samym katalogu) STC_vs_contigs1.xlsx
+
+2. Przesyłam pozycję BES na kontigach.
+Na stronie konsorcjum: http://csgenome.sggw.pl/en-us/resources/
+Znajduje się plik Annotation GFF - to są pozycje genów wraz z pozycją
+elementów budowy (egzony i i introny).
+Możemy się spotkać w celu wyjaśnienia co jest co, lub zdzwonić.
+
+
+
+Dane będą umieszczane na serwerze antakya.ise.pw.edu.pl
+
+/home/mhaponiu/genview-data
