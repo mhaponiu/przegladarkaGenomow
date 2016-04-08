@@ -199,7 +199,7 @@ def ajaxSeqSection(request):
     # else:
     #     seq_list.append(selected_scflds[-1].sequence_set.first().sequence[:widok_do])
 
-    return HttpResponse("DSFADS")
+    # return HttpResponse("DSFADS")
 
 def test(request):
     #TODO zrobic tak zeby post'a przyjmowal i byl w ajaxSekwencja

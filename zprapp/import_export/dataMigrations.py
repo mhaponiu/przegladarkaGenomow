@@ -1,13 +1,15 @@
-from organizm import Organizm
+from collections import namedtuple
+
 from chromosom import Chromosom
-from scaffold import ScaffoldImpExp
 from markerImpExp import MarkerImpExp
 from meaningImpExp import MeaningImpExp
-from zprapp.models import Chromosome, Marker, Scaffold, Organism, Meaning, Sequence
-from sekwencjaGff import SekwencjaGff
+from organizm import Organizm
+from scaffold import ScaffoldImpExp
 from sekwencjaFasta import SekwencjaFastaImpExp
+from sekwencjaGff import SekwencjaGff
 from wyjatki import CheckError
-from collections import namedtuple
+from zprapp.models import Chromosome, Marker, Scaffold, Organism, Sequence
+
 
 class DataMigrations(object):
     def __init__(self):
@@ -105,7 +107,7 @@ class DataMigrations(object):
 if __name__ == "__main__":
     data = DataMigrations()
     # exp.export([54,55])
-    data.export([92])
+    data.export([126])
 
     # chrms, mean = exp._prepare_lists_id([54])
     # print chrms
