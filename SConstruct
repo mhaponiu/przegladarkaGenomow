@@ -69,13 +69,14 @@ if env['run'] == 'l':
     os.system('{python} manage.py runserver {port}'.format(python=VIRTUALENV_PYTHON, port=WEB_SRV_PORT_LOCAL))
 
 elif env['run'] == 'p':
-    os.system(BROWSER_CMD)
+    #os.system(BROWSER_CMD)
     os.system('{gunicorn} --bind {unix_socket} zpr.wsgi:application'.format(gunicorn= os.path.join(VIRTUALENV_ROOT, 'bin', 'gunicorn'), unix_socket=UNIX_SOCKET))
 
 elif ( 1 in [ env['build_db'], env['clear_db'], env['test'], env['restore_ogorek_roboczy'] ]):
 
     if env['build_db'] == 1 or env['clear_db'] == 1:
-        os.system('{python} manage.py migrate'.format(python= VIRTUALENV_PYTHON))
+        os.system('{python} manage.py makemigrations zprapp'.format(python= VIRTUALENV_PYTHON))
+        os.system('{python} manage.py migrate zprapp'.format(python= VIRTUALENV_PYTHON))
 
     # import ustawien django zeby mozna uzywac orm django do bazy danych
     # bez wywolywania django shell, tylko z poziomu np terminala
@@ -124,4 +125,6 @@ else:
 
     os.system('{python} manage.py collectstatic --noinput'.format(python=VIRTUALENV_PYTHON))
     print "******* Koniec podstawowego budowania aplikacji: *******"
+
+    SConscript(['zprapp/calc/SConscript'], exports=['env']);
 

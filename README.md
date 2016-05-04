@@ -78,6 +78,7 @@
     <li>
         uruchom w produkcji <b><i>scons run=p</i></b>
     </li>
+    (jesli nginx nie serwuje plikow statycznych -> kazdy folder na scieżce do plików musi mieć uprawnienia dostępu (rx) dla innych użytkowników(a), czyli chmod a+rx)
 </ul>
 
 <h2>Polecenia:</h2>

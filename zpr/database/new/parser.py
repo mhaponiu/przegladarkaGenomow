@@ -9,7 +9,7 @@ from zpr.settings import BASE_DIR
 
 
 class ParserXLSX(object):
-    def __init__(self, xslx_location=os.path.abspath(os.path.join(BASE_DIR, '../database/new/STC_vs_contigs1.xlsx'))):
+    def __init__(self, xslx_location):
         self.xslx_location = xslx_location
 
     def _convert_string_to_correct_namedtuple(self, text, col):
@@ -18,6 +18,9 @@ class ParserXLSX(object):
             return 'unknown'+str(col)
         text = text.replace("1st", "First")
         text = text.replace(" ", "_")
+        if text.startswith("if"):
+            text = text.replace('if', "i_f")
+        text = re.sub(r"!|@|#|$|%|^|&|\*|(|)|=|\+", "", text)
         return text
 
     def _gen_row_from_sheet_nr(self, nr):
@@ -60,6 +63,19 @@ class ParserXLSX(object):
         for row in row_gen:
             yield XLSX(*row)
 
+    # def gen_record_arkusz1(self):
+    #     return self._gen_record_from_sheet_by_name("Arkusz1")
+    #
+    # def gen_record_arkusz2(self):
+    #     return self._gen_record_from_sheet_by_name("Arkusz2")
+    #
+    # def gen_record_arkusz3(self):
+    #     return self._gen_record_from_sheet_by_name("Arkusz3")
+
+class ParserSTC_vs_contigs1(ParserXLSX):
+    def __init__(self, xslx_location=os.path.abspath(os.path.join(BASE_DIR, '../database/new/STC_vs_contigs1.xlsx'))):
+        ParserXLSX.__init__(self, xslx_location)
+
     def gen_record_arkusz1(self):
         return self._gen_record_from_sheet_by_name("Arkusz1")
 
@@ -68,6 +84,17 @@ class ParserXLSX(object):
 
     def gen_record_arkusz3(self):
         return self._gen_record_from_sheet_by_name("Arkusz3")
+
+
+
+class ParserLinks3(ParserXLSX):
+    def __init__(self, xslx_location=os.path.abspath(os.path.join(BASE_DIR, '../database/new/links3.xlsx'))):
+        ParserXLSX.__init__(self, xslx_location)
+
+    def gen_record_oryginalny(self):
+        return self._gen_record_from_sheet_by_name("ORYGINALNY")
+
+
 
 class ParserGffTxt(object):
     def __init__(self, gff_file=os.path.abspath(os.path.join(BASE_DIR, '../database/new/GFF_to_Predictions_ID.txt'))):
@@ -98,22 +125,22 @@ class ParserGffTxt(object):
 
 
 if __name__ == '__main__':
-    p = ParserXLSX()
+    p = ParserSTC_vs_contigs1()
     g1 = p.gen_record_arkusz1()
     print g1.next()
-    # print list(p.gen_record_arkusz1()).__len__() # 52524
+    print list(p.gen_record_arkusz1()).__len__() # 52524
 
     g2 = p.gen_record_arkusz2()
     print g2.next()
-    # print list(p.gen_record_arkusz2()).__len__() # 52524
+    print list(p.gen_record_arkusz2()).__len__() # 52524
 
     g3 = p.gen_record_arkusz3()
     print g3.next()
-    # print list(p.gen_record_arkusz3()).__len__() # 12087
+    print list(p.gen_record_arkusz3()).__len__() # 12087
 
     p2 = ParserGffTxt()
     print p2.gen_record().next()
-    # print list(p2.gen_record()).__len__() # 210143
+    print list(p2.gen_record()).__len__() # 210143
 
     # XLSX(lp=7535.0, Read_name=u'STC1_Bam_071_J24_M13.f', Polskie_chromosomy=1.0, Chinese_chromosome=4.0,
     #       Read_Length=780.0, Ctg_ID_NCBI=138.0, Ctg_Length=30580.0, First_base_ctg=2252.0, Last_base_ctg=3031.0,
@@ -126,3 +153,8 @@ if __name__ == '__main__':
     #       cM_wg_r='', v=u'ok.')
     # GFF(ContigID='CSB10A_v1_contig_1', Model='GeneMark.hmm', Feature='stop_codon', Start='11744', Stop='11746',
     #       Strand='-', unknown='0', GFF_GeneID=' 1_g', Predictions_GeneID='gene_1#CSB10A_v1_contig_1')
+
+    p2 = ParserLinks3()
+    g4 = p2.gen_record_oryginalny()
+    print g4.next()
+    print list(g4.next()).__len__()
