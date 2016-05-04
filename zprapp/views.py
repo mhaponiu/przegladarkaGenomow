@@ -6,7 +6,8 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
-from zprapp.calc import calc;
+
+from zprapp.calc.calc import kmp
 from zprapp.import_export.chromosom import Chromosom
 from zprapp.import_export.dataMigrations import DataMigrations
 from zprapp.import_export.organizm import Organizm
@@ -265,13 +266,13 @@ def ajaxDeleteOrganism(request):
     else:
         return HttpResponse(status=405)
 
-
+@csrf_exempt
 def ajaxSearchSeq(request):
     if request.method == "POST":
         body = json.loads(request.body);
         wzorzec = str(body['wzorzec']);
         cel = str(body['cel'])
-        wynik = calc.kmp(cel, wzorzec)
+        wynik = kmp(cel, wzorzec)
         # print wzorzec, cel;
         return JsonResponse(wynik, safe=False)
 

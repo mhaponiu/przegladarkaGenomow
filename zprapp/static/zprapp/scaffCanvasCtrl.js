@@ -101,7 +101,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
         $scope.canvas.meanings.reset();
 
         for(var i=0; i<$scope.canvas.meanings.data.length; i++){
-            $scope.$watch("canvas.meanings.data["+i+"].check", function(){
+            $scope.$watch("canvas.meanings.data["+ i +"].check", function(){
                 $scope.canvas.mrkrs = $filter("selectMarkersChecked")($scope.mrkrs, $scope.canvas.meanings.data);
                 updatePanel();
             })
@@ -115,6 +115,8 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
     }).then(function(){
         setDrawStage()
     })
+//######################### KONIEC GLOWNA INICJALIZACJA ########################################################
+
 
     $scope.canvas.meanings.reset = function(){
         for(var i=0; i<$scope.canvas.meanings.data.length; i++){
@@ -172,6 +174,10 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
         }
 
         setDrawStage();
+    }
+    
+    $scope.updatePanel = function(){
+        updatePanel()
     }
 
     $scope.skokLewo = function(){
