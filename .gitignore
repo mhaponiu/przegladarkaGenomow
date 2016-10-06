@@ -8,8 +8,15 @@
 /zprapp/import_export/exported_data
 /zpr/database/data
 *.pyc
-/.idea
+/.idea/
 *.xml
 /.sconsign.dblite
 /build_tools/build_conf.json
 *~
+zprapp/calc/.sconsign.dblite
+zprapp/calc/calc.so
+zprapp/calc/calc_py.os
+zprapp/calc/kmp.os
+zprapp/migrations/__init__.py
+*.os
+*.so

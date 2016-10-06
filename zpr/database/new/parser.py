@@ -20,7 +20,7 @@ class ParserXLSX(object):
         text = text.replace(" ", "_")
         if text.startswith("if"):
             text = text.replace('if', "i_f")
-        text = re.sub(r"!|@|#|$|%|^|&|\*|(|)|=|\+", "", text)
+        text = re.sub(r"!|@|#|$|%|^|&|\*|\(|\)|=|\+", "", text)
         return text
 
     def _gen_row_from_sheet_nr(self, nr):
