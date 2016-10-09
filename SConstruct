@@ -13,7 +13,7 @@ WEB_CLIENT_START_PATH =''
 PROJECT_NAME = 'przegladarkaGenomow'
 
 #nginx
-WWW_SRV_HOST='89.76.222.16'
+WWW_SRV_HOST='192.168.0.16'
 WWW_SRV_PORT='80'
 
 WEB_CLIENT_PROD_HOST = WWW_SRV_HOST
@@ -46,7 +46,7 @@ vars.Add(BoolVariable('restore_ogorek_roboczy','Ustaw na 1 aby wczytac backup ba
 vars.Add(BoolVariable('build_deploy','[SUDO potrzebne] Ustaw na 1 aby skonfigurowac serwer www (nginx) i django do wdrozenia',False) )
 vars.Add(BoolVariable('new_secret_key','Ustaw na 1 aby wygenerowac nowy klucz',False) )
 
-vars.Add(BoolVariable('test','Ustaw na 1 aby odpalic jakas testowa operacje',False) )
+vars.Add(EnumVariable('test','Uruchom testy, a: wszystkie, f: funkcjonalne, u: jednostkowe', 'no', allowed_values = ('a', 'f', 'u', 'no'), map={}, ignorecase=2) )
 
 # srodowisko
 env = Environment(variables=vars)
@@ -72,7 +72,16 @@ elif env['run'] == 'p':
     #os.system(BROWSER_CMD)
     os.system('{gunicorn} --bind {unix_socket} zpr.wsgi:application'.format(gunicorn= os.path.join(VIRTUALENV_ROOT, 'bin', 'gunicorn'), unix_socket=UNIX_SOCKET))
 
-elif ( 1 in [ env['build_db'], env['clear_db'], env['test'], env['restore_ogorek_roboczy'] ]):
+elif env['test'] == 'a':
+    os.system('{python} manage.py test'.format(python=VIRTUALENV_PYTHON))
+
+elif env['test'] == 'f':
+    os.system('{python} manage.py test functional_tests'.format(python=VIRTUALENV_PYTHON))
+
+elif env['test'] == 'u':
+    os.system('{python} manage.py test zprapp'.format(python=VIRTUALENV_PYTHON))
+
+elif ( 1 in [ env['build_db'], env['clear_db'], env['restore_ogorek_roboczy'] ]):
 
     if env['build_db'] == 1 or env['clear_db'] == 1:
         os.system('{python} manage.py makemigrations zprapp'.format(python= VIRTUALENV_PYTHON))

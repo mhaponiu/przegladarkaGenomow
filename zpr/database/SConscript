@@ -42,7 +42,7 @@ elif env['restore_ogorek_roboczy'] == 1:
         print "ERROR : brak potrzebnego backupu {} w ".format(OGOREK_ROBOCZY_BACKUP), DATABASE_ROOT_FILES
 
 
-elif env['test'] == 1:
-    conf = AppBuilder.load_conf()
-    conf['db']['built'] = 34543
-    AppBuilder.save_conf(conf)
+#elif env['test'] == 1:
+#    conf = AppBuilder.load_conf()
+#    conf['db']['built'] = 34543
+#    AppBuilder.save_conf(conf)
