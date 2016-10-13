@@ -213,6 +213,7 @@ def test(request):
     #print seq_json;
     return HttpResponse(seq.sequence[:1000]);
 
+@csrf_exempt
 def ajaxNewOrganism(request):
     wynik = True;
     wiadomosc = "wiadomosc z serwera po odebraniu plikow"

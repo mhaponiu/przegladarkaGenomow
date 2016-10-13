@@ -107,7 +107,7 @@ class DataMigrations(object):
 if __name__ == "__main__":
     data = DataMigrations()
     # exp.export([54,55])
-    data.export([126])
+    data.export([1])
 
     # chrms, mean = exp._prepare_lists_id([54])
     # print chrms

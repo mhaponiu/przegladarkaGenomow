@@ -8,8 +8,8 @@
 /zprapp/import_export/exported_data
 /zpr/database/data
 *.pyc
-/.idea/
 *.xml
+/.idea/
 /.sconsign.dblite
 /build_tools/build_conf.json
 *~
@@ -20,3 +20,4 @@ zprapp/calc/kmp.os
 zprapp/migrations/__init__.py
 *.os
 *.so
+functional_tests/chromedriver
