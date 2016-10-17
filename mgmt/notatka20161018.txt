@@ -1,0 +1,3 @@
++ algorytm wyszukiwania napisu, KNP, obudowany warstwą prezentacji
++ interfejs pozwala na wybór algorytmu, później będzie też inny niż KNP, np. BLAST
++ czekamy na poprawne dane z SGGW
