@@ -4,8 +4,7 @@ from django.core import serializers
 from django.db.models.expressions import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 
 from zprapp.calc.calc import kmp
 from zprapp.import_export.chromosom import Chromosom
@@ -17,7 +16,7 @@ from zprapp.import_export.sekwencjaGff import SekwencjaGff
 from zprapp.import_export.wyjatki import CheckError
 from zprapp.models import Chromosome, Organism, Meaning;
 
-
+@ensure_csrf_cookie
 def index(request):
     return render(request, 'zprapp/index.html')
 
@@ -213,7 +212,7 @@ def test(request):
     #print seq_json;
     return HttpResponse(seq.sequence[:1000]);
 
-@csrf_exempt
+# @csrf_exempt
 def ajaxNewOrganism(request):
     wynik = True;
     wiadomosc = "wiadomosc z serwera po odebraniu plikow"
@@ -250,7 +249,7 @@ def ajaxNewOrganism(request):
 
     return JsonResponse({'success': wynik, 'message': wiadomosc});
 
-@csrf_exempt #nie zawsze angular dodaje ciasteczko do responsa z tokenem - cos dziwnego
+# @csrf_exempt #nie zawsze angular dodaje ciasteczko do responsa z tokenem - cos dziwnego
 def ajaxDeleteOrganism(request):
     print "proba usuniecia"
     if request.method == "DELETE":
@@ -267,7 +266,7 @@ def ajaxDeleteOrganism(request):
     else:
         return HttpResponse(status=405)
 
-@csrf_exempt
+# @csrf_exempt
 def ajaxSearchSeq(request):
     if request.method == "POST":
         body = json.loads(request.body);

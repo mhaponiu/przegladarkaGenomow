@@ -12,11 +12,10 @@ cucModule.config(function ($interpolateProvider) {
     $interpolateProvider.endSymbol(']}');
 }).config(function($httpProvider){
     $httpProvider.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-    // $httpProvider.defaults.xsrfCookieName = 'csrftoken';
-    // $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
+    $httpProvider.defaults.xsrfCookieName = 'csrftoken';
+    $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
 }).run(function($http, $cookies){
-    $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
-    // console.log($cookies)
+    // $http.defaults.headers.common['X-CSRFToken'] = $cookies.csrftoken;
 }).config(['$translateProvider', function ($translateProvider) {
     $translateProvider.useStaticFilesLoader({
                       prefix: 'static/zprapp/lang/',
