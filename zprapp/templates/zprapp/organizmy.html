@@ -109,6 +109,8 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
+                    <select class="form-control" ng-model="wybranyOrg"
+                            ng-options="org['fields']['name'] for org in orgs"/></select>
                     <input class="form-control" placeholder="cel" ng-model="cel">
                     <input class="form-control" placeholder="wzorzec" ng-model="wzorzec">
                     <div class="well">
@@ -120,8 +122,8 @@
         </div>
 
 
-        <div class="modal-footer">
-            <div>stopka</div>
-        </div>
+{#        <div class="modal-footer">#}
+{#            <div>stopka</div>#}
+{#        </div>#}
     </script>
 </div>

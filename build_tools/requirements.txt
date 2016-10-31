@@ -3,3 +3,6 @@ gunicorn==19.3.0
 psycopg2==2.6.1
 selenium==2.49.2
 xlrd==0.9.4
+djangorestframework==3.5.1
+Markdown==2.6.7
+django-filter==0.15.3

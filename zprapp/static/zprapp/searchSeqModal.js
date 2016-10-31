@@ -38,6 +38,10 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function($scope
     $scope.cel;
     $scope.wynik = ""
 
+
+    $scope.wybranyOrg = $scope.orgs[0]
+    // $scope.wybranyOrg = $scope.orgs[0]['fields']['name']
+
     // $scope.searchSeq = function(){
     //     console.log("searchSEQ!!!")
     //    var request = {
@@ -58,7 +62,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function($scope
             method: 'POST',
             url: 'ajax_searchSeq',
             //params: {param1: "p1p1p1", param2: "p2p2p2"}, //query string parametr
-            data: {wzorzec: $scope.wzorzec, cel: $scope.cel} //ukryte data w poscie
+            data: {wzorzec: $scope.wzorzec, cel: $scope.cel, org: $scope.wybranyOrg['pk']} //ukryte data w poscie
             //headers: {'Content-Type': 'application/x-www-form-urlencoded', //musi tak byc zeby posta dobrze odebralo, wiekszosc bibliotek JS tak robi
             //            'X-Requested-With': 'XMLHttpRequest'} //zeby w django request.is_ajax dawalo true
         };
