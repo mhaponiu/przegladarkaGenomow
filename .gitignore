@@ -20,4 +20,3 @@ zprapp/calc/kmp.os
 zprapp/migrations/__init__.py
 *.os
 *.so
-functional_tests/chromedriver
