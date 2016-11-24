@@ -34,11 +34,11 @@ class Organism(models.Model):
 class Chromosome(models.Model):
     number = models.IntegerField()
     length = models.FloatField()
-    organism = models.ForeignKey(Organism)
+    organism = models.ForeignKey(Organism, related_name='chromosomes')
 
 class Scaffold(models.Model):
     id = models.TextField(primary_key=True, null=False, unique=True)
-    chromosome = models.ForeignKey(Chromosome)
+    chromosome = models.ForeignKey(Chromosome, related_name='scaffolds')
     length = models.FloatField()
     order = models.IntegerField()
     start = models.FloatField()
@@ -54,5 +54,5 @@ class Marker(models.Model):
     chromosome = models.ForeignKey(Chromosome)
 
 class Sequence(models.Model):
-    scaffold = models.ForeignKey(Scaffold)
+    scaffold = models.ForeignKey(Scaffold, related_name='sequence', unique=True)
     sequence = models.TextField()

@@ -5,6 +5,9 @@ from django.db.models.expressions import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from rest_framework import viewsets, renderers
+from rest_framework.decorators import detail_route
+from rest_framework.response import Response
 
 from zprapp.calc.calc import kmp
 from zprapp.import_export.chromosom import Chromosom
@@ -14,7 +17,9 @@ from zprapp.import_export.scaffold import ScaffoldImpExp
 from zprapp.import_export.sekwencjaFasta import SekwencjaFastaImpExp
 from zprapp.import_export.sekwencjaGff import SekwencjaGff
 from zprapp.import_export.wyjatki import CheckError
-from zprapp.models import Chromosome, Organism, Meaning;
+from zprapp.models import Chromosome, Organism, Meaning, Scaffold, Sequence
+from zprapp.serializers import OrganismSerializer, ChromosomeSerializer, ScaffoldSerializer, SequenceSerializer
+
 
 @ensure_csrf_cookie
 def index(request):
@@ -288,6 +293,8 @@ def ajaxPost(request):
     print "body['data1']: ", body['data1'];
     print "request.GET['param1']: ", request.GET['param1'];
     return HttpResponse("JAKIS POST");
+
+
 # var ajaxRequest = function(){
 #         var request = {
 #             method: 'POST',
@@ -303,4 +310,29 @@ def ajaxPost(request):
 #             });
 #     }
 
+class OrganismViewSet(viewsets.ModelViewSet):
+    queryset = Organism.objects.all()
+    serializer_class = OrganismSerializer
 
+class ChromosomeViewSet(viewsets.ModelViewSet):
+    queryset = Chromosome.objects.all()
+    serializer_class = ChromosomeSerializer
+
+class ScaffoldViewSet(viewsets.ModelViewSet):
+    queryset = Scaffold.objects.all()
+    serializer_class = ScaffoldSerializer
+
+    @detail_route(renderer_classes=(renderers.StaticHTMLRenderer,))
+    def rawseq(self, request, *args, **kwargs):
+        scf = self.get_object()
+        seq_obj = Sequence.objects.get(scaffold= scf)
+        return Response(seq_obj.sequence)
+
+class SequenceViewSet(viewsets.ModelViewSet):
+    queryset = Sequence.objects.all()
+    serializer_class = SequenceSerializer
+
+    @detail_route(renderer_classes=(renderers.StaticHTMLRenderer,))
+    def rawseq(self, request, *args, **kwargs):
+        seq = self.get_object()
+        return Response(seq.sequence)
