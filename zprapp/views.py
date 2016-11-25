@@ -271,10 +271,28 @@ def ajaxSearchSeq(request):
     if request.method == "POST":
         body = json.loads(request.body);
         wzorzec = str(body['wzorzec']);
-        cel = str(body['cel'])
-        wynik = kmp(cel, wzorzec)
+        # cel = str(body['cel'])
+        # wynik = kmp(cel, wzorzec)
+
+        ret = []
+        org = Organism.objects.get(id=body['org'])
+        chrms = org.chromosome_set.all()
+
+        for chr in chrms:
+            scflds = chr.scaffold_set.all()
+            for scf in scflds:
+                seq = str(scf.sequence_set.all()[0].sequence)
+                pozycje = kmp(seq, wzorzec)
+                # pozycje = []
+                if pozycje == []:
+                    continue
+                ret_item={'org_id': org.id,
+                          'chr_id': chr.id, 'scf_id': scf.id,
+                          'pos': pozycje}
+                ret.append(ret_item)
+
         # print wzorzec, cel;
-        return JsonResponse(wynik, safe=False)
+        return JsonResponse(ret, safe=False)
 
 
 # @csrf_exempt

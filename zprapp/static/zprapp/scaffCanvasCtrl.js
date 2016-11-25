@@ -113,6 +113,24 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
         initSettings();
         //$scope.canvas.getViewData(); -> wykonywany juz w initSettings()?
     }).then(function(){
+        var view_from = DataBufor.getData('view_from') //jest to wzgledem skafoldu
+        var view_to = DataBufor.getData('view_to') // jest to wzgledem skafoldu
+        var start_scf = 0
+
+        if(angular.isNumber(view_from, view_to) && view_from < view_to){
+            var scf_id = DataBufor.getData('scf_id')
+            console.log($scope.scflds)
+
+            for(var i = 0; i < $scope.scflds.length; i++){
+                if($scope.scflds[i]['pk'] == scf_id){
+                    start_scf = $scope.scflds[i]['fields']['start']
+                    break
+                }
+            }
+            $scope.settings.widok_od = start_scf + view_from
+            $scope.settings.widok_do = start_scf + view_to
+        }
+    }).then(function(){
         setDrawStage()
     })
 //######################### KONIEC GLOWNA INICJALIZACJA ########################################################

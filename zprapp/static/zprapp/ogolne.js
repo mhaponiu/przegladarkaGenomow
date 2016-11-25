@@ -239,6 +239,27 @@ cucModule.filter("wytnijNaScaffView", function(){
             return listaList
         }
     }
+}).filter("multipleLineWhenManyPos", function() {
+    return function (listaWierszy) {
+        if(angular.isArray(listaWierszy)){
+            var new_list = []
+            angular.forEach(listaWierszy, function(wiersz){
+                var pos_list = wiersz['pos']
+                angular.forEach(pos_list, function(p){
+                    new_list.push({
+                        'org_id': wiersz['org_id'],
+                        'chr_id': wiersz['chr_id'],
+                        'scf_id': wiersz['scf_id'],
+                        'pos': p
+                    })
+                })
+            })
+            return new_list
+        }
+        else{
+            return listaWierszy
+        }
+    }
 })
 
 

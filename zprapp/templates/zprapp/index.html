@@ -1,116 +1,155 @@
 <!DOCTYPE html>
 <html ng-app="CucModule">
-    <head lang="en">
-        <link href="/static/zprapp/css/bootstrap.css" rel="stylesheet"/>
-        <link href="/static/zprapp/css/bootstrap-theme.css" rel="stylesheet"/>
-        <link href="/static/zprapp/css/animate.css" rel="stylesheet"/>
-        {#    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.js"></script>#}
-        <script src="/static/zprapp/angularjs/angular.js"></script>
-        <script src="/static/zprapp/angularjs/angular-route.js"></script>
-        <script src="/static/zprapp/angularjs/angular-cookies.js"></script>
-        {#    1.2.22#}
-        <script src="/static/zprapp/angularjs/angular-animate.js"></script>
-{#        <script src="/static/zprapp/js/ngfx/jquery-1.11.3.min.js"></script>#}
-        <script src="/static/zprapp/js/ngfx/TweenMax.min.js"></script>
-        <script src="/static/zprapp/js/ngfx/ngFx.js"></script>
+<head lang="en">
+    <link href="/static/zprapp/css/bootstrap.css" rel="stylesheet"/>
+    <link href="/static/zprapp/css/bootstrap-theme.css" rel="stylesheet"/>
+    <link href="/static/zprapp/css/animate.css" rel="stylesheet"/>
+    {#    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.22/angular.js"></script>#}
+    <script src="/static/zprapp/angularjs/angular.js"></script>
+    <script src="/static/zprapp/angularjs/angular-route.js"></script>
+    <script src="/static/zprapp/angularjs/angular-cookies.js"></script>
+    {#    1.2.22#}
+    <script src="/static/zprapp/angularjs/angular-animate.js"></script>
+    {#        <script src="/static/zprapp/js/ngfx/jquery-1.11.3.min.js"></script>#}
+    <script src="/static/zprapp/js/ngfx/TweenMax.min.js"></script>
+    <script src="/static/zprapp/js/ngfx/ngFx.js"></script>
 
-        <script src="/static/zprapp/js/ui-bootstrap-tpls-0.12.1.min.js"></script>
-        <script src="/static/zprapp/angularjs/events.js"></script>
-        <script src="/static/zprapp/ogolne.js"></script>
-        <script src="/static/zprapp/organizmCtrl.js"></script>
-        <script src="/static/zprapp/sekwencjaKontroller.js"></script>
-        <script src="/static/zprapp/scaffoldKontroler.js"></script>
-        <script src="/static/zprapp/chromosomKontroler.js"></script>
-        <script src="/static/zprapp/chrCanvasCtrl.js"></script>
-        <script src="/static/zprapp/scaffCanvasCtrl.js"></script>
-        <script src="/static/zprapp/scaffModal.js"></script>
-        <script src="/static/zprapp/newOrganizmModal.js"></script>
-        <script src="/static/zprapp/searchSeqModal.js"></script>
-        <script src="/static/zprapp/searchMarkerModal.js"></script>
+    <script src="/static/zprapp/js/ui-bootstrap-tpls-0.12.1.min.js"></script>
+    <script src="/static/zprapp/angularjs/events.js"></script>
+    <script src="/static/zprapp/ogolne.js"></script>
+    <script src="/static/zprapp/organizmCtrl.js"></script>
+    <script src="/static/zprapp/sekwencjaKontroller.js"></script>
+    <script src="/static/zprapp/scaffoldKontroler.js"></script>
+    <script src="/static/zprapp/chromosomKontroler.js"></script>
+    <script src="/static/zprapp/chrCanvasCtrl.js"></script>
+    <script src="/static/zprapp/scaffCanvasCtrl.js"></script>
+    <script src="/static/zprapp/scaffModal.js"></script>
+    <script src="/static/zprapp/newOrganizmModal.js"></script>
+    <script src="/static/zprapp/searchSeqModal.js"></script>
+    <script src="/static/zprapp/searchMarkerModal.js"></script>
+    <script src="/static/zprapp/bucketModal.js"></script>
 
-        <script src="/static/zprapp/js/ng-file-upload.js"></script>
-        <script src="/static/zprapp/js/angular-clipboard.js"></script>
-        <script src="/static/zprapp/angularjs/angular-translate.js"></script>
-        <script src="/static/zprapp/angularjs/angular-translate-loader-static-files.js"></script>
-        {#    <script src="/static/zprapp/angularjs/bootstrap.js"></script>#}
-        {#    <script src="/static/zprapp/angularjs/jquery.js"></script>#}
-        {#    <script src="/static/zprapp/angularjs/bootstrap-theme.css.map"></script>#}
-        {#    <script src="/static/zprapp/angularjs/bootstrap.css.map"></script>#}
+    <script src="/static/zprapp/js/ng-file-upload.js"></script>
+    <script src="/static/zprapp/js/angular-clipboard.js"></script>
+    <script src="/static/zprapp/angularjs/angular-translate.js"></script>
+    <script src="/static/zprapp/angularjs/angular-translate-loader-static-files.js"></script>
+    {#    <script src="/static/zprapp/angularjs/bootstrap.js"></script>#}
+    {#    <script src="/static/zprapp/angularjs/jquery.js"></script>#}
+    {#    <script src="/static/zprapp/angularjs/bootstrap-theme.css.map"></script>#}
+    {#    <script src="/static/zprapp/angularjs/bootstrap.css.map"></script>#}
 
-        {#    chyba nigdzie nie uzywane#}
-        <style type="text/css">
-            .selected {
-                background-color: rgba(199, 240, 234, 0.55);
-            }
-        </style>
-        {#    <style>#}
-        {#        canvas {#}
-        {#            background-color: blue;#}
-        {#            width: 100%;#}
-        {#            height: auto;#}
-        {#        }#}
-        {#    </style>#}
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
+    {#    chyba nigdzie nie uzywane#}
+    <style type="text/css">
+        .selected {
+            background-color: rgba(199, 240, 234, 0.55);
+        }
+    </style>
+    {#    <style>#}
+    {#        canvas {#}
+    {#            background-color: blue;#}
+    {#            width: 100%;#}
+    {#            height: auto;#}
+    {#        }#}
+    {#    </style>#}
+    <meta charset="UTF-8">
+    <title></title>
+</head>
 
-    <body ng-controller="OgolnyKontroller">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-10 col-lg-offset-1">
-                    <div class="navbar navbar-inverse">
-                        <a class="navbar-brand" href="#/organizmy">{['PRZEGLADARKA_GENOMOW' | translate | uppercase]}</a>
-{#                        <a ng-repeat="lang in langs" id="a_lang_{[ lang ]}" ng-click="changeLanguage(lang)">#}
-{#                                <img ng-src="/static/zprapp/lang/pict/{[ lang ]}.png"/>#}
-{#                            </a>#}
-                        <div class="navbar-brand" align="right">
+<body ng-controller="OgolnyKontroller">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-10 col-lg-offset-1">
+            <div class="navbar navbar-inverse">
+                <a class="navbar-brand" href="#/organizmy">{['PRZEGLADARKA_GENOMOW' | translate | uppercase]}</a>
+                {#                        <a ng-repeat="lang in langs" id="a_lang_{[ lang ]}" ng-click="changeLanguage(lang)">#}
+                {#                                <img ng-src="/static/zprapp/lang/pict/{[ lang ]}.png"/>#}
+                {#                            </a>#}
+                <div class="navbar-brand" align="right">
                             <span ng-repeat="lang in langs" id="a_lang_{[ lang ]}" ng-click="changeLanguage(lang)">
                                 <img ng-src="/static/zprapp/lang/pict/{[ lang ]}.png"/>
                             </span>
-                        </div>
-                    </div>
-                    <style>
-                        div[ng-view].ng-enter {
-                            -webkit-animation: fadeInRight 0.5s;
-                            animation: fadeInRight 0.5s;
-                        }
-                    </style>
-                    <div ng-view id="view"></div>
+
+                </div>
+                <div align="right">
+                    <button ng-controller="BucketModalCtrl" class="btn btn-primary"
+                            ng-click="open()">
+                        <span class="glyphicon glyphicon-shopping-cart"> {[ile_w_koszyku]}</span>
+                    </button>
+
                 </div>
             </div>
-
+            <style>
+                div[ng-view].ng-enter {
+                    -webkit-animation: fadeInRight 0.5s;
+                    animation: fadeInRight 0.5s;
+                }
+            </style>
+            <div ng-view id="view"></div>
         </div>
+    </div>
+
+</div>
 
 
-        {# mimo ze uzywam modala w scaffoldy.html to modal musi byc poza wszystkimi div'ami wiec jest tutaj #}
-        <div class="modal fade" id="sequenceWarningModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Nagłówek -->
-                    <div class="modal-header">
-                        {#                <button type="button" class="close" data-dismiss="modal">&times;</button>#}
-                        <h4 class="modal-title">Uwaga!</h4>
-                    </div>
-                    <!-- Treść -->
-                    <div class="modal-body" id="dupa">
-                        <h1>Drodzy Czytelnicy!</h1>
-                    </div>
-                    <!-- Stopka -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-                        <button type="button" class="btn btn-primary">Zapisz zmiany</button>
-                    </div>
-                </div>
+{# mimo ze uzywam modala w scaffoldy.html to modal musi byc poza wszystkimi div'ami wiec jest tutaj #}
+<div class="modal fade" id="sequenceWarningModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Nagłówek -->
+            <div class="modal-header">
+                {#                <button type="button" class="close" data-dismiss="modal">&times;</button>#}
+                <h4 class="modal-title">Uwaga!</h4>
+            </div>
+            <!-- Treść -->
+            <div class="modal-body" id="dupa">
+                <h1>Drodzy Czytelnicy!</h1>
+            </div>
+            <!-- Stopka -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+                <button type="button" class="btn btn-primary">Zapisz zmiany</button>
             </div>
         </div>
-        {#    <script>#}
-        {#    var opt = {#}
-        {#                backdrop: "static",#}
-        {#                show: false,#}
-        {#                remote: true#}
-        {#            };#}
-        {#        $("#myModal").modal(opt);#}
-        {#    </script>#}
+    </div>
+</div>
+{#    <script>#}
+{#    var opt = {#}
+{#                backdrop: "static",#}
+{#                show: false,#}
+{#                remote: true#}
+{#            };#}
+{#        $("#myModal").modal(opt);#}
+{#    </script>#}
 
-    </body>
+
+{##########################################################################################################################}
+{#okno modalne z koszykiem#}
+<div ng-controller="BucketModalCtrl">
+    <script type="text/ng-template" id="BucketModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">wyszukane sekwencje</h3>
+        </div>
+        <div class="modal-body">
+            <table class="table table-striped table-hover">
+                <thead>
+                <tr>
+                    <th>Nazwa</th>
+                    <th>c</th>
+                </tr>
+                </thead>
+                <tr ng-repeat="i in koszyk">
+                    <td>
+                        <h5>
+                            {[i]}
+                        </h5>
+                    </td>
+                    <td align="right">
+                        COS
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </script>
+</div>
+</body>
 </html>
