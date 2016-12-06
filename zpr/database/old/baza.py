@@ -13,6 +13,9 @@ from znaczenia import *
 '''
 
 class DatabaseGenome(DBBase):
+    '''stara baza danych stworzona jeszcze przez Piotra Roza
+    zostala odtworzona zeby dalo sie jakies dane wrzucic'''
+
     def __init__(self, connect_string = None, marker_xls = None):
         if None not in [connect_string, marker_xls]:
             self.CONNECT_STRING = connect_string

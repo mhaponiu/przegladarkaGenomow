@@ -1,4 +1,4 @@
-from dbbase import *
+from zpr.database.dbbase import *
 from zprapp.models import Organism
 
 

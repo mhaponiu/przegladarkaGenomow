@@ -1,4 +1,4 @@
-from dbbase import DBBase
+from zpr.database.dbbase import DBBase
 from scaffoldy import Scaffolds
 from zprapp.models import Organism, Meaning, Marker, Chromosome
 

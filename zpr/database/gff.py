@@ -23,7 +23,7 @@ class Gff(FormatInterface):
         with open(filename, 'wt') as f:
             ORGANICZENIE = 0
             for record in self._gen_record_from_db():
-                #FIXME sztuczne ograniczenie, usunac je mozna
+                # FIXME sztuczne ograniczenie, usunc je mozna
                 if ORGANICZENIE == limit: break
                 ORGANICZENIE+=1
 

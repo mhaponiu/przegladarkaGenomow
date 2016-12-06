@@ -1,4 +1,4 @@
-from baza import DatabaseGenome
+from old.baza import DatabaseGenome
 from build_tools.build import AppBuilder
 import os
 

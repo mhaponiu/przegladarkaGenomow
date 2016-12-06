@@ -1,4 +1,4 @@
-from dbbase import DBBase
+from zpr.database.dbbase import DBBase
 from zprapp.models import Meaning
 
 

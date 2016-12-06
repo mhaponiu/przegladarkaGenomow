@@ -63,14 +63,6 @@ class ParserXLSX(object):
         for row in row_gen:
             yield XLSX(*row)
 
-    # def gen_record_arkusz1(self):
-    #     return self._gen_record_from_sheet_by_name("Arkusz1")
-    #
-    # def gen_record_arkusz2(self):
-    #     return self._gen_record_from_sheet_by_name("Arkusz2")
-    #
-    # def gen_record_arkusz3(self):
-    #     return self._gen_record_from_sheet_by_name("Arkusz3")
 
 class ParserSTC_vs_contigs1(ParserXLSX):
     def __init__(self, xslx_location=os.path.abspath(os.path.join(BASE_DIR, '../database/new/STC_vs_contigs1.xlsx'))):
@@ -86,14 +78,12 @@ class ParserSTC_vs_contigs1(ParserXLSX):
         return self._gen_record_from_sheet_by_name("Arkusz3")
 
 
-
 class ParserLinks3(ParserXLSX):
     def __init__(self, xslx_location=os.path.abspath(os.path.join(BASE_DIR, '../database/new/links3.xlsx'))):
         ParserXLSX.__init__(self, xslx_location)
 
     def gen_record_oryginalny(self):
         return self._gen_record_from_sheet_by_name("ORYGINALNY")
-
 
 
 class ParserGffTxt(object):
@@ -142,6 +132,7 @@ if __name__ == '__main__':
     print p2.gen_record().next()
     print list(p2.gen_record()).__len__() # 210143
 
+    # STD_OUTPUT:
     # XLSX(lp=7535.0, Read_name=u'STC1_Bam_071_J24_M13.f', Polskie_chromosomy=1.0, Chinese_chromosome=4.0,
     #       Read_Length=780.0, Ctg_ID_NCBI=138.0, Ctg_Length=30580.0, First_base_ctg=2252.0, Last_base_ctg=3031.0,
     #       strand=u'-', Read_partner_name=u'STC1_Bam_071_J24_M13.r', Partner_contig=135.0, Real_insert_length=121308.0,
