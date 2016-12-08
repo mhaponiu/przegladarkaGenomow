@@ -79,8 +79,8 @@ class ParserSTC_vs_contigs1(ParserXLSX):
 
 
 class ParserLinks3(ParserXLSX):
-    def __init__(self, xslx_location=os.path.abspath(os.path.join(BASE_DIR, '../database/new/links3.xlsx'))):
-        ParserXLSX.__init__(self, xslx_location)
+    def __init__(self):
+        ParserXLSX.__init__(self, xslx_location=os.path.abspath(os.path.join(BASE_DIR, '../database/new/links3.xlsx')))
 
     def gen_record_oryginalny(self):
         return self._gen_record_from_sheet_by_name("ORYGINALNY")
