@@ -1,8 +1,9 @@
 # coding=latin-1
-
+import json
+import os
 from zpr.database.new.parser import ParserLinks3
-import pickle
-import cPickle
+
+from zpr.settings import BASE_DIR
 
 
 class Links3(object):
@@ -40,8 +41,16 @@ class Links3(object):
         print 'liczba scfldow - liczba scfldow z 1 contigiem == liczba nieprawidlowych num_bases_in_super: ', \
             liczba_scaffoldow - amount_scfldy_one_ctg == incorrect_num_bases_in_super, \
             "=> wniosek: wszystkie scaffoldy co maja >1 ctg maja nieprawidlowa 'kolumne num_bases_in_super'"
-        # TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        print 'hipoteza: num_bases_in_super zawierają GAPY => sprawdzic dla bezwzglednych wartosci GAPow'
+        print "suma gapow_abs miedzy contigami dla scaffoldu (dict[scfld]=sum_abs_gaps): ", \
+            self.sum_abs_gaps_between_ctgs_in_scfld_()
+
+        print 'hipoteza: num_bases_in_super zawieraja GAPY => sprawdzic dla bezwzglednych wartosci GAPow: FALSZ,' \
+              'jakis problem z ujemnymi gapami, zgadza sie gdy wszystkie gapy w scaffoldzie sa dodatnie (plik scaff_links3.json)'
+        plik = os.path.abspath(os.path.join(BASE_DIR, '..', 'database', 'new', 'scaff_links3.json'))
+        with open(plik, 'wt') as f:
+            d = self.full_scaffold_dict_stats()
+            f.write(json.dumps(d, sort_keys=True, indent=4, separators=(',', ': ')))
+            print 'zapis do pliku ', plik
 
     def max_ncbi_ctg_id(self):
         return int(max(self.lista_links3, key=lambda a: a.ncbi_ctg_id).ncbi_ctg_id)
@@ -101,13 +110,42 @@ class Links3(object):
         return d
 
     def check_col_num_bases_in_super_with_sum_length_of_contig(self):
-        '''zwraca liczbe scaffoldow gdzie nie zgadza sie ta kolumna z obliczona wartoscia'''
+        '''zwraca liczbe scaffoldow gdzie nie zgadza sie kolumna num_bases_in_super
+        z obliczona suma dlugosci contigow'''
         zle = 0
         obliczony_dict = self.sum_len_of_contigs_without_gaps_between()  # dict[scfld] = sum_ctgs_len
         for scf_id, rows in self._dict_scafld_ctgs().items():
             if obliczony_dict[scf_id] != rows[0].num_bases_in_super:
                 zle = zle + 1
         return zle
+
+    def sum_abs_gaps_between_ctgs_in_scfld_(self):
+        '''return dict[scfld] = sum_abs_gaps_between_ctgs_in_scaffold
+        pola gaps sa na minusie czesto -> robie abs'a na nich
+        uzywam tylko pola after do sumowania
+        pole before przy pierwszym contigu w scaffoldzie ma zawsze zero (chyba)'''
+        d = {}
+        for scf in range(int(self.min_scaffold_id()), int(self.max_scaffold_id()) + 1):
+            d[scf] = 0
+        for row in self.lista_links3:
+            d[int(row.super_id)] = d[int(row.super_id)] + abs(int(row.estimated_gap_after_contig))
+        return d
+
+    def full_scaffold_dict_stats(self):
+        '''return dict[scfld]=(sum_len_ctgs, sum_abs_gaps, sum_first_and_second_pole)'''
+        d = {}
+        scf_dict = self._dict_scafld_ctgs()
+        sum_len_ctgs = self.sum_len_of_contigs_without_gaps_between()
+        sum_abs_gaps = self.sum_abs_gaps_between_ctgs_in_scfld_()
+        for scf_id in range(int(self.min_scaffold_id()), int(self.max_scaffold_id()) + 1):
+            d[scf_id] = {'sum_len_ctgs': sum_len_ctgs[scf_id],
+                         'sum_abs_gaps': sum_abs_gaps[scf_id],
+                         'sum_len_ctgs+sum_abs_gaps': sum_len_ctgs[scf_id] + sum_abs_gaps[scf_id],
+                         'num_bases_in_super': int(scf_dict[scf_id][0].num_bases_in_super),
+                         'num_contigs': int(scf_dict[scf_id][0].num_contigs_in_super),
+                         'gaps_all_pools_positive': True}
+        return d
+
 
 
 if __name__ == "__main__":
