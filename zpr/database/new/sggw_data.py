@@ -143,7 +143,9 @@ class Links3(object):
                          'sum_len_ctgs+sum_abs_gaps': sum_len_ctgs[scf_id] + sum_abs_gaps[scf_id],
                          'num_bases_in_super': int(scf_dict[scf_id][0].num_bases_in_super),
                          'num_contigs': int(scf_dict[scf_id][0].num_contigs_in_super),
-                         'gaps_all_pools_positive': True}
+                         'gaps_all_pools_positive': None,
+                         'gaps_after_positive': None,
+                         'gaps_before_positive': None}  # TODO sprawdzac gapsy tam gdzie None!
         return d
 
 
