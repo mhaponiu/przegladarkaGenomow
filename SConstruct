@@ -4,7 +4,7 @@ from zpr.settings import BASE_DIR, STATIC_ROOT
 from build_tools.build import AppBuilder
 from build_tools.deploy import Deployer
 
-#web
+# web
 WWW_BROWSER_WINDOWS='chrome'
 WWW_BROWSER_LINUX='google-chrome'
 
@@ -12,7 +12,7 @@ WEB_CLIENT_START_PATH =''
 
 PROJECT_NAME = 'przegladarkaGenomow'
 
-#nginx
+# nginx
 WWW_SRV_HOST='192.168.0.16'
 WWW_SRV_PORT='80'
 
@@ -27,7 +27,7 @@ WEB_CLIENT_PORT_LOCAL = WEB_SRV_PORT_LOCAL
 UNIX_SOCKET = 'unix:/tmp/{name}.socket'.format(name=PROJECT_NAME)
 
 
-#database files, backups
+# database files, backups
 DATABASE_ROOT_FILES = os.path.abspath(os.path.join(BASE_DIR, '../database'))
 DB_FILES_URL = 'https://www.dropbox.com/sh/r8ihnkc5jenzc37/AACcauRmkCPz1qbxQBqhNthpa?raw=1'
 
@@ -45,14 +45,14 @@ vars.Add(BoolVariable('clear_db','Ustaw na 1 aby usunac dane ze wszystkich tabel
 vars.Add(BoolVariable('restore_ogorek_roboczy','Ustaw na 1 aby wczytac backup bazy ogorek_roboczy',False) )
 vars.Add(BoolVariable('build_deploy','[SUDO potrzebne] Ustaw na 1 aby skonfigurowac serwer www (nginx) i django do wdrozenia',False) )
 vars.Add(BoolVariable('new_secret_key','Ustaw na 1 aby wygenerowac nowy klucz',False) )
-
-vars.Add(EnumVariable('test','Uruchom testy, a: wszystkie, f: funkcjonalne, u: jednostkowe', 'no', allowed_values = ('a', 'f', 'u', 'no'), map={}, ignorecase=2) )
+vars.Add(EnumVariable('test','Uruchom testy, a: wszystkie, f: funkcjonalne, u: jednostkowe, c: calc_module', 'no', allowed_values = ('a', 'f', 'u', 'c', 'no'), map={}, ignorecase=2) )
+help_clean = "\n'-c' aby wyczyscic zbudowane pliki c++"
 
 # srodowisko
 env = Environment(variables=vars)
 
 # pomoc
-Help(vars.GenerateHelpText(env))
+Help(vars.GenerateHelpText(env) + help_clean + '\n')
 
 if (platform.system() == "Linux"):
     WWW_BROWSER = WWW_BROWSER_LINUX
@@ -80,6 +80,22 @@ elif env['test'] == 'f':
 
 elif env['test'] == 'u':
     os.system('{python} manage.py test zprapp'.format(python=VIRTUALENV_PYTHON))
+
+elif env['test'] == 'c':
+    from subprocess import call
+
+    print "\n---------------------------------------------"
+    print "Testy algorytmu BLAST\n"
+    call('zprapp/calc/calc_webomics/build/tests/BLAST_Tests')
+    print "\n---------------------------------------------"
+    print "Testy algorytmu SW\n"
+    call('zprapp/calc/calc_webomics/build/tests/SW_Tests')
+    print "\n---------------------------------------------"
+    print "Testy algorytmu KMP\n"
+    call('zprapp/calc/calc_webomics/build/tests/KMP_Tests')
+    print "\n---------------------------------------------"
+    print "Testy algorytmu BM\n"
+    call('zprapp/calc/calc_webomics/build/tests/BM_Tests')
 
 elif ( 1 in [ env['build_db'], env['clear_db'], env['restore_ogorek_roboczy'] ]):
 
@@ -120,7 +136,7 @@ elif env['new_secret_key'] == 1:
 
 
 else:
-    print "******* Podstawowe budowanie aplikacji: *******"
+    print "\n******* Podstawowe budowanie aplikacji: *******"
     builder = AppBuilder(db_files_dir=DATABASE_ROOT_FILES,
                          virtenv_root=VIRTUALENV_ROOT,
                          static_root=STATIC_ROOT)
@@ -133,7 +149,10 @@ else:
     Deployer.django_allowed_host_add()
 
     os.system('{python} manage.py collectstatic --noinput'.format(python=VIRTUALENV_PYTHON))
-    print "******* Koniec podstawowego budowania aplikacji: *******"
 
+    print "\n******* Budowanie biblioteki C++ : *******"
     SConscript(['zprapp/calc/SConscript'], exports=['env']);
+
+    print "\n******* Koniec podstawowego budowania aplikacji: *******"
+
 
