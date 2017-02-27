@@ -1,9 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-/praca_inz/praca_inzynierska.log
-/praca_inz/praca_inzynierska.aux
-/praca_inz/praca_inzynierska.synctex.gz
-/praca_inz/praca_inzynierska.toc
-/praca_inz/praca_inzynierska.out
 /pomocniczy/canvas chromosom
 /zprapp/import_export/exported_data
 /zpr/database/data
@@ -20,3 +15,6 @@ zprapp/calc/kmp.os
 zprapp/migrations/__init__.py
 *.os
 *.so
+/prace_dypl/
+!/prace_dypl/praca_inzynierska.pdf
+!/prace_dypl/PiotrRoz-PracaMagisterska.pdf
