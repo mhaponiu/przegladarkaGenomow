@@ -63,8 +63,9 @@ class ParserXLSX(object):
         for row in row_gen:
             yield XLSX(*row)
 
+
 class Parser_besSeq_besOldName_B10v2_yang13(ParserXLSX):
-    def __init__(self, xslx_location= os.path.join(BASE_DIR, '..', 'database', '3podejscie',
+    def __init__(self, xslx_location= os.path.join(BASE_DIR, '..', 'database', 'third_probe',
                                                    'besSeq_besOldName_B10v2_yang13.xlsx')):
         ParserXLSX.__init__(self, xslx_location)
 
