@@ -1,15 +1,42 @@
 from data_extractor import DataExtractor
 from sorter import Sorter
+from parser import Fasta_B10v2_c_corr
 
 class DataTree():
     def __init__(self):
         self.data_extractor = DataExtractor()
         self.sorter = Sorter(contigs= self.data_extractor.ctgs,
                              markers= self.data_extractor.mrkrs)
+        self.ctg_fasta = list(Fasta_B10v2_c_corr().generator())
+        # namedtuple('FastaRecord', ['id', 'sequence'])
 
     def produce_tree(self):
         # { chromosome: [{scaffold: [{contig: [{ marker }] }] }] }
-        return None
+        pass
+
+    def dict_ctg_fasta(self):
+        return {ctg.id: ctg.sequence for ctg in self.ctg_fasta}
+
+    def chr_sumCtgLen(self):
+        ''' dict {chr: sum(ctg_len}'''
+        chr_ctg = self.sorter.chr_ctg_dict()
+        ret = {}
+        for chr in chr_ctg:
+            ret[chr] = sum([ctg['contig_length'] for ctg in chr_ctg[chr]])
+        return ret
+
+    def sum_ctg_exel(self):
+        chr_sumCtg = self.chr_sumCtgLen()
+        return sum([chr_sumCtg[chr]for chr in chr_sumCtg.keys()])
+
+    def sum_ctg_fasta(self):
+        ''' :return sum contigs from gff file'''
+        return sum([len(fasta.sequence) for fasta in self.ctg_fasta])
+
+    def percent_known_genome(self):
+        return self.sum_ctg_exel()/float(self.sum_ctg_fasta())
+
+
 
 if __name__ == "__main__":
     '''

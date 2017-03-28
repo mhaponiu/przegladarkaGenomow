@@ -1,0 +1,21 @@
+suma dlugosci sekwencji contigow zliczyc w 116 w porownaniu do calosci jaką mam
+ile contigow na kazdym chromosomie wypisac
+dlugosci na chromosomach contigow policzyc
+równo rozloczyc kontigi; zaokrąglić jak się da
+wyprodukować 7 dużych ciągów genomu dla każdego chromosomu;
+
+porownywanie genomow calych dla np chromosomow albo organizmow;
+jesli dane male to algorytm SM
+ale jak łacuchy duze to by sie dlugo wykonywalo ->
+    najpierw analiza podnapisow kmp
+
+2 maile:
+    1 z problemem ze malo contigow
+    2 ze zmapowanymi chromosomami
+
+integracja algorytmów z przeglądarką
+
+artykul
+    opisać architekturę aplikacji
+    najwazniejsze moduły
+    funkcjonalność

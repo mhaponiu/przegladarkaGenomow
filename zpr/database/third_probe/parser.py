@@ -4,6 +4,7 @@ from itertools import starmap
 import os
 import re
 import xlrd
+import io
 
 from zpr.settings import BASE_DIR
 
@@ -73,8 +74,33 @@ class Parser_besSeq_besOldName_B10v2_yang13(ParserXLSX):
         return self._gen_record_from_sheet_by_name("Arkusz1")
 
 
+class Fasta():
+    FastaRecord = namedtuple('FastaRecord', ['id', 'sequence'])
+
+    #generator zwracajacy krotke (id, sequence)
+    def gen_record_from_file(self, filename):
+        #FastaRecord = namedtuple('FastaRecord', ['id', 'sequence'])
+        with open(filename, 'rt') as f:
+            line = f.readline()
+            while True:
+                try:
+                    if line[0] == '>':
+                        id = line[1:-1]
+                        s = io.StringIO()
+                        while True:
+                            line = f.readline()
+                            if line == '' or line[0] == '>': break
+                            s.write(unicode(line[:-1]))
+                        yield self.FastaRecord(id, s.getvalue())
+                    if line == '': break
+                except IndexError:
+                    raise StopIteration
 
 
+class Fasta_B10v2_c_corr(Fasta):
+    def generator(self):
+        return self.gen_record_from_file(filename=os.path.join(BASE_DIR, '..', 'database', 'third_probe',
+                                                                    'B10v2_c_corr.fsa'))
 
 if __name__ == '__main__':
     p = Parser_besSeq_besOldName_B10v2_yang13()
