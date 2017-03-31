@@ -66,7 +66,7 @@ class ParserXLSX(object):
 
 
 class Parser_besSeq_besOldName_B10v2_yang13(ParserXLSX):
-    def __init__(self, xslx_location= os.path.join(BASE_DIR, '..', 'database', 'third_probe',
+    def __init__(self, xslx_location= os.path.join(BASE_DIR, '..', 'database', 'v3',
                                                    'besSeq_besOldName_B10v2_yang13.xlsx')):
         ParserXLSX.__init__(self, xslx_location)
 
@@ -99,7 +99,7 @@ class Fasta():
 
 class Fasta_B10v2_c_corr(Fasta):
     def generator(self):
-        return self.gen_record_from_file(filename=os.path.join(BASE_DIR, '..', 'database', 'third_probe',
+        return self.gen_record_from_file(filename=os.path.join(BASE_DIR, '..', 'database', 'v3',
                                                                     'B10v2_c_corr.fsa'))
 
 if __name__ == '__main__':

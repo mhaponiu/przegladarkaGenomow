@@ -4,9 +4,9 @@ from data_extractor import DataExtractor
 from sorter import Sorter
 from parser import Fasta_B10v2_c_corr
 
-'''DataTreeContig produkuje contigi przygotowane do zapisu
+'''DataTreeContig produkuje finalne struktury contigowe przygotowane do zapisu
 do bazy dla poszczegolnych chromosomow. Bez informacji o innych strukturach takich jak scaffold itd.'''
-class DataTreeContig():
+class ContigsCompleteData():
     def __init__(self):
         data_extractor = DataExtractor()
         self.sorter = Sorter(contigs= data_extractor.ctgs,
@@ -17,7 +17,65 @@ class DataTreeContig():
         self.chr_ctg_order = self.sorter.ctg_order_in_chr()
         self.Contig = namedtuple("Contig", ['id', 'start', 'length', 'seq'])
 
-    def produce_full_dict(self):
+    def dict_ctg_fasta(self):
+        return {ctg.id: ctg.sequence for ctg in self.ctg_fasta}
+
+    def chr_sumCtgLen(self):
+        ''' dict {chr: sum(ctg_len}'''
+        ret = {}
+        for chr in self.chr_ctg:
+            ret[chr] = sum([ctg['contig_length'] for ctg in self.chr_ctg[chr]])
+        return ret
+
+    def sum_ctg_exel(self):
+        chr_sumCtg = self.chr_sumCtgLen()
+        return sum([chr_sumCtg[chr]for chr in chr_sumCtg.keys()])
+
+    def sum_ctg_fasta(self):
+        ''' :return sum contigs from gff file'''
+        return sum([len(fasta.sequence) for fasta in self.ctg_fasta])
+
+    def percent_known_genome(self):
+        return self.sum_ctg_exel()/float(self.sum_ctg_fasta())
+
+    @staticmethod
+    def convert_int_to_ctg_id(id):
+        return "ctg" + str(id)
+
+    @staticmethod
+    def convert_ctgId_to_int(ctg_id):
+        return ctg_id[3:]
+
+''' ChromosomesContigFactory produkuje cale chromosomy skladajace sie z contigow gotowe do zapisu do bazy'''
+class ChromosomesContigFactory(ContigsCompleteData):
+    def produce_chromosomes(self):
+        ''':return dict 
+        chromosomes[0] = {'length': int, contigs: set([namedtuple("Contig", ['id', 'start', 'length', 'seq']) }
+        chromosomes{1..7} = {'length': int, 'contigs': [namedtuple("Contig", ['id', 'start', 'length', 'seq'])]}'''
+        chromosomes = self._seven_chromosomes()
+        chromosomes[0] = self._chromosome_zero()
+        return chromosomes
+
+    def _chromosome_zero(self):
+        ''':return {'length': int, contigs: set([namedtuple("Contig", ['id', 'start', 'length', 'seq']) }
+        chromosom zerowy z nieuporzadkowanymi contigami '''
+        fasta_ctg_ids = [self.convert_ctgId_to_int(id) for id in self.ctg_fasta_dict.keys()]
+        exel_ctg_ids = self.sorter.contigs.keys()
+        unmapped_ctg_ids = [id for id in fasta_ctg_ids if id not in exel_ctg_ids]
+        calculated_length = sum([len(self.ctg_fasta_dict[self.convert_int_to_ctg_id(id)]) for id in unmapped_ctg_ids])
+        expected_length = self.sum_ctg_fasta() - self.sum_ctg_exel()
+        assert(expected_length == calculated_length)
+
+        ret_contigs = set()
+        for id in unmapped_ctg_ids:
+            seq = self.ctg_fasta_dict[self.convert_int_to_ctg_id(id)]
+            ret_contigs.add(self.Contig(id= id, start=None, length=len(seq), seq= seq))
+        return {
+                'length': expected_length,
+                'contigs': ret_contigs
+               }
+
+    def _seven_chromosomes(self):
         # {'length': int, 'contigs': [namedtuple("Contig", ['id', 'start', 'length', 'seq'])]}
         ret = {}
         for chr in range(1,8):
@@ -51,35 +109,8 @@ class DataTreeContig():
         gaps_per_chr = all_gaps / 7
         ctgs_in_chr = len(self.chr_ctg[chr])
         gaps_every_ctg = gaps_per_chr / (ctgs_in_chr - 1)
-        print "gap dla chr " + str(chr) + ": " + str(gaps_every_ctg)
+        # print "gap dla chr " + str(chr) + ": " + str(gaps_every_ctg)
         return gaps_every_ctg
-
-    def dict_ctg_fasta(self):
-        return {ctg.id: ctg.sequence for ctg in self.ctg_fasta}
-
-    def chr_sumCtgLen(self):
-        ''' dict {chr: sum(ctg_len}'''
-        ret = {}
-        for chr in self.chr_ctg:
-            ret[chr] = sum([ctg['contig_length'] for ctg in self.chr_ctg[chr]])
-        return ret
-
-    def sum_ctg_exel(self):
-        chr_sumCtg = self.chr_sumCtgLen()
-        return sum([chr_sumCtg[chr]for chr in chr_sumCtg.keys()])
-
-    def sum_ctg_fasta(self):
-        ''' :return sum contigs from gff file'''
-        return sum([len(fasta.sequence) for fasta in self.ctg_fasta])
-
-    def percent_known_genome(self):
-        return self.sum_ctg_exel()/float(self.sum_ctg_fasta())
-
-    @staticmethod
-    def convert_int_to_ctg_id(id):
-        return "ctg" + str(id)
-
-
 
 if __name__ == "__main__":
     '''
