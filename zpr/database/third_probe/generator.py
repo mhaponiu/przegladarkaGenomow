@@ -1,8 +1,11 @@
-from data_tree import DataTree
+from data_tree import DataTreeContig
 
-class GenomeGenerator():
+class GenomeGeneratorContig():
+    ''' generuje pliki z genomem dla poszczegolnych chromosomow
+    na podstawie contigow'''
+
     def __init__(self):
-        data_tree = DataTree()
+        data_tree = DataTreeContig()
         self.ctg_order_in_chr = data_tree.sorter.ctg_order_in_chr()
         self.dict_ctg_fasta = data_tree.dict_ctg_fasta()
         self.chr_ctg_dict = data_tree.sorter.chr_ctg_dict()
@@ -47,6 +50,6 @@ class GenomeGenerator():
 
 if __name__ == "__main__":
     print("start generating genomes")
-    g = GenomeGenerator()
+    g = GenomeGeneratorContig()
     g.generate_files()
     print("end generating genomes")

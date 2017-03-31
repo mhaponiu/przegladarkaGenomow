@@ -1,28 +1,67 @@
+from collections import namedtuple
+
 from data_extractor import DataExtractor
 from sorter import Sorter
 from parser import Fasta_B10v2_c_corr
 
-class DataTree():
+'''DataTreeContig produkuje contigi przygotowane do zapisu
+do bazy dla poszczegolnych chromosomow. Bez informacji o innych strukturach takich jak scaffold itd.'''
+class DataTreeContig():
     def __init__(self):
-        self.data_extractor = DataExtractor()
-        self.sorter = Sorter(contigs= self.data_extractor.ctgs,
-                             markers= self.data_extractor.mrkrs)
-        self.ctg_fasta = list(Fasta_B10v2_c_corr().generator())
-        # namedtuple('FastaRecord', ['id', 'sequence'])
+        data_extractor = DataExtractor()
+        self.sorter = Sorter(contigs= data_extractor.ctgs,
+                             markers= data_extractor.mrkrs)
+        self.chr_ctg = self.sorter.chr_ctg_dict()
+        self.ctg_fasta = list(Fasta_B10v2_c_corr().generator())# namedtuple('FastaRecord', ['id', 'sequence'])
+        self.ctg_fasta_dict = self.dict_ctg_fasta()
+        self.chr_ctg_order = self.sorter.ctg_order_in_chr()
+        self.Contig = namedtuple("Contig", ['id', 'start', 'length', 'seq'])
 
-    def produce_tree(self):
-        # { chromosome: [{scaffold: [{contig: [{ marker }] }] }] }
-        pass
+    def produce_full_dict(self):
+        # {'length': int, 'contigs': [namedtuple("Contig", ['id', 'start', 'length', 'seq'])]}
+        ret = {}
+        for chr in range(1,8):
+            contig_list = self._produce_chromosome(chr)
+            chr_len = contig_list[-1].start + contig_list[-1].length
+            ret[chr] = {'length': chr_len, 'contigs': contig_list}
+        return ret
+
+
+    def _produce_chromosome(self, chr):
+        gap = self._gaps(chr)
+        ctg_order = self.chr_ctg_order[chr]
+        ret_list = []
+        start = 0
+        for ctg_id in ctg_order:
+            seq = self.ctg_fasta_dict[self.convert_int_to_ctg_id(ctg_id)]
+            seq_len = len(seq)
+            ret_list.append(self.Contig(id=ctg_id, start=start, length=seq_len, seq=seq))
+            start = start + seq_len + gap
+        return ret_list
+
+    def _gaps(self, chr):
+        '''
+                Suma sekwencji contigow z pliku fasta: 342288160
+                Suma sekwencji contigow z pliku exel: 196309823
+                zakladam ze suma contigow z pliku exel z wszystkich chromosomow wraz z gapami
+                ma dac lacznie sume contigow z pliku fasta, czyli maksymalny znany nam genom.
+                na kazdy chromosom rozdzielam tyle samo gapow, i daje je po rowno miedzy ctgi
+                '''
+        all_gaps = self.sum_ctg_fasta() - self.sum_ctg_exel() # 342288160 - 196309823
+        gaps_per_chr = all_gaps / 7
+        ctgs_in_chr = len(self.chr_ctg[chr])
+        gaps_every_ctg = gaps_per_chr / (ctgs_in_chr - 1)
+        print "gap dla chr " + str(chr) + ": " + str(gaps_every_ctg)
+        return gaps_every_ctg
 
     def dict_ctg_fasta(self):
         return {ctg.id: ctg.sequence for ctg in self.ctg_fasta}
 
     def chr_sumCtgLen(self):
         ''' dict {chr: sum(ctg_len}'''
-        chr_ctg = self.sorter.chr_ctg_dict()
         ret = {}
-        for chr in chr_ctg:
-            ret[chr] = sum([ctg['contig_length'] for ctg in chr_ctg[chr]])
+        for chr in self.chr_ctg:
+            ret[chr] = sum([ctg['contig_length'] for ctg in self.chr_ctg[chr]])
         return ret
 
     def sum_ctg_exel(self):
@@ -35,6 +74,10 @@ class DataTree():
 
     def percent_known_genome(self):
         return self.sum_ctg_exel()/float(self.sum_ctg_fasta())
+
+    @staticmethod
+    def convert_int_to_ctg_id(id):
+        return "ctg" + str(id)
 
 
 

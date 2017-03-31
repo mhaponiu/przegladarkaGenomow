@@ -9,7 +9,8 @@ from collections import namedtuple, OrderedDict
 # from zprapp.models import Organism
 
 
-
+''' DataExtractor parsuje plik besSeq_besOldName_B10v2_yang13.xslx
+    i wyciaga z niego informacje o scaffoldach, contigach i markerach'''
 class DataExtractor():
     '''
     { scaffold_no: (scaffold_length, chromosome) }

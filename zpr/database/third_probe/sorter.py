@@ -1,17 +1,19 @@
 from collections import defaultdict, OrderedDict
 
 from data_extractor import DataExtractor
-
 '''
+    DataExtractor dostarcza do Sortera:
     { scaffold_no: (scaffold_length, chromosome) }
     { contig_no: (contig_length, ctg_pos_on_scf, chromosome, scaffold) }
     { marker_name: (marker_in_chr, chromosome, ctg_no, pos_1_on_ctg, pos_2_on_ctg) }
 '''
 
-# Scaffold -> order
-
+'''
+Sorter tworzy odpowiednie pomocnicze struktury danych ustawiajace w kolejnosci contigi, scaffoldy
+'''
 class Sorter():
     def __init__(self, contigs, markers):
+        # parametry z wyjscia DataExtractora
         self.contigs = contigs # { contig_no: (contig_length, ctg_pos_on_scf, chromosome, scaffold) }
         self.markers = markers # { marker_name: (marker_in_chr, chromosome, ctg_no, pos_1_on_ctg, pos_2_on_ctg) }
 
