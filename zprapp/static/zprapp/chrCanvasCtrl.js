@@ -71,7 +71,7 @@ function chrCanvasCtrl($scope, $http, $location, DataBufor, $routeParams) {
         var max_len_chr = canvas.height * 0.7;
         var delta_x = 0
         var h, x, y, x_text, y_text;
-        var napis = 1;
+        var napis = 0;
         var h_napis = Math.round(0.5 * (canvas.height - y_line_start))
 
         var addRegionEventListener = function(wskaznik_rodzica, string_zdarzenia, argument, fun){
