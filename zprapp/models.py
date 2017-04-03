@@ -2,57 +2,40 @@ from django.db import models
 
 # Create your models here.
 
-# class Organizm(models.Model):
-#     nazwa = models.CharField(max_length=50)
-#
-#     def __unicode__(self):
-#         return self.nazwa
-#
-# class Chromosom(models.Model):
-#     organizm = models.ForeignKey(Organizm)
-#     nazwa = models.CharField(max_length=50)
-#     dlugosc = models.BigIntegerField()
-#
-#     def __unicode__(self):
-#         return self.nazwa
-#
-# class Marker(models.Model):
-#     chromosom = models.ForeignKey(Chromosom)
-#     pozycja_od = models.BigIntegerField()
-#     pozycja_do = models.BigIntegerField()
-#     sekwencja = models.TextField()
-#
-#     def __unicode__(self):
-#         return self.sekwencja
-#OLD
-##########################################################################
-#NEW
-
 class Organism(models.Model):
     name = models.TextField()
 
+    def __str__(self):
+        return self.name
+
 class Chromosome(models.Model):
     number = models.IntegerField()
-    length = models.FloatField()
+    length = models.IntegerField()
     organism = models.ForeignKey(Organism)
+    ordered = models.BooleanField(default=False)
 
-class Scaffold(models.Model):
-    id = models.TextField(primary_key=True, null=False, unique=True)
-    chromosome = models.ForeignKey(Chromosome)
-    length = models.FloatField()
-    order = models.IntegerField()
-    start = models.FloatField()
+    def __str__(self):
+        return str(self.number)
 
-class Meaning(models.Model):
-    mean = models.TextField()
-
-class Marker(models.Model):
+class AnnotationType(models.Model):
     name = models.TextField()
-    start = models.FloatField()
-    length = models.FloatField()
-    meaning = models.ForeignKey(Meaning)
+    short_name = models.TextField(null=True)
+
+    def __str__(self):
+        return self.name
+
+class Annotation(models.Model):
+    start_chr = models.IntegerField(null=True)
+    length = models.IntegerField()
+    name = models.TextField()
+    sequence = models.TextField(null=True)
+    aggregated_by = models.ForeignKey('Aggregation', null=True)
+    type = models.ForeignKey(AnnotationType)
     chromosome = models.ForeignKey(Chromosome)
 
-class Sequence(models.Model):
-    scaffold = models.ForeignKey(Scaffold)
-    sequence = models.TextField()
+    def __str__(self):
+        return self.name
+
+class Aggregation(models.Model):
+    start_local = models.IntegerField(null=True)
+    annotation_master = models.ForeignKey(Annotation)

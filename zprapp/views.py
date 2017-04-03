@@ -7,14 +7,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 
 from zprapp.calc.calc import kmp
-from zprapp.import_export.chromosom import Chromosom
-from zprapp.import_export.dataMigrations import DataMigrations
-from zprapp.import_export.organizm import Organizm
-from zprapp.import_export.scaffold import ScaffoldImpExp
-from zprapp.import_export.sekwencjaFasta import SekwencjaFastaImpExp
-from zprapp.import_export.sekwencjaGff import SekwencjaGff
-from zprapp.import_export.wyjatki import CheckError
-from zprapp.models import Chromosome, Organism, Meaning;
+from zprapp.models import Chromosome, Organism;
 
 @ensure_csrf_cookie
 def index(request):
@@ -77,12 +70,6 @@ def ajaxOrganizmy(request):
     orgs = Organism.objects.all();
     orgs_json = serializers.serialize("json", orgs);
     return HttpResponse(orgs_json, content_type="application/json");
-
-def ajaxMeanings(request):
-    print "daje meanings"
-    means = Meaning.objects.all();
-    means_json = serializers.serialize("json", means);
-    return HttpResponse(means_json, content_type="application/json");
 
 def ajaxMarkers(request):
     print "daje markery"
