@@ -1,13 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
-/pomocniczy/canvas chromosom
-/zprapp/import_export/exported_data
-/zpr/database/data
 *.pyc
-*.xml
+#*.xml
 /.idea/
 /.sconsign.dblite
 /build_tools/build_conf.json
-*~
 zprapp/calc/.sconsign.dblite
 zprapp/calc/calc.so
 zprapp/calc/calc_py.os
@@ -15,6 +11,6 @@ zprapp/calc/kmp.os
 zprapp/migrations/__init__.py
 *.os
 *.so
-/prace_dypl/
-!/prace_dypl/praca_inzynierska.pdf
-!/prace_dypl/PiotrRoz-PracaMagisterska.pdf
+#/doc/grafika
+#!/doc/praca_inzynierska.pdf
+#!/doc/PiotrRoz-PracaMagisterska.pdf

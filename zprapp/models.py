@@ -5,7 +5,7 @@ from django.db import models
 class Organism(models.Model):
     name = models.TextField()
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 class Chromosome(models.Model):
@@ -14,14 +14,14 @@ class Chromosome(models.Model):
     organism = models.ForeignKey(Organism)
     ordered = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __unicode__(self):
         return str(self.number)
 
 class AnnotationType(models.Model):
     name = models.TextField()
     short_name = models.TextField(null=True)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 class Annotation(models.Model):
@@ -33,7 +33,7 @@ class Annotation(models.Model):
     type = models.ForeignKey(AnnotationType)
     chromosome = models.ForeignKey(Chromosome)
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 class Aggregation(models.Model):

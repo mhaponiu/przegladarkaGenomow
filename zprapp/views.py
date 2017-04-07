@@ -4,11 +4,13 @@ from django.core import serializers
 from django.db.models.expressions import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 
 from zprapp.calc.calc import kmp
 from zprapp.models import Chromosome, Organism;
 
+@never_cache
 @ensure_csrf_cookie
 def index(request):
     return render(request, 'zprapp/index.html')
@@ -39,30 +41,25 @@ def ajaxChromosomy(request):
 #     ch = Chromosome.objects.get(id=request.REQUEST['id'])
 
 
-def ajaxScaffoldy(request):
+def ajaxContig(request):
     print "daje scaffoldy chromosomu ", request.GET['id_chr'];
     o = Organism.objects.get(id=request.GET['id_org']);
     ch = o.chromosome_set.get(id=request.GET['id_chr']);
-    scflds = ch.scaffold_set.all();
+    # ctgs = ch.annotation_set.values("start_chr", "length", "name")
+    ctgs = ch.annotation_set.only("start_chr", "length", "name")
     #ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
     # scflds = ch.scaffold_set.all();
-    print "liczba scaffoldow to ", len(scflds);
-    scflds_json = serializers.serialize("json", scflds);
-    return HttpResponse(scflds_json, content_type="application/json");
+    print "liczba contigow to ", len(ctgs);
+    ctg_json = serializers.serialize("json", ctgs);
+    return HttpResponse(ctg_json, content_type="application/json");
 
 
 def ajaxSekwencja(request):
     print "daje sekwencje chr:", request.GET['id_chr']," scaff: ", request.GET['id_sc'];
     o = Organism.objects.get(id=request.GET['id_org'])
     ch = o.chromosome_set.get(id=request.GET['id_chr'])
-    scfld = ch.scaffold_set.get(id=request.GET['id_sc'])
-    # ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
-    # scfld = ch.scaffold_set.get(id=request.REQUEST['id_sc']);
-    seq = scfld.sequence_set.all()[0];# liscie sekwencji i tak jest jedna tylko
-    print seq;
-    #seq_json = serializers.serialize("json", seq)
-    #print seq_json;
-    return HttpResponse(seq.sequence);
+    ctg = ch.annotation_set.get(id=request.GET['id_sc'])
+    return HttpResponse(ctg.sequence);
     # return HttpResponse(seq_json, content_type="application/json");
 
 def ajaxOrganizmy(request):
@@ -71,13 +68,17 @@ def ajaxOrganizmy(request):
     orgs_json = serializers.serialize("json", orgs);
     return HttpResponse(orgs_json, content_type="application/json");
 
+def ajaxMeanings(request):
+    return HttpResponse({"todo": "usun mnie"}, content_type="application/json");
+
 def ajaxMarkers(request):
     print "daje markery"
     o = Organism.objects.get(id=request.GET['id_org'])
     ch = o.chromosome_set.get(id=request.GET['id_chr'])
-    mrkrs = ch.marker_set.all()
-    mrkrs_json = serializers.serialize("json", mrkrs)
-    return HttpResponse(mrkrs_json, content_type="application/json");
+    # mrkrs = ch.marker_set.all()
+    # mrkrs_json = serializers.serialize("json", mrkrs)
+    # return HttpResponse(mrkrs_json, content_type="application/json");
+    return HttpResponse({"todo": "usun mnie"}, content_type="application/json");
 
 def ajaxSeqSection(request):
     # print request.GET['id_chr'], request.GET['widok_od'],request.GET['widok_do']

@@ -24,8 +24,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
             $scope.settings.tmp.widok_do = $scope.settings.defaults.widok_do;
             $scope.textarea.text = $scope.textarea.defaults.text;
             $scope.textarea.visible = false;
-            $scope.markery.visible = $scope.markery.defaults.visible;
-            $scope.canvas.meanings.reset();
             updatePanel();
         }
         $scope.settings.reset();
@@ -72,43 +70,13 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
     //-------------canvas data aktualnych scaffoldow------------------------------------
     $scope.canvas = {};
     $scope.canvas.data = []; //scaffoldy na aktualny main view
-    $scope.canvas.mrkrs = []; //markery na aktualny main view
-    $scope.canvas.meanings = {}; //meanings na main view -> te beda wyswietlane w checkboxie wyboru
     $scope.canvas.defaults = {}
-    $scope.canvas.defaults.check = true; //domysle ustawienie checkboxow meanings
-    $scope.canvas.meanings.data = [] //ma pola id, meaning, check
     $scope.canvas.skala = 2;
-
-    $scope.markery = {};
-    $scope.markery.defaults = {}
-    $scope.markery.defaults.visible = false;
-    $scope.markery.visible = $scope.markery.defaults.visible;
 
 
 //######################### GLOWNA INICJALIZACJA ########################################################
     $scope.promiseLoadScaffolds.then(function () {
         return pobierzChromosomeLength();
-    }).then(function(){
-        return $scope.loadMarkers($routeParams.id_org, $routeParams.id_chr);
-    }).then(function(){
-        return $scope.loadMarkerMeanings();
-    }).then(function(){
-        $scope.canvas.meanings.data = $filter("uniqueMeaningsFromMarkers")($scope.mrkrs, $scope.meanings);
-        //sortowanie rosnace po id
-        $scope.canvas.meanings.data.sort(function(a,b){
-            return a.id - b.id;
-        })
-        $scope.canvas.meanings.reset();
-
-        for(var i=0; i<$scope.canvas.meanings.data.length; i++){
-            $scope.$watch("canvas.meanings.data["+ i +"].check", function(){
-                $scope.canvas.mrkrs = $filter("selectMarkersChecked")($scope.mrkrs, $scope.canvas.meanings.data);
-                updatePanel();
-            })
-        }
-        $scope.$watch("markery.visible", function () {
-            updatePanel();
-        })
     }).then(function () {
         initSettings();
         //$scope.canvas.getViewData(); -> wykonywany juz w initSettings()?
@@ -123,7 +91,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
 
             for(var i = 0; i < $scope.scflds.length; i++){
                 if($scope.scflds[i]['pk'] == scf_id){
-                    start_scf = $scope.scflds[i]['fields']['start']
+                    start_scf = $scope.scflds[i]['fields']['start_chr']
                     break
                 }
             }
@@ -136,22 +104,15 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
 //######################### KONIEC GLOWNA INICJALIZACJA ########################################################
 
 
-    $scope.canvas.meanings.reset = function(){
-        for(var i=0; i<$scope.canvas.meanings.data.length; i++){
-            $scope.canvas.meanings.data[i]["check"] = $scope.canvas.defaults.check;
-        }
-    }
-
     //wywolywanie ma sens dopiero gdy istnieje juz $scope.scflds   =>   $scope.promiseLoadScaffolds
     $scope.canvas.getViewData = function () {
         console.log("getViewDATA")
+        console.log($scope.scflds)
         $scope.canvas.data = $filter("wytnijNaScaffView")($scope.scflds, $scope.settings.widok_od, $scope.settings.widok_do)
         //sortowanie rosnace po fields.order
         $scope.canvas.data.sort(function(a,b){
             return a.fields.order - b.fields.order;
         })
-        $scope.canvas.mrkrs = $filter("selectMarkersChecked")($scope.mrkrs, $scope.canvas.meanings.data);
-        $scope.canvas.mrkrs = $filter("wytnijNaScaffView")($scope.canvas.mrkrs, $scope.settings.widok_od, $scope.settings.widok_do)
     }
 
     //pomocnicze guziki do wywolan asynchronicznych
@@ -507,36 +468,6 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
         }
         context.restore();
 
-        //rysujemy markery
-        function drawMarker(from, to){
-            var powiekszenie = 1.5
-            drawRectangle(from, y+powiekszenie*h/2, to-from, powiekszenie*h);
-        }
-        if ($scope.markery.visible) {
-            context.save();
-            context.fillStyle = "rgba(91, 192, 222, 0.4)";
-            for (i = 0; i <= $scope.canvas.mrkrs.length - 1; i++) {
-                item = $scope.canvas.mrkrs[i];
-                odkad = (item.fields.start - $scope.settings.widok_od)
-                        * (x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
-                dokad = (item.fields.start + item.fields.length - $scope.settings.widok_od)
-                        * (x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
-                if (i == 0 && item.fields.start < $scope.settings.widok_od) {
-                    odkad = x_from;
-                    if (item.fields.start + item.fields.length > $scope.settings.widok_do) {
-                        dokad = x_to;
-                    }
-                }
-                else {
-                    if (i == $scope.canvas.mrkrs.length - 1 && item.fields.start + item.fields.length > $scope.settings.widok_do) {
-                        dokad = x_to;
-                    }
-                }
-                context.beginPath();
-                drawMarker(odkad, dokad);
-            }
-            context.restore();
-        }
     }
 
     function drawScaffCanvas(parent){
