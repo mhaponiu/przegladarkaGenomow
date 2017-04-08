@@ -1,0 +1,10 @@
+import os
+env = Environment()
+
+env.Append( CPPFLAGS = ['--std=c++11'] )
+
+blast_files = ['test.cpp', 
+               '../Alignment.cpp',
+               '../Word.cpp',
+               '../Blast.cpp']
+env.Program( target = "dupa", source=blast_files)
