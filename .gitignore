@@ -10,6 +10,7 @@ zprapp/migrations/__init__.py
 *.aux
 *.log
 *.o
+*.synctex.gz
 /doc/artykul/nowak_pawelkowicz_webomics.pdf
 /zpr/database/v3/genomes/
 /zpr/database/v3/genom.zip
