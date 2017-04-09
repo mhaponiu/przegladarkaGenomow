@@ -47,14 +47,14 @@ class Inserter():
 
     def _contigs(self, chr, type):
         if chr.number == 0:
-            return [Annotation(length=self.chr_contig[0]['length'],
+            return [Annotation(length= ctg.length,
                               name= str(ctg.id),
                               sequence= ctg.seq,
                               type= type,
                               chromosome= chr) for ctg in self.chr_contig[0]['contigs']]
         else:
             return [Annotation(start_chr= ctg.start,
-                        length= self.chr_contig[chr.number]['length'],
+                        length= ctg.length,
                         name= str(ctg.id),
                         sequence= ctg.seq,
                         type=type,
