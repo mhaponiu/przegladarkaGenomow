@@ -28,6 +28,8 @@
 
 \newcommand{\chg}[1]{{\color{blue} #1}}
 \newcommand{\todo}[1]{{\color{red} TODO: #1}}
+\newcommand{\appName}{CuGene}
+\newcommand{\appShortcut}{CG}
 
 \setcitestyle{numbers,square}
 
@@ -35,7 +37,7 @@
 %% \pagewiselinenumbers
 
 
-\title{WebOmics as a tool to view and explore genomic data}
+\title{\appName{} as a tool to view and explore genomic data}
 
 \author{Michał Haponiuk$^{1}$, Magdalena Pawełkowicz$^{2}$, Robert Nowak$^{1}$, Zbigniew Przybecki$^{2}$
   \skiplinehalf
@@ -50,7 +52,7 @@
 \maketitle
 
 \begin{abstract}
-  Integrated WebOmics is an easy-to-use, open-source, on-line tool that can be used to browse, analyze,
+  Integrated \appName{} is an easy-to-use, open-source, on-line tool that can be used to browse, analyze,
   and query genomic data and annotations.
   It places annotation tracks beneath genome coordinate positions, allowing rapid visual correlation of different types of information.
   It also allows users to upload and display their own experimental results or annotation sets.
@@ -71,16 +73,15 @@ Large data sets are produced day by day, by the sequencing technology of genomes
 therefore the requirements to handle and manage such data are apparent.
 
 Genome browser provides a graphical interface for users to browse, search, retrieve and analyze genomic sequence and annotation data.
-Here we present the new tool -- WebOmics (WO).
+Here we present the new tool -- \appName{} (\appShortcut).
 We attempt to give an overview of the main functions and features of this web-based tool,
 covering data visualization, retrieval, analysis and customization.
 To give a brief introduction to our computer program, we describe the user interface and the most important features
 using the North European cucumber genome \cite{woycicki2011genome} as an example.
-The user guide with 'getting started' section and installation instructions is available at project website.
 
 \section{Software functionality}
 
-WebOmics (WO) is a genome browser tool for visualizing and manually annotating whole genomes.
+\appName{} (\appShortcut) is a genome browser tool for visualizing and manually annotating whole genomes.
 This tool provides:
 \begin{itemize}
 \itemsep0em
@@ -89,27 +90,25 @@ This tool provides:
 \item editing of individual features, supporting manual annotation;
 \item intuitive aligned sequences, elegant to view;
 \item an option for being run as online client-server as well as standalone application;
-\item the possibility to integrate physical and genetic maps.
+\item the possibility to integrate third party applications with \appShortcut{} via HTTP API.
 \end{itemize}
 
 Though other genome browsers, listed in Tab.~\ref{tab:comparison}, with similar feature sets exist,
 we believe that the presented application provides a more flexible and intuitive user interface.
-This software is available at \url{http://webomics.sourceforge.net} under GNU Library or Lesser General Public License version 2.0 (LGPLv2).
+This software is available at \url{https://github.com/mhaponiu/przegladarkaGenomow} under GNU Library or Lesser General Public License version 2.0 (LGPLv2).
 The source code is open, the users with programming experience could modify and customize our application.
 
-WO is platform portable, can be installed on any modern operating system (Microsoft Windows, Linux, BSD, OSx, etc.).
-It was tested in Microsoft Windows 7 and Ubuntu 12.10.
+\appShortcut{} is platform portable, can be installed on any modern operating system (Microsoft Windows, Linux, BSD, OSx, etc.).
+It was tested in Ubuntu 16.04 LTS.
 No Unix or scripting knowledge is required so it is easily accessible to the average biologist with little computing experience.
 The presentation layer is deployed on web browser, therefore the computer program is available for many platforms (PC, tablets, smartphones).
 The graphical user interface (GUI) permits images to be drawn with minimal user input,
 yet allows highly customizable figures to be generated for closer analysis or even publication.
-WO accepts multiple sequences with or without annotation in standard formats (i.e. FASTA or CSV).
-The input DNA sequence is rendered to scale as a solid black line centered vertically.
+\appShortcut{} accepts multiple sequences with annotation in standard formats (FASTA and GFF or Exel file format).
 The presented computer program can handle a variety of sequences lengths, from full chromosome or scaffolds  (Fig. \ref{fig:organism})
-to individual loci or genes (Fig. \ref{fig:chromosome}).
-The relative orientation of each region (forward/reverse) can be specified so that input sequences can be ‘flipped’ if required.
-
-WO produces an image showing genome and components such as: contigs, coding sequences, markers and many others.
+to individual loci or genes (Fig. \ref{fig:chromosome}). Chromosome number 0 always contains faulty structures without complete information set (e.g. doesn't have start position at chromosome).
+The relative orientation of each region (forward/reverse) can be specified. 
+\appShortcut{} produces an image showing genome and components such as: contigs, coding sequences, markers and many others.
 The user can specify an additional feature bond to specific position and/or specific region.
 User-specified features connected with coloring scheme could be used to filter and to highlight interesting places or interesting regions.
 Visualized genomic regions can be zoomed in and out, and scrolled left or right.
@@ -117,7 +116,7 @@ A ‘zoom’ feature enables subregions of large sequence files to be examined i
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.7\textwidth]{img/organism.png}
+  \includegraphics[width=0.7\textwidth]{img/chromosomy.png}
   \caption{User interface main window with cucumber chromosomes}
   \label{fig:organism}
 \end{figure}
@@ -125,12 +124,35 @@ A ‘zoom’ feature enables subregions of large sequence files to be examined i
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.7\textwidth]{img/chromosome.png}
+  \includegraphics[width=0.7\textwidth]{img/skafoldy2.png}
   \caption{Detailed description of third chromosome in working window}
   \label{fig:chromosome}
 \end{figure}
 
+\section{Northern European cucumber genome}
+Resarchers from Polish Consortium of Cucumber Genome Sequencing have sequenced nuclear genome of Northern European cucumber.
+Consortium is the free joint-venture of scientists and businessmen from different institutions willing to cooperate in exploration of cucumber genome. The main task of the Consortium is to obtain a new knowledge from the cucumber nuclear genome sequence and implement this knowledge into amelioration of the cucumber. Completing the cucumber genome sequence project should be also helpful in the sequencing projects of other plant genomes.
 
+Data about markers and contigs allowed to map sequenced genome onto chromosomes. Contigs were mapped based on Chinese markers. Not every contig has been mapped successfully. Tab.\ref{tab:genome_stat} shows obtained mapping results.
+General cucumber genome statistics after mapping process:\\
+$\bullet$ All contigs amount: 8035 \\
+$\bullet$ Mapped contigs amount: 116 \\
+$\bullet$ Sum of known contig sequence lengths: 342288160 \\
+$\bullet$ Sum of mapped contig sequence lengths: 196309823 \\
+We have mapped around 57\% genome. Contig data includes order on chromosomes but does not have start and stop positions. To be able to visualize genome in \appName{}, we done some approximates. Between contigs there are gaps, where length of each gap depends on concrete chromosome length. In each chromosome, sum of gaps is equal to one another and sum of all mapped chromosome sequences with gaps are equal to sum of all known contigs.
+
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c||c|c|c|c|c|c|c|c|c|p{1cm}|p{1cm}|} \hline
+		\textbf{Chromosome no.}& \textbf{1} & \textbf{2} & \textbf{3} & \textbf{4} & \textbf{5} & \textbf{6} & \textbf{7}\\ \hline\hline
+		~Mapped contigs & 22        & 13       & 14       & 15       & 22       & 19       & 11\\ \hline
+		Mapped length [bp]     & 32970425  & 23992470 & 39532546 & 24781874 & 26573846 & 29507078 &  18951584 \\ \hline
+	\end{tabular}
+	
+	\caption{Chromosome statistic for mapped contigs of Nothern European cucumber genome.}
+	\label{tab:genome_stat}
+\end{table}
 
 \section{Architecture and implementation details}
 
@@ -146,6 +168,19 @@ The data is stored in general purpose database management system PostgreSQL.
 Communication with others modules is carried out through Django Object Relational Mapping,
 therefore usage of other DBMS (MySQL, SqlLite, Oracle, MsSQL etc.) is possible.
 The PostgreSQL provides efficient data storage with a mechanism for the transactions.
+Designed physical database model (Fig. \ref{fig:db_model}) allow us to storage different genomic structures.
+Due to model is generic, user can dynamically define new types of annotations without any code interference.
+It let us to define relations between annotations and create custom hierarchic tree structures. Such a solution makes application more flexible.
+\appShortcut{} can storage and visualize structures without full informations about themselves (e.g. without raw sequence data).
+
+\todo{REST}
+
+\begin{figure}[htp]
+	\centering
+	\includegraphics[width=0.7\textwidth]{img/db_model.png}
+	\caption{Physical database model in \appShortcut{} application.}
+	\label{fig:db_model}
+\end{figure}
 
 The logic layer, responsible for data processing, involves the modules implemented in C++ and in Python.
 The C++ modules include the calculation algorithms that require most computer power,
@@ -153,16 +188,15 @@ e.g. custom implementation of BLAST \cite{altschul1997gapped}, Smith-Waterman \c
 and Boyer-Moore \cite{boyer1977fast} methods.
 The C++11 concurrency mechanism applied here speeds-up the computations in multi-core and multi-processor environment.
 Communication with Django web application framework is provided by Boost.Python wrappers \cite{rn:cpp}.
-The BioPython library is here a collection of reference algorithms and it is used to test and to compare our implementation.
 
-The presentation layer uses a web browser (as in thin client applications), but the Adobe Flash plugin is required.
+The presentation layer uses a web browser (as in thin client applications).
 The client partly processes information, e.g. validates user input, generates pictures to decrease the server and network load.
 The client application is asynchronous -- can send and retrieve data in the background, like the Asynchronous JavaScript and XML (AJAX) techniques.
-The Apache Flex Software Development Kit is the main technology involved in creating the client modules.
+The AngularJS framework, HTML5 and the CSS Bootstrap framework are the main technologies involved in creating the client modules.
 
 The client and server machines could be physically separated by the Internet or intranet,
-because the standard HTTP server (Lighttpd or Apache) is used.
-The messages are encapsulated of the payload in the AMF and further in HTTP format.
+because the standard HTTP server (NGINX) is used.
+The messages are encapsulated of the payload in the JSON and further in HTTP format.
 This will allow the data to pass through any network elements, including firewalls and address translations.
 
 All modules are portable and could work in different operating systems and processor architectures, and only the C++ modules require the source code rebuilding.
@@ -170,8 +204,8 @@ The used libraries have non-restrictive licenses and could be used in commercial
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.7\textwidth]{img/wov_architecture.pdf}
-  \caption{Modules and its interfaces in WO application.
+  \includegraphics[width=0.7\textwidth]{img/ogolny_schemat_en.png}
+  \caption{Modules and its interfaces in \appShortcut{} application.
     Persistence and logic layers are deployed on server site, the presentation layer is deployed on client machine.
     All modules are portable.}
   \label{fig:architecture}
@@ -179,28 +213,27 @@ The used libraries have non-restrictive licenses and could be used in commercial
 
 \subsection{Similarity algorithms}
 
-An important functionality of the WO are sequence alignment algorithms, search algorithms patterns and graphic display of alignment results.
+An important functionality of the \appShortcut{} are sequence alignment algorithms, search algorithms patterns and graphic display of alignment results.
 These algorithms are particularly  applicable in matching unknown fragments of the genome sequence.
 The application user has the opportunity to select one of four comparison methods: BLAST, Smith-Waterman, Knuth-Morris-Pratt and Boyer-Moore.
-The example, BLAST with Smith-Waterman searching, is depicted in~Fig.~\ref{fig:search}.
+The example, KMP searching, is depicted in~Fig.~\ref{fig:search}.
 
 
 \begin{figure}[htp]
   \centering
   \begin{tabular}{ll}
-    \includegraphics[width=0.35\textwidth]{img/search_similar_blast_sw.png}
+    \includegraphics[width=0.35\textwidth]{img/search.png}
     &
-    \includegraphics[width=0.35\textwidth]{img/search_similar_results.png}
+    \includegraphics[width=0.35\textwidth]{img/search_results.png}
   \end{tabular}
-  \caption{The search for sequence using BLAST and Smith-Waterman algorithm (on left) and search results (on right).}
+  \caption{The search for sequence using Knuth-Morris-Pratt algorithm (on left) and search results (on right).}
   \label{fig:search}
 \end{figure}
 
 BLAST is most widely used, heuristic algorithm, to search for similar regions in sequences.
-WO allows customization of the minimum expect values, lengths and identities of BLAST hit to be displayed in the image.
+\appShortcut{} allows customization of the minimum expect values, lengths and identities of BLAST hit to be displayed in the image.
 Additionally, comparisons between two or more loci and use of previously generated tabular comparison files (converted to BLAST hit table format) is available.
-The compared regions can also be rolled left, right or centered to their best BLAST hit, the hits are coloured on a gradient according to the BLAST identity value.
-The colour scheme of the alignment can also be defined by the user.
+The compared regions can also be rolled left, right or centered to their best BLAST hit.
 
 In order to increase the BLAST efficiency, the Smith-Waterman algorithm is used at final step, with the highest similarity according to the BLAST.
 The purpose (of this) is to examine the measures that are accurate alignment for the selected best matches.
@@ -232,7 +265,7 @@ Subsequently, some of them provided browsers framework.
 At the same time, a framework for local usage by scientists was constructed by Generic Model Organism Database (GMOD) project \cite{stein2002generic}.
 It enabled every research group to convert FASTA files and tabular data into easily accessible, interactive web page with embedded bioinformatics tools.
 
-WO (WO) was developed due to two main factors: rapidly expanding genomic database of Northern European cucumber, containing massive amounts of data,
+\appName{} was developed due to two main factors: rapidly expanding genomic database of Northern European cucumber, containing massive amounts of data,
 separated in several not integrated sections impeded information access and transparency.
 Secondly, most popular framework for local installation and creation genomic browsers GBrowse is based on static web pages and
 does not provide smooth interactive browsing like frameworks based on modern technologies.
@@ -241,17 +274,17 @@ Our software is a web based framework for storage and management of massive geno
 Configuration and format of introduced information has been simplified versus most programs allowing for smoother and swifter start up for new species or varieties.
 Currently, one species application is functional with a goal for multispecies genome comparisons like  Ensembl and UCSC as depicted in Tab.~\ref{tab:comparison},
 however it is possible to input several genomes data for independent browsing  but without interaction mode.
-The most important feature provided by all available browsers and WO is data input and comparison executed by end users through the user interface.
+The most important feature provided by all available browsers and \appShortcut{} is data input and comparison executed by end users through the user interface.
 This function is essential for genomic and transcriptomic information sharing with others research teams.
 Contrary to Alamut \url{http://www.interactive-biosoftware.com/}, Celera Genome Browser \url{http://sourceforge.net/projects/celeragb/}
-and Vista \cite{visel2007vista}, WO implemented as a web browser becomes a universal tool accessible for different devices ranging from personal computers,
+and Vista \cite{visel2007vista}, \appShortcut{} implemented as a web browser becomes a universal tool accessible for different devices ranging from personal computers,
 tablets to smartphones and compatible with both windows and UNIX based systems.
 Similarly to the most developed AJAX-based JBrowse \cite{skinner2009jbrowse}, ABrowse \cite{kong2012abrowse} and Anno-J \cite{lister2008highly}
-WO provides full interactive access to genomic data with smooth scanning throughout the whole genome,
+\appShortcut{} provides full interactive access to genomic data with smooth scanning throughout the whole genome,
 exhibiting nucleotide sequence, structural annotation and functions of annotated genes.
-Being also stand-alone framework WO can be used as a data sharing tool for sensitive information
+Being also stand-alone framework \appShortcut{} can be used as a data sharing tool for sensitive information
 among researchers from one department or institution as opposed to genome browsers implemented only for online operation.
-WO like most browser supports search function; however, this browser exploits three different algorithms including BLAST,
+\appName{} like most browser supports search function; however, this browser exploits three different algorithms including BLAST,
 which is not implemented in several modern browsers: Synbrowse \cite{pan2005synbrowse}, GeneWall \url{http://www.wobblebase.com/GeneWall},
 Celera Genome Browser.
 This results in more accurate and precise outcome of new genes, regulatory elements and markers localization in genome and identifying homologous
@@ -298,14 +331,14 @@ even for end users with low computational power.
 
 \section{Conclusion}
 
-The WebOmics implements most modern solutions for managing genomic resources obtained through new generation sequencing,
+The \appName{} implements most modern solutions for managing genomic resources obtained through new generation sequencing,
 structural and functional annotation and more.
 User friendly interface enables fast and effective data search.
-Genomic and annotation data exhibit in WO provides a different view on it contrary to tabular management, especially with North European Cucumber.
+Genomic and annotation data exhibit in \appShortcut{} provides a different view on it contrary to tabular management, especially with North European Cucumber.
 Embedded tools extended by internet access even in stand-alone distribution simplify the work of a researcher,
 who can focus on results rather then on analysis processes.
 This instrument allows for swift information exchange with other research institution with a possibility of restricting sensitive date to your department.
-Further development of WebOmics will be implemented to keep up with genomic and transcriptomic massive data analysis.
+Further development of \appName{} will be implemented to keep up with genomic and transcriptomic massive data analysis.
 
 \section*{Acknowledgements}
 

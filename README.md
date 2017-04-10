@@ -1,3 +1,4 @@
+licence under Lesser General Public License version 2.0 (LGPLv2)
 # przegladarkaGenomow
 <hr>
 <h2>Wymagania:</h2>
