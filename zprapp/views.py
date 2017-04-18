@@ -5,7 +5,7 @@ from django.db.models.expressions import F
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie
 
 from zprapp.calc.calc import kmp
 from zprapp.models import Chromosome, Organism;

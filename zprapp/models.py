@@ -12,7 +12,7 @@ class Chromosome(models.Model):
     number = models.IntegerField()
     length = models.IntegerField()
     organism = models.ForeignKey(Organism)
-    ordered = models.BooleanField(default=False)
+    order = models.BooleanField(default=False)
 
     def __unicode__(self):
         return str(self.number)
