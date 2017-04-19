@@ -21,10 +21,31 @@ class OrganismSerializer(serializers.HyperlinkedModelSerializer):
         fields = ('url', 'name', 'id')
 
 
+class OrganismChromosomesSerializer(serializers.HyperlinkedModelSerializer):
+    chromosomes = serializers.PrimaryKeyRelatedField(many=True,
+                                                     #queryset=Chromosome.objects.all(),
+                                                     read_only=True)
+    class Meta:
+        model = Organism
+        fields = ('url', 'name', 'id', "chromosomes")
+
+
 class ChromosomeSerializer(serializers.HyperlinkedModelSerializer):
+    organism_id = serializers.ReadOnlyField(source='organism.pk')
     class Meta:
         model = Chromosome
-        fields = ("url", "number", "length", "organism", "order", 'id')
+        fields = ("url", "number", "length", "organism", "ordered", 'id',
+                  'organism_id')
+
+
+class ChromosomeAnnotationSerializer(serializers.HyperlinkedModelSerializer):
+    organism_id = serializers.ReadOnlyField(source='organism.pk')
+    annotations = serializers.PrimaryKeyRelatedField(many=True,
+                                                     read_only=True)
+    class Meta:
+        model = Chromosome
+        fields = ("url", "number", "length", "organism", "ordered", 'id',
+                  'organism_id', 'annotations')
 
 
 class AnnotationSerializer(serializers.HyperlinkedModelSerializer):

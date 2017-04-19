@@ -61,11 +61,12 @@ class Inserter():
                         chromosome= chr) for ctg in self.chr_contig[chr.number]['contigs']]
 
     def clear_db(self):
+        # TODO
         pass
 
 
 
 if __name__ == "__main__":
     inserter = Inserter()
-    inserter.clear_db()
+    # inserter.clear_db()
     inserter.insert()

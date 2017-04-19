@@ -31,7 +31,7 @@ def ajaxChromosomy(request):
     else:
         o = Organism.objects.get(id=request.GET['id_org'])
         #chall = Chromosome.objects.all();
-        chall = o.chromosome_set.all();
+        chall = o.chromosomes.all();
     chall_json = serializers.serialize("json", chall);
     # print chall_json;
     return HttpResponse(chall_json, content_type="application/json");
@@ -44,7 +44,7 @@ def ajaxChromosomy(request):
 def ajaxContig(request):
     print "daje scaffoldy chromosomu ", request.GET['id_chr'];
     o = Organism.objects.get(id=request.GET['id_org']);
-    ch = o.chromosome_set.get(id=request.GET['id_chr']);
+    ch = o.chromosomes.get(id=request.GET['id_chr']);
     # ctgs = ch.annotation_set.values("start_chr", "length", "name")
     ctgs = ch.annotation_set.only("start_chr", "length", "name")
     #ch = Chromosome.objects.get(id=request.REQUEST['id_chr']);
