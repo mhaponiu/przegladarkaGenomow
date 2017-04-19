@@ -75,7 +75,7 @@ Here we present the new genome browser named \appName{} (\appShortcut).
 We attempt to give an overview of the main functions and features of this web-based tool,
 covering data visualization, retrieval, analysis and customization.
 To give a brief introduction to our computer program, we describe the user interface and the most important features
-using the North European cucumber genome \cite{woycicki2011genome} as an example.
+using the North European cucumber genome \cite{woycicki2011genome}, as an example.
 
 \section{Software functionality}
 
@@ -105,8 +105,8 @@ yet allows highly customizable figures to be generated for closer analysis or ev
 \appShortcut{} accepts multiple sequences with annotation in standard formats (FASTA and GFF or Exel file format).
 The presented computer program can handle a variety of sequences lengths, from full chromosome or scaffolds  (Fig. \ref{fig:organism})
 to individual loci or genes (Fig. \ref{fig:chromosome}). Chromosome number 0 always contains faulty structures without complete information set (e.g. doesn't have start position at chromosome).
-The relative orientation of each region (forward/reverse) can be specified. 
-\appShortcut{} produces an image showing genome and components such as: contigs, coding sequences, markers and many others.
+The relative orientation of each region of DNA strand (forward/reverse) can be specified. 
+\appShortcut{} produces an image showing genome and components such as: contigs, coding sequences (exon, introns), SNV, markers position and many others.
 The user can specify an additional feature bond to specific position and/or specific region.
 User-specified features connected with coloring scheme could be used to filter and to highlight interesting places or interesting regions.
 Visualized genomic regions can be zoomed in and out, and scrolled left or right.
@@ -129,16 +129,15 @@ A ‘zoom’ feature enables subregions of large sequence files to be examined i
 
 \section{Northern European cucumber genome}
 Resarchers from Polish Consortium of Cucumber Genome Sequencing have sequenced nuclear genome of Northern European cucumber.
-Consortium is the free joint-venture of scientists and businessmen from different institutions willing to cooperate in exploration of cucumber genome. The main task of the Consortium is to obtain a new knowledge from the cucumber nuclear genome sequence and implement this knowledge into amelioration of the cucumber. Completing the cucumber genome sequence project should be also helpful in the sequencing projects of other plant genomes.
+Consortium is the free joint-venture of scientists and businessmen from different institutions willing to cooperate in exploration of cucumber genome. The main task of the Consortium is to obtain a new knowledge from the cucumber nuclear genome sequence and implement this knowledge into amelioration of the cucumber breeding technology (Pawełkowicz et al. 2016; Przybecki et al 2003, Przybecki et al 2004). Completing the cucumber genome sequence project should be also helpful in the sequencing projects of other plant genomes.
 
-Data about markers and contigs allowed to map sequenced genome onto chromosomes. Contigs were mapped based on Chinese markers. Not every contig has been mapped successfully. Tab.\ref{tab:genome_stat} shows obtained mapping results.
+Data about markers and contigs allowed to map sequenced genome onto chromosomes. Contigs were mapped based on Chinese markers (Ren et al. 2009) . Not every contig has been mapped successfully. Tab.\ref{tab:genome_stat} shows obtained mapping results.
 General cucumber genome statistics after mapping process:\\
 $\bullet$ All contigs amount: 8035 \\
 $\bullet$ Mapped contigs amount: 116 \\
 $\bullet$ Sum of known contig sequence lengths: 342288160 \\
 $\bullet$ Sum of mapped contig sequence lengths: 196309823 \\
-We have mapped around 57\% genome. Contig data includes order on chromosomes but does not have start and stop positions. To be able to visualize genome in \appName{}, we done some approximates. Between contigs there are gaps, where length of each gap depends on concrete chromosome length. In each chromosome, sum of gaps is equal to one another and sum of all mapped chromosome sequences with gaps are equal to sum of all known contigs.
-
+We have mapped around 57\% genome. Contig data includes order on chromosomes but does not have real start and stop positions. The genomic draft is a skeleton with physical and structural gaps. Contigs  are arranged in scaffolds and those using anchor markers are assigned to chromosomes. Gaps in the draft between contigs are easier to recognize thanks to experimental methods, for example, using DNA libraries. The best seems to be BAC library due it consists of large insert  between 100 – 300 kbp (Gutman et al. 2008). Sequencing of the clones from BAC library, and anchoring BES (Bac End Sequences) to the pool of contigs is basic steps in building the genome draft, because contigs could be oriented and ordered and consist the scaffold structure. Thus we can estimate the gaps across the scaffold calculating the insert length form BAC library, but this is still approximate value. More problematic are gaps between the scaffolds. In case where is no Bac library available the estmation is very difficult. Thus, to be able to visualize genome in \appName{}, we done some approximates. Between contigs there are gaps, where length of each gap depends on concrete chromosome length. In each chromosome, sum of gaps is equal to one another and sum of all mapped chromosome sequences with gaps are equal to sum of all known contigs.
 
 \begin{table}
 	\centering
@@ -179,8 +178,6 @@ Designed physical database model (Fig. \ref{fig:db_model}) allow us to storage d
 Due to model is generic, user can dynamically define new types of annotations without any code interference.
 It let us to define relations between annotations and create custom hierarchic tree structures. Such a solution makes application more flexible.
 \appShortcut{} can storage and visualize structures without full informations about themselves (e.g. without raw sequence data).
-
-\todo{REST}
 
 \begin{figure}[htp]
 	\centering
@@ -257,10 +254,11 @@ The BLAST, as a representative of heuristic algorithms, is particularly useful f
 
 \section{Discussion}
 
-Rapid development of sequencing technologies, increasing in effectiveness and simultaneously lowering the costs, resulted in genomes massive sequencing. The number of assembled genomes almost doubles each year.
+Rapid development of sequencing technologies, increasing in effectiveness and simultaneously lowering the costs, resulted in genomes massive sequencing. The number of assembled genomes almost doubles each year.are growing in avalanche.
 Beside information about the order of nucleotides,
-DNA sequence becomes a source of data for further steps like structural and functional annotation, polymorphisms discovery and markers detection.
-The transcriptoms sequencing projects extend genetic databases even more.
+DNA sequence becomes a source of data for further steps like structural and functional annotation, polymorphisms discovery, and markers detection, and very broad study of genome evolution. This involves multiple fields such as structural analysis of the genome, the study of genomic features, gene and ancient genome duplications, polyploidy, and comparative genomics. Genome evolution is a constantly changing and evolving field due to the steadily growing number of sequenced genomes and transcriptomes, both prokaryotic and eukaryotic, available to the scientific community and the public at large..
+Moreover due to increase  number of sequenced data  (genomes and transcriptomes) there is a huge need to upswing their features in a simple way with maintaining more information for example as a graphical output in the browser. A complete genome sequence of an organism can be considered to be the ultimate genetic map, in the sense that the heritable characteristics are encoded within the DNA and that the order of all the nucleotides along each chromosome is known. Finding all the functional parts of genome sequences and using this information to improve our knowledge of the  organism actions is very important. The genes are the fundamental units of inheritance and the ultimate determinant of all phenotypes. According to the “central dogma” of molecular biology, the process of transcribing DNA into RNA, or translating RNA into protein are very interesting for  researchers. The process of transcription involves creating a perfect RNA copy of the gene using the DNA of the gene as a template. Every gene consists of several functional components, each involved in a different facet of the process of gene expression. In eukaryotes, the coding regions of most genes are not continuous. They consist of areas that are transcribed into mRNA, the exons, which are interrupted by stretches of DNA that do not appear in mature mRNA, the introns. Transcription is the first step of gene regulation in which particular segment of DNA is copied into pre-mRNA, then pre-mRNA is spliced (Chen et al. 2009). This is a process in which introns are removed from a mRNA precursor. Also important feature is a promoter. This is a region of DNA that initiates transcription of a particular gene. Promoters are located near the transcription start sites of genes, on the same strand and upstream on the DNA (towards the 5' region of the sense strand). The coding region and promotor region arevery important are two main functional units (Pawełkowicz et al. 2016).
+Such readily accessible data have encouraged the proliferation of adaptive arguments for the evolution of gene and genomic features, often with little or no attention being given to simpler and more powerful alternative explanations. Comparative genomic and transcriptomics develops intensely mainly on bioinformatics fields so possessing browsers for visualization of compared data sets is indispensable. 
 In this vast accumulation of information,
 a simple and clear way of visualization, access and modification of data is necessary.
 Since early 2000s the web based browsers for genomic purposes have been developed.
