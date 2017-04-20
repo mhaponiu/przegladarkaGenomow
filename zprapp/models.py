@@ -11,7 +11,7 @@ class Organism(models.Model):
 class Chromosome(models.Model):
     number = models.IntegerField()
     length = models.IntegerField()
-    organism = models.ForeignKey(Organism, related_name="chromosomes")
+    organism = models.ForeignKey(Organism, related_name="chromosomes", on_delete=models.CASCADE)
     ordered = models.BooleanField(default=False) # if chromosom has annotation mapped in order
 
     def __unicode__(self):
@@ -29,9 +29,10 @@ class Annotation(models.Model):
     length = models.IntegerField()
     name = models.TextField()
     sequence = models.TextField(null=True)
-    aggregated_by = models.OneToOneField('Aggregation', related_name='annotation_slaves', null=True)
+    aggregated_by = models.OneToOneField('Aggregation', related_name='annotation_slaves',
+                                         null=True)
     type = models.ForeignKey(AnnotationType)
-    chromosome = models.ForeignKey(Chromosome, related_name="annotations")
+    chromosome = models.ForeignKey(Chromosome, related_name="annotations", on_delete=models.CASCADE)
 
     def __unicode__(self):
         return self.name
