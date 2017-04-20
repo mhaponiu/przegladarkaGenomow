@@ -9,6 +9,7 @@ zprapp/migrations/__init__.py
 *.so
 *.aux
 *.log
+*.blg
 *.o
 *.synctex.gz
 /doc/artykul/nowak_pawelkowicz_webomics.pdf
