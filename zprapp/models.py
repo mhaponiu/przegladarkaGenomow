@@ -29,8 +29,8 @@ class Annotation(models.Model):
     length = models.IntegerField()
     name = models.TextField()
     sequence = models.TextField(null=True)
-    aggregated_by = models.OneToOneField('Aggregation', related_name='annotation_slaves',
-                                         null=True)
+    # aggregated_by = models.OneToOneField('Aggregation', related_name='annotation_slaves',
+    #                                      null=True)
     type = models.ForeignKey(AnnotationType)
     chromosome = models.ForeignKey(Chromosome, related_name="annotations", on_delete=models.CASCADE)
 
@@ -39,4 +39,5 @@ class Annotation(models.Model):
 
 class Aggregation(models.Model):
     start_local = models.IntegerField(null=True)
+    annotation_slave = models.OneToOneField(Annotation, related_name='aggregated_by')
     annotation_master = models.ForeignKey(Annotation, related_name='aggregation_slaves')

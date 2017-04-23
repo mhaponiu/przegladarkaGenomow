@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from zprapp.models import Organism, Chromosome, Annotation, AnnotationType
+from zprapp.models import Organism, Chromosome, Annotation, AnnotationType, Aggregation
 
 # Serializers define the API representation.
 class UserSerializer(serializers.ModelSerializer):
@@ -52,15 +52,32 @@ class ChromosomeAnnotationSerializer(serializers.ModelSerializer):
 class AnnotationSerializer(serializers.ModelSerializer):
     # type = AnnotationTypeSerializer()
     type = serializers.ReadOnlyField(source='type.name')
+    annotation_master = serializers.ReadOnlyField(source='aggregated_by.annotation_master.id')
 
     class Meta:
         model = Annotation
         fields = ("start_chr", "length", "name",
-                  "chromosome", "id", "type")
+                  "chromosome", "id", "type", "annotation_master")
 
 
-class AnnotationDetailSerializer(serializers.ModelSerializer):
+class AnnotationDetailSerializer(AnnotationSerializer):
+    class Meta(AnnotationSerializer.Meta):
+        fields = AnnotationSerializer.Meta.fields + ("sequence",)
+
+
+class AnnotationAggregationSerializer(AnnotationSerializer):
+    start_local = serializers.ReadOnlyField(source='aggregated_by.start_local')
+
+    class Meta(AnnotationSerializer.Meta):
+        fields = AnnotationSerializer.Meta.fields + ('start_local',)
+
+
+class AnnotationAggregationDetailSerializer(AnnotationDetailSerializer, AnnotationAggregationSerializer):
+    class Meta(AnnotationAggregationSerializer.Meta):
+        fields = AnnotationAggregationSerializer.Meta.fields + ('sequence',)
+
+
+class AggregationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Annotation
-        fields = ("start_chr", "length", "name",
-                  "chromosome", "id", "sequence")
+        model= Aggregation
+        fields = ("id", "start_local", "annotation_master", "annotation_slave")
