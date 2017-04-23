@@ -18,13 +18,7 @@ class GroupSerializer(serializers.ModelSerializer):
 class AnnotationTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AnnotationType
-        fields = ("name", "short_name")
-
-
-# class OrganismSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = Organism
-#         fields = ('url', 'name', 'id')
+        fields = ("name", "short_name", "id")
 
 
 class OrganismChromosomesSerializer(serializers.ModelSerializer):
@@ -56,7 +50,17 @@ class ChromosomeAnnotationSerializer(serializers.ModelSerializer):
 
 
 class AnnotationSerializer(serializers.ModelSerializer):
+    # type = AnnotationTypeSerializer()
+    type = serializers.ReadOnlyField(source='type.name')
+
     class Meta:
         model = Annotation
         fields = ("start_chr", "length", "name",
-                  "chromosome", "id")
+                  "chromosome", "id", "type")
+
+
+class AnnotationDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Annotation
+        fields = ("start_chr", "length", "name",
+                  "chromosome", "id", "sequence")

@@ -8,9 +8,9 @@ function ScaffoldKontroler($scope, $routeParams, $http) {
 
     $scope.loadScaffolds = function(id_org, id_chr){
         var request = {
-            method: 'GET',
-            url: 'ajax_scfldy',
-            params: {id_org: id_org, id_chr: id_chr}
+            method: 'POST',
+            url: 'api/annotations/',
+            data: {id: "id_chr"}
         };
         return $http(request)
             .success(function (data) {
