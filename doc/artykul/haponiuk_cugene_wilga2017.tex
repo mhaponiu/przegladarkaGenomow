@@ -189,10 +189,9 @@ It let us to define relations between annotations and create custom hierarchic t
 
 The logic layer, responsible for data processing, involves the modules implemented in C++ and in Python.
 The C++ modules include the calculation algorithms that require most computer power,
-e.g. custom implementation of BLAST \cite{altschul1997gapped}, Smith-Waterman \cite{smith1981identification}, Knuth-Morris-Pratt \cite{knuth1977fast}
-and Boyer-Moore \cite{boyer1977fast} methods.
+e.g. searching algorithms.
 The C++11 concurrency mechanism applied here speeds-up the computations in multi-core and multi-processor environment.
-Communication with Django web application framework is provided by Boost.Python wrappers \cite{rn:cpp}.
+Communication with Django web application framework is provided by Boost.Python wrappers.
 
 The presentation layer uses a web browser (as in thin client applications).
 The client partly processes information, e.g. validates user input, generates pictures to decrease the server and network load.
