@@ -34,6 +34,15 @@ class AnnotationTypeViewSet(viewsets.ModelViewSet):
     serializer_class = AnnotationTypeSerializer
 
 
+class AggregationViewSet(viewsets.ModelViewSet):
+    queryset = Aggregation.objects.all()
+    serializer_class = AggregationSerializer
+
+
+class PaginatedAggregationViewSet(AggregationViewSet):
+    pagination_class = MyPagination
+
+
 class ChromosomeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     model = Chromosome
     queryset = Chromosome.objects.all()
@@ -44,7 +53,8 @@ class AnnotationViewSet(DetailSerializerMixin, NestedViewSetMixin, viewsets.Mode
     model = Annotation
     queryset = Annotation.objects.all()
     serializer_class = AnnotationSerializer
-    serializer_detail_class = AnnotationDetailSerializer
+    # serializer_detail_class = AnnotationDetailSerializer
+    serializer_detail_class = AnnotationSerializer # uwaga, to zwykly AnnotationSerializer - nie wersja Detail
 
     @detail_route(methods=["GET"])
     def sequence(self, request, *args, **kwargs):
@@ -53,6 +63,16 @@ class AnnotationViewSet(DetailSerializerMixin, NestedViewSetMixin, viewsets.Mode
 
 
 class PaginatedAnnotationViewSet(AnnotationViewSet):
+    pagination_class = MyPagination
+
+
+class AnnotationAggregationViewSet(AnnotationViewSet):
+    serializer_class = AnnotationAggregationSerializer
+    # serializer_detail_class = AnnotationAggregationDetailSerializer
+    serializer_detail_class = AnnotationAggregationSerializer # uwaga, to zwykly Serializer - nie wersja Detail
+
+
+class PaginatedAnnotationAggregationViewSet(AnnotationAggregationViewSet):
     pagination_class = MyPagination
 
 
