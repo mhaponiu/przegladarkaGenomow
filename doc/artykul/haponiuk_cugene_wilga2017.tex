@@ -7,7 +7,7 @@
 % REVISION HISTORY
 % 20080211 changed some space characters in the title-author block
 %
-\documentclass[a4paper]{spie}
+\documentclass[]{spie}
 
 \usepackage[utf8]{inputenc}
 \usepackage{fontenc}
@@ -15,23 +15,21 @@
 \usepackage{url}
 \usepackage{multirow}
 \usepackage{multicol}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+%% \usepackage{algorithm}
+%% \usepackage{algpseudocode}
 \usepackage{graphicx}
 \usepackage{import}
 \usepackage{xcolor}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
 %\usepackage{amsthm}
-\usepackage{natbib}
+%\usepackage{natbib}
 
 \newcommand{\chg}[1]{{\color{blue} #1}}
 \newcommand{\todo}[1]{{\color{red} TODO: #1}}
 \newcommand{\appName}{CuGene}
 \newcommand{\appShortcut}{CG}
-
-\setcitestyle{numbers,square}
 
 %% \usepackage{lineno}
 %% \pagewiselinenumbers
@@ -347,9 +345,9 @@ Further development of \appName{} will be implemented to keep up with genomic an
 
 \acknowledgments
 
-This work was supported by grants from National Science Center 2013/11/B/NZ/00814 and the statutory research of Institute of Computer Science of Warsaw University of Technology.
+This work was supported by grants from National Science Center 2013/11/B/NZ/00814 and the statutory funds of Institute of Computer Science of Warsaw University of Technology.
 
-\bibliographystyle{unsrt}
+\bibliographystyle{spiebib}
 \bibliography{webomics.bib}
 
 \end{document}
