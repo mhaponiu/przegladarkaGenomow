@@ -73,8 +73,8 @@ class AnnotationAggregationSerializer(AnnotationSerializer):
 
 
 class AnnotationAggregationDetailSerializer(AnnotationDetailSerializer, AnnotationAggregationSerializer):
-    class Meta(AnnotationAggregationSerializer.Meta):
-        fields = AnnotationAggregationSerializer.Meta.fields + ('sequence',)
+    class Meta(AnnotationDetailSerializer.Meta, AnnotationAggregationSerializer.Meta):
+        fields = tuple(set(AnnotationDetailSerializer.Meta.fields + AnnotationAggregationSerializer.Meta.fields))
 
 
 class AggregationSerializer(serializers.ModelSerializer):
