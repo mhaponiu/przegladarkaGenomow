@@ -7,7 +7,7 @@
 % REVISION HISTORY
 % 20080211 changed some space characters in the title-author block
 %
-\documentclass[a4paper]{spie}
+\documentclass[]{spie}
 
 \usepackage[utf8]{inputenc}
 \usepackage{fontenc}
@@ -15,23 +15,21 @@
 \usepackage{url}
 \usepackage{multirow}
 \usepackage{multicol}
-\usepackage{algorithm}
-\usepackage{algpseudocode}
+%% \usepackage{algorithm}
+%% \usepackage{algpseudocode}
 \usepackage{graphicx}
 \usepackage{import}
 \usepackage{xcolor}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
 %\usepackage{amsthm}
-\usepackage{natbib}
+%\usepackage{natbib}
 
 \newcommand{\chg}[1]{{\color{blue} #1}}
 \newcommand{\todo}[1]{{\color{red} TODO: #1}}
 \newcommand{\appName}{CuGene}
 \newcommand{\appShortcut}{CG}
-
-\setcitestyle{numbers,square}
 
 %% \usepackage{lineno}
 %% \pagewiselinenumbers
@@ -39,7 +37,7 @@
 
 \title{\appName{} as a tool to view and explore genomic data}
 
-\author{Michał Haponiuk$^{1}$, Magdalena Pawełkowicz$^{2}$, Robert Nowak$^{1}$, Zbigniew Przybecki$^{2}$
+\author{Michał Haponiuk$^{1}$, Magdalena Pawełkowicz$^{2}$, Zbigniew Przybecki$^{2}$, Robert M. Nowak$^{1}$,
   \skiplinehalf
   $^{1}$ Institute of Computer Science, Warsaw University of Technology; Nowowiejska 15/19, 00-665, Warsaw, Poland\\
   $^{2}$ Department of Plant Genetics, Breeding and Biotechnology, Warsaw University of Life Sciences; Nowoursynowska 159, 02-776, Warsaw, Poland\\
@@ -100,7 +98,7 @@ The source code is open, the users with programming experience could modify and 
 It was tested in Ubuntu 16.04 LTS.
 No Unix or scripting knowledge is required so it is easily accessible to the average biologist with little computing experience.
 The presentation layer is deployed on web browser, therefore the computer program is available for many platforms (PC, tablets, smartphones).
-Demo server is avalible at \url{https://antakya.ise.pw.edu.pl:9002/}.
+Demo server is avalible at \url{http://antakya.ise.pw.edu.pl:9002/}.
 The graphical user interface (GUI) permits images to be drawn with minimal user input,
 yet allows highly customizable figures to be generated for closer analysis or even publication.
 \appShortcut{} accepts multiple sequences with annotation in standard formats (FASTA and GFF or Exel file format).
@@ -145,15 +143,15 @@ We have mapped around 57\% genome. Contig data includes order on chromosomes but
 	\begin{tabular}{|c||r|r|r|c|} \hline
 	  \textbf{Chromosome}    & chr.\ length [Mbp] & No.\ mapped contigs & Mapped length [bp] & Mapped length [\%] \\
       \hline
-      \textbf{1}             &                    &  22                 &  32970425          &                    \\
-      \textbf{2}             &                    &  13                 &  23992470          &                    \\
-      \textbf{3}             &                    &  14                 &  39532546          &                    \\
-      \textbf{4}             &                    &  15                 &  24781874          &                    \\
-      \textbf{5}             &                    &  22                 &  26573846          &                    \\
-      \textbf{6}             &                    &  19                 &  29507078          &                    \\
-      \textbf{7}             &                    &  11                 &  18951584          &                    \\
+      \textbf{1}             & 55                 &  22                 &  32970425          & 60\%               \\
+      \textbf{2}             & 44                 &  13                 &  23992470          & 55\%               \\
+      \textbf{3}             & 65                 &  14                 &  39532546          & 61\%               \\
+      \textbf{4}             & 61                 &  15                 &  24781874          & 41\%               \\
+      \textbf{5}             & 49                 &  22                 &  26573846          & 54\%               \\
+      \textbf{6}             & 42                 &  19                 &  29507078          & 70\%               \\
+      \textbf{7}             & 52                 &  11                 &  18951584          & 37\%               \\
       \hline
-      $\mathbf{\Sigma}$      &                    & 116                 & 196309823          &  57\%              \\
+      $\mathbf{\Sigma}$      &368                 & 116                 & 196309823          &  57\%              \\
       \hline
 	\end{tabular}
 	\caption{Chromosome statistic for mapped contigs of Nothern European cucumber genome.
@@ -189,10 +187,9 @@ It let us to define relations between annotations and create custom hierarchic t
 
 The logic layer, responsible for data processing, involves the modules implemented in C++ and in Python.
 The C++ modules include the calculation algorithms that require most computer power,
-e.g. custom implementation of BLAST \cite{altschul1997gapped}, Smith-Waterman \cite{smith1981identification}, Knuth-Morris-Pratt \cite{knuth1977fast}
-and Boyer-Moore \cite{boyer1977fast} methods.
+e.g. searching algorithms.
 The C++11 concurrency mechanism applied here speeds-up the computations in multi-core and multi-processor environment.
-Communication with Django web application framework is provided by Boost.Python wrappers \cite{rn:cpp}.
+Communication with Django web application framework is provided by Boost.Python wrappers.
 
 The presentation layer uses a web browser (as in thin client applications).
 The client partly processes information, e.g. validates user input, generates pictures to decrease the server and network load.
@@ -348,9 +345,9 @@ Further development of \appName{} will be implemented to keep up with genomic an
 
 \acknowledgments
 
-This work was supported by grants from National Science Center 2013/11/B/NZ/00814 and the statutory research of Institute of Computer Science of Warsaw University of Technology.
+This work was supported by grants from National Science Center 2013/11/B/NZ/00814 and the statutory funds of Institute of Computer Science of Warsaw University of Technology.
 
-\bibliographystyle{unsrt}
+\bibliographystyle{spiebib}
 \bibliography{webomics.bib}
 
 \end{document}
