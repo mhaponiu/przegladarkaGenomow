@@ -136,22 +136,22 @@ $\bullet$ All contigs amount: 8035 \\
 $\bullet$ Mapped contigs amount: 116 \\
 $\bullet$ Sum of known contig sequence lengths: 342288160 \\
 $\bullet$ Sum of mapped contig sequence lengths: 196309823 \\
-We have mapped around 57\% genome. Contig data includes order on chromosomes but does not have real start and stop positions. The genomic draft is a skeleton with physical and structural gaps. Contigs  are arranged in scaffolds and those using anchor markers are assigned to chromosomes. Gaps in the draft between contigs are easier to recognize thanks to experimental methods, for example, using DNA libraries. The best seems to be BAC library due it consists of large insert  between 100 – 300 kbp (Gutman et al. 2008). Sequencing of the clones from BAC library, and anchoring BES (Bac End Sequences) to the pool of contigs is basic steps in building the genome draft, because contigs could be oriented and ordered and consist the scaffold structure. Thus we can estimate the gaps across the scaffold calculating the insert length form BAC library, but this is still approximate value. More problematic are gaps between the scaffolds. In case where is no BAC library available the estmation is very difficult. Thus, to be able to visualize genome in \appName{}, we done some approximates. Between contigs there are gaps, where length of each gap depends on concrete chromosome length. In each chromosome, sum of gaps is equal to one another and sum of all mapped chromosome sequences with gaps are equal to sum of all known contigs.
+We have mapped 53.3\% genome ie around 57\% of our contigs. Contig data includes order on chromosomes but does not have real start and stop positions. The genomic draft is a skeleton with physical and structural gaps. Contigs  are arranged in scaffolds and those using anchor markers are assigned to chromosomes. Gaps in the draft between contigs are easier to recognize thanks to experimental methods, for example, using DNA libraries. The best seems to be BAC library due it consists of large insert  between 100 – 300 kbp (Gutman et al. 2008). Sequencing of the clones from BAC library, and anchoring BES (Bac End Sequences) to the pool of contigs is basic steps in building the genome draft, because contigs could be oriented and ordered and consist the scaffold structure. Thus we can estimate the gaps across the scaffold calculating the insert length form BAC library, but this is still approximate value. More problematic are gaps between the scaffolds. In case where is no BAC library available the estmation is very difficult. Thus, to be able to visualize genome in \appName{}, we done some approximates. Between contigs there are gaps, where length of each gap depends on concrete chromosome length. In each chromosome, sum of gaps is equal to one another and sum of all mapped chromosome sequences with gaps are equal to sum of all known contigs.
 
 \begin{table}
 	\centering
 	\begin{tabular}{|c||r|r|r|c|} \hline
 	  \textbf{Chromosome}    & chr.\ length [Mbp] & No.\ mapped contigs & Mapped length [bp] & Mapped length [\%] \\
       \hline
-      \textbf{1}             & 55                 &  22                 &  32970425          & 60\%               \\
-      \textbf{2}             & 44                 &  13                 &  23992470          & 55\%               \\
-      \textbf{3}             & 65                 &  14                 &  39532546          & 61\%               \\
-      \textbf{4}             & 61                 &  15                 &  24781874          & 41\%               \\
-      \textbf{5}             & 49                 &  22                 &  26573846          & 54\%               \\
-      \textbf{6}             & 42                 &  19                 &  29507078          & 70\%               \\
-      \textbf{7}             & 52                 &  11                 &  18951584          & 37\%               \\
+      \textbf{1}             & 55                 &  22                 &  32970425          & 59.9\%               \\
+      \textbf{2}             & 44                 &  13                 &  23992470          & 52.2\%               \\
+      \textbf{3}             & 65                 &  14                 &  39532546          & 60.8\%               \\
+      \textbf{4}             & 61                 &  15                 &  24781874          & 40.6\%               \\
+      \textbf{5}             & 49                 &  22                 &  26573846          & 54.2\%               \\
+      \textbf{6}             & 42                 &  19                 &  29507078          & 70.2\%               \\
+      \textbf{7}             & 52                 &  11                 &  18951584          & 36.4\%               \\
       \hline
-      $\mathbf{\Sigma}$      &368                 & 116                 & 196309823          &  57\%              \\
+      $\mathbf{\Sigma}$      &368                 & 116                 & 196309823          &  53.3\%              \\
       \hline
 	\end{tabular}
 	\caption{Chromosome statistic for mapped contigs of Nothern European cucumber genome.
@@ -252,7 +252,8 @@ The BLAST, as a representative of heuristic algorithms, is particularly useful f
 
 \section{Discussion}
 
-Rapid development of sequencing technologies, increasing in effectiveness and simultaneously lowering the costs, resulted in genomes massive sequencing. The number of assembled genomes almost doubles each year.are growing in avalanche.
+Rapid development of sequencing technologies, increasing in effectiveness and simultaneously lowering the costs, resulted in genomes massive sequencing.
+The number of assembled genomes almost doubles each year.
 Beside information about the order of nucleotides,
 DNA sequence becomes a source of data for further steps like structural and functional annotation, polymorphisms discovery, and markers detection, and very broad study of genome evolution. This involves multiple fields such as structural analysis of the genome, the study of genomic features, gene and ancient genome duplications, polyploidy, and comparative genomics. Genome evolution is a constantly changing and evolving field due to the steadily growing number of sequenced genomes and transcriptomes, both prokaryotic and eukaryotic, available to the scientific community and the public at large.
 Moreover due to increase  number of sequenced data  (genomes and transcriptomes) there is a huge need to upswing their features in a simple way with maintaining more information for example as a graphical output in the browser. A complete genome sequence of an organism can be considered to be the ultimate genetic map, in the sense that the heritable characteristics are encoded within the DNA and that the order of all the nucleotides along each chromosome is known. Finding all the functional parts of genome sequences and using this information to improve our knowledge of the  organism actions is very important. The genes are the fundamental units of inheritance and the ultimate determinant of all phenotypes. According to the “central dogma” of molecular biology, the process of transcribing DNA into RNA, or translating RNA into protein are very interesting for  researchers. The process of transcription involves creating a perfect RNA copy of the gene using the DNA of the gene as a template. Every gene consists of several functional components, each involved in a different facet of the process of gene expression. In eukaryotes, the coding regions of most genes are not continuous. They consist of areas that are transcribed into mRNA, the exons, which are interrupted by stretches of DNA that do not appear in mature mRNA, the introns. Transcription is the first step of gene regulation in which particular segment of DNA is copied into pre-mRNA, then pre-mRNA is spliced \cite{chen2009mechanisms}. This is a process in which introns are removed from a mRNA precursor. Also important feature is a promoter. This is a region of DNA that initiates transcription of a particular gene. Promoters are located near the transcription start sites of genes, on the same strand and upstream on the DNA (towards the 5' region of the sense strand). The coding region and promotor region arevery important are two main functional units \cite{pawelkowicz2016next}.
