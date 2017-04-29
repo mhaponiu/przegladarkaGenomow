@@ -4,12 +4,9 @@ from rest_framework.decorators import detail_route, list_route
 from serializers import *
 from django.contrib.auth.models import User, Group
 from zprapp.models import Organism, Chromosome, Annotation
-from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.views import APIView
 from rest_framework_extensions.mixins import NestedViewSetMixin, DetailSerializerMixin
 from paginations import MyPagination
-import json
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -29,12 +26,15 @@ class OrganismViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     serializer_class = OrganismChromosomesSerializer
 
 
-class AnnotationTypeViewSet(viewsets.ModelViewSet):
+class AnnotationTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AnnotationType.objects.all()
     serializer_class = AnnotationTypeSerializer
 
+    def filter_queryset(self, queryset):
+        return super(AnnotationTypeViewSet, self).filter_queryset(queryset=queryset).distinct().order_by('id')
 
-class AggregationViewSet(viewsets.ModelViewSet):
+
+class AggregationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Aggregation.objects.all()
     serializer_class = AggregationSerializer
 

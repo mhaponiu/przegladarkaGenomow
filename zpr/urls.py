@@ -41,7 +41,9 @@ chromosome_routes.register(r'paginated_annotations', PaginatedAnnotationViewSet,
                                                     parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_master'])
 
 chromosome_routes.register(r'annotation_types', AnnotationTypeViewSet, base_name='organism-chromosome-annotation_types',
-                                               parents_query_lookups=['annotation__chromosome__organism', 'annotation__chromosome'])
+                                               parents_query_lookups=['annotations__chromosome__organism', 'annotations__chromosome'])\
+                 .register(r'annotations', AnnotationViewSet, base_name='organism-chromosome-annotation_type-annotations',
+                                            parents_query_lookups=['chromosome__organism', 'chromosome', 'type'])
 
 
 urlpatterns = patterns('',
