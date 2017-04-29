@@ -1,7 +1,14 @@
+import sys, os
+sys.path.append([os.path.abspath('')])
+os.environ['DJANGO_SETTINGS_MODULE'] = 'zpr.settings'
+import django
+django.setup()
+
 from zprapp.models import Organism, Chromosome, AnnotationType, Annotation
 
 class TestDataInserter():
     def insert(self):
+        print "insert test data"
         self.db_objects = []
 
         organisms = self._organisms()
@@ -26,6 +33,7 @@ class TestDataInserter():
             e.save()
 
     def delete(self):
+        print "delete test data"
         for i in reversed(self.db_objects):
             i.delete()
 
@@ -75,3 +83,6 @@ class TestDataInserter():
         ]
         return annotations_demo1 + annotations_demo2 + annotations_demo3 + annotations_demo4
 
+if __name__ == '__main__':
+    t = TestDataInserter()
+    t.insert()
