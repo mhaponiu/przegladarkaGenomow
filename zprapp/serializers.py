@@ -31,11 +31,10 @@ class OrganismChromosomesSerializer(serializers.ModelSerializer):
 
 
 class ChromosomeSerializer(serializers.ModelSerializer):
-    organism_id = serializers.ReadOnlyField(source='organism.pk')
+    # organism_id = serializers.ReadOnlyField(source='organism.pk')
     class Meta:
         model = Chromosome
-        fields = ("number", "length", "organism", "ordered", 'id',
-                  'organism_id')
+        fields = ("number", "length", "organism", "ordered", 'id')
 
 
 class ChromosomeAnnotationSerializer(serializers.ModelSerializer):

@@ -34,10 +34,12 @@ chromosome_routes.register(r'annotations', AnnotationViewSet, base_name='organis
                                                parents_query_lookups=['chromosome__organism', 'chromosome'])\
                  .register(r'aggregations', AnnotationAggregationViewSet, base_name='organism-chromosome-annotation-aggreations',
                                                     parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_master'])
+
 chromosome_routes.register(r'paginated_annotations', PaginatedAnnotationViewSet, base_name='organism-chromosome-paginated_annotations',
                                                parents_query_lookups=['chromosome__organism', 'chromosome'])\
                  .register(r'aggregations', PaginatedAnnotationAggregationViewSet, base_name='organism-chromosome-paginated_annotations-paginated_aggregations',
                                                     parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_master'])
+
 chromosome_routes.register(r'annotation_types', AnnotationTypeViewSet, base_name='organism-chromosome-annotation_types',
                                                parents_query_lookups=['annotation__chromosome__organism', 'annotation__chromosome'])
 
