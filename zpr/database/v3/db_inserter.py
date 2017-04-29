@@ -15,15 +15,27 @@ class Inserter():
         self.chr_contig = contigs_factory.produce_chromosomes()
 
     def insert(self):
+        self.db_objects = []
         orgs = self._organisms()
         self._save_elements(orgs)
+        self.db_objects += orgs
+
         chrs = self._chromosomes(orgs[0])
         self._save_elements(chrs)
+        self.db_objects += chrs
+
         types = self._annotation_types()
         self._save_elements(types)
+        self.db_objects += types
+
         for chr in range(0,8):
             ctgs = self._contigs(chrs[chr], types[0])
             self._save_elements(ctgs)
+            self.db_objects += ctgs
+
+    def delete(self):
+        for i in reversed(self.db_objects):
+            i.delete()
 
     def _save_elements(self, elements):
         ''':param elements -- list'''
@@ -60,13 +72,7 @@ class Inserter():
                         type=type,
                         chromosome= chr) for ctg in self.chr_contig[chr.number]['contigs']]
 
-    def clear_db(self):
-        # TODO
-        pass
-
-
 
 if __name__ == "__main__":
     inserter = Inserter()
-    # inserter.clear_db()
     inserter.insert()
