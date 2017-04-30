@@ -7,6 +7,8 @@ from zprapp.models import Organism, Chromosome, Annotation
 from rest_framework.response import Response
 from rest_framework_extensions.mixins import NestedViewSetMixin, DetailSerializerMixin
 from paginations import MyPagination
+from zprapp.contrib.cutter import Cutter
+from zprapp.contrib.layerer import Layerer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -32,6 +34,20 @@ class AnnotationTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
 
     def filter_queryset(self, queryset):
         return super(AnnotationTypeViewSet, self).filter_queryset(queryset=queryset).distinct().order_by('id')
+
+    @detail_route(methods=["GET"])
+    def sequence(self, request, *args, **kwargs):
+        print request.query_params
+        params = request.query_params
+        start = None
+        end = None
+        if 'start' in params: start = int(params['start'])
+        if 'end' in params: end = int(params['end'])
+        type = self.get_object()
+        layerer = Layerer(type_priority_list=[type.id])
+        annotations = layerer.compose()
+        cutter = Cutter(annotations, start=start, end=end)
+        return Response(cutter.sequence())
 
 
 class AggregationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
