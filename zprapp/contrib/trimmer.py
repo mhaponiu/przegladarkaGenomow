@@ -1,16 +1,57 @@
 from django.db.models.expressions import F
 
 class Trimmer():
-    def __init__(self, ordered_annotation_list, start=None, end=None):
+    '''
+    zakladam ze wszystkie adnotacje leza na jednym chromosomie
+    '''
+    def __init__(self, ordered_annotation_list, start_chr=None, end_chr=None):
         self.ordered_annotation_list = ordered_annotation_list
-        self.start = start
-        self.end = end
+        self.start = start_chr
+        self.end = end_chr
+        self.chromosome = ordered_annotation_list[0].chromosome # zakladam ze wszystkie adnotacje leza na jednym chromosomie
 
     def sequence(self):
-        ret = ""
-        for a in self.ordered_annotation_list:
-            ret += a.sequence
-        return ret
+        annotations = self.ordered_annotation_list.annotate(end=F('start_chr') + F('length'))
+
+        filter_args = {}
+        if self.start is not None:
+            filter_args['end__gt'] = self.start
+        if self.end is not None: filter_args['start_chr__lt'] = \
+            self.end
+        if self.start is not None or self.end is not None:
+            annotations = annotations.filter(**filter_args)
+        annotations = annotations.order_by('start_chr')
+
+        if self.end is None or self.end > self.chromosome.length:
+            self.end = self.chromosome.length
+        if self.start is None or self.start < 0 or self.start > self.end:
+            self.start = 0
+
+        ret_string = bytearray('N' * (self.end - self.start))
+
+        for a in annotations:
+            string_od = None
+            string_do = None
+            if self.start > a.start_chr:
+                seq_od = int(self.start - a.start_chr)
+            elif self.start <= a.start_chr:
+                seq_od = None
+                string_od = self._zeroToNone(int(abs(a.start_chr - self.start)))
+            if self.end < a.end:
+                seq_do = int(self.end - a.start_chr)
+                string_do = None
+            elif self.end >= a.end:
+                seq_do = None
+
+            write_seq = a.sequence[seq_od:seq_do]
+
+            if self.end >= a.end:
+                string_do = self._noneToZero(string_od) + len(write_seq)
+
+            ret_string[string_od:string_do] = str(write_seq)
+
+        return ret_string.decode()
+
 
     def _zeroToNone(self, arg):
         if arg == 0:
@@ -23,63 +64,3 @@ class Trimmer():
             return 0
         else:
             return int(arg)
-
-
-    # def ajaxSeqSection(request):
-    #     id_chr = request.GET['id_chr']
-    #     widok_od = int(request.GET['widok_od'])
-    #     widok_do = int(request.GET['widok_do'])
-    #     chr = Chromosome.objects.get(id=id_chr)
-    #     chr_len = chr.length
-    #     selected_scflds = chr.scaffold_set.annotate(end=F('start') + F('length')) \
-    #         .filter(start__lt=widok_do, end__gt=widok_od) \
-    #         .order_by('order')
-    #
-    #     ret_string = bytearray('N' * (widok_do - widok_od))
-    #     # print "empty_ret_string", ret_string
-    #
-    #     if selected_scflds.__len__() == 0:
-    #         return ret_string.decode()
-    #
-    #     def zeroToNone(arg):
-    #         if arg == 0:
-    #             return None
-    #         else:
-    #             return int(arg)
-    #
-    #     def noneToZero(arg):
-    #         if arg == None:
-    #             return 0
-    #         else:
-    #             return int(arg)
-    #
-    #     for sc in selected_scflds:
-    #         string_od = None
-    #         string_do = None
-    #         if widok_od > sc.start:
-    #             seq_od = int(widok_od - sc.start)
-    #             string_od = None
-    #         elif widok_od <= sc.start:
-    #             seq_od = None
-    #             string_od = zeroToNone(int(abs(sc.start - widok_od)))
-    #         if widok_do < sc.end:
-    #             seq_do = int(widok_do - sc.start)
-    #             string_do = None
-    #         elif widok_do >= sc.end:
-    #             seq_do = None
-    #             # string_do zdefiniowany pozniej -> musze znac dlugosc_write_seq
-    #
-    #         write_seq = sc.sequence_set.first().sequence[seq_od:seq_do]
-    #
-    #         if widok_do >= sc.end:
-    #             string_do = noneToZero(string_od) + write_seq.__len__()
-    #
-    #         ret_string[string_od:string_do] = str(write_seq)
-    #         # print "seq_od", seq_od
-    #         # print "seq_do", seq_do
-    #         # print "write_seq", write_seq
-    #         # print "write_seq_len", write_seq.__len__()
-    #         # print "string_od ",string_od
-    #         # print "string_do ",string_do
-    #         # print "ret_string", ret_string
-    #     return ret_string.decode()

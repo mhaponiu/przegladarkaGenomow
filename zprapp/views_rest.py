@@ -40,7 +40,10 @@ class AnnotationTypeSeqSectionViewSet(AnnotationTypeViewSet):
 
     @detail_route(methods=["GET"])
     def sequence(self, request, *args, **kwargs):
-        '''widok dobrze dziala przy posrednim przechodzeniu
+        '''
+        @:param start -- widok od na chromosomie
+        @:param end -- widok do na chromosomie
+        widok dobrze dziala przy posrednim przechodzeniu
         organism/chromosom/annotation_type/sequence
         lub
         chromosom/annotation_type/sequence'''
@@ -56,7 +59,7 @@ class AnnotationTypeSeqSectionViewSet(AnnotationTypeViewSet):
         type = self.get_object()
         layerer = Layerer(type_priority_list=[type.id], chromosome=chromosome)
         annotations = layerer.compose()
-        trimmer = Trimmer(annotations, start=start, end=end)
+        trimmer = Trimmer(annotations, start_chr=start, end_chr=end)
         return Response(trimmer.sequence())
 
 
