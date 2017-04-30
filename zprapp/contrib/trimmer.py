@@ -1,6 +1,6 @@
 from django.db.models.expressions import F
 
-class Cutter():
+class Trimmer():
     def __init__(self, ordered_annotation_list, start=None, end=None):
         self.ordered_annotation_list = ordered_annotation_list
         self.start = start

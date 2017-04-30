@@ -7,7 +7,7 @@ from zprapp.models import Organism, Chromosome, Annotation
 from rest_framework.response import Response
 from rest_framework_extensions.mixins import NestedViewSetMixin, DetailSerializerMixin
 from paginations import MyPagination
-from zprapp.contrib.cutter import Cutter
+from zprapp.contrib.trimmer import Trimmer
 from zprapp.contrib.layerer import Layerer
 
 
@@ -32,22 +32,32 @@ class AnnotationTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AnnotationType.objects.all()
     serializer_class = AnnotationTypeSerializer
 
+
+class AnnotationTypeSeqSectionViewSet(AnnotationTypeViewSet):
+
     def filter_queryset(self, queryset):
         return super(AnnotationTypeViewSet, self).filter_queryset(queryset=queryset).distinct().order_by('id')
 
     @detail_route(methods=["GET"])
     def sequence(self, request, *args, **kwargs):
-        print request.query_params
+        '''widok dobrze dziala przy posrednim przechodzeniu
+        organism/chromosom/annotation_type/sequence
+        lub
+        chromosom/annotation_type/sequence'''
         params = request.query_params
+        if 'parent_lookup_annotations__chromosome' in kwargs:
+            chromosome = int(kwargs['parent_lookup_annotations__chromosome'])
+        else:
+            chromosome = None
         start = None
         end = None
         if 'start' in params: start = int(params['start'])
         if 'end' in params: end = int(params['end'])
         type = self.get_object()
-        layerer = Layerer(type_priority_list=[type.id])
+        layerer = Layerer(type_priority_list=[type.id], chromosome=chromosome)
         annotations = layerer.compose()
-        cutter = Cutter(annotations, start=start, end=end)
-        return Response(cutter.sequence())
+        trimmer = Trimmer(annotations, start=start, end=end)
+        return Response(trimmer.sequence())
 
 
 class AggregationViewSet(NestedViewSetMixin, viewsets.ModelViewSet):

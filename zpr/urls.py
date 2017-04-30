@@ -13,14 +13,17 @@ router = ExtendedDefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'groups', GroupViewSet)
 router.register(r'annotation_types', AnnotationTypeViewSet)
+
 router.register(r'aggregations', PaginatedAggregationViewSet)
 
-router.register(r'chromosomes', ChromosomeViewSet)\
-      .register(r'annotations', AnnotationViewSet, base_name='chromosome-annotations',
+base_chromosomes_routes = router.register(r'chromosomes', ChromosomeViewSet)
+base_chromosomes_routes.register(r'annotations', AnnotationViewSet, base_name='chromosome-annotations',
                                                parents_query_lookups=['chromosome'])
+base_chromosomes_routes.register(r'annotation_types', AnnotationTypeSeqSectionViewSet, base_name='chromosome-annotation_types',
+                                 parents_query_lookups=['annotations__chromosome'])
 
 router.register(r'annotations', PaginatedAnnotationViewSet)\
-      .register(r'aggregations', PaginatedAnnotationAggregationViewSet, base_name='annotation-aggreations',
+      .register(r'aggregations', PaginatedAnnotationAggregationViewSet, base_name='chromosome-annotation_types-seqsection',
                                                     parents_query_lookups=['aggregated_by__annotation_master'])
 
 
@@ -40,7 +43,7 @@ chromosome_routes.register(r'paginated_annotations', PaginatedAnnotationViewSet,
                  .register(r'aggregations', PaginatedAnnotationAggregationViewSet, base_name='organism-chromosome-paginated_annotations-paginated_aggregations',
                                                     parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_master'])
 
-chromosome_routes.register(r'annotation_types', AnnotationTypeViewSet, base_name='organism-chromosome-annotation_types',
+chromosome_routes.register(r'annotation_types', AnnotationTypeSeqSectionViewSet, base_name='organism-chromosome-annotation_types',
                                                parents_query_lookups=['annotations__chromosome__organism', 'annotations__chromosome'])\
                  .register(r'annotations', AnnotationViewSet, base_name='organism-chromosome-annotation_type-annotations',
                                             parents_query_lookups=['chromosome__organism', 'chromosome', 'type'])
@@ -49,9 +52,6 @@ chromosome_routes.register(r'annotation_types', AnnotationTypeViewSet, base_name
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
-
-    # url(r'^api/annotations/$', AnnotationList.as_view()),
-
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^', include('zprapp.urls')),
 )
