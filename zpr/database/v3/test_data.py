@@ -23,7 +23,7 @@ class TestDataInserter():
         self._save_elements(annotation_types)
         self.db_objects += annotation_types
 
-        annotations = self._annotations(chromosomes[0])
+        annotations = self._annotations(chromosomes)
         self._save_elements(annotations)
         self.db_objects += annotations
 
@@ -41,7 +41,8 @@ class TestDataInserter():
         return [Organism(name="demo_organism")]
 
     def _chromosomes(self, org):
-        return [Chromosome(organism=org, number=1, ordered=True, length=100)]
+        return [Chromosome(organism=org, number=1, ordered=True, length=100),
+                Chromosome(organism=org, number=2 , ordered=True, length=100)]
 
     def _annotation_types(self):
         return [
@@ -52,34 +53,38 @@ class TestDataInserter():
             AnnotationType(name='demo_nadmiarowy', short_name='nadmiar')
         ]
 
-    def _annotations(self, chromosome):
+    def _annotations(self, chromosomes):
+        chromosome1 = chromosomes[0]
+        chromosome2 = chromosomes[1]
         demo1 = AnnotationType.objects.get(short_name='demo1')
         annotations_demo1 = [
-            Annotation(start_chr=0, length=10, name='ann1', sequence='DEMO1_ANN1',
-                       type=demo1, chromosome=chromosome),
-            Annotation(start_chr=20, length=10, name='ann2', sequence='DEMO1_ANN2',
-                       type=demo1, chromosome=chromosome)
+            Annotation(start_chr=0, length=10, name='ann1', sequence='CHR1_DEMO1_ANN1',
+                       type=demo1, chromosome=chromosome1),
+            Annotation(start_chr=20, length=10, name='ann2', sequence='CHR1_DEMO1_ANN2',
+                       type=demo1, chromosome=chromosome1),
+            Annotation(start_chr=35, length=95, name='ann1', sequence='CHR2_DEMO1_ANN1',
+                       type=demo1, chromosome=chromosome2)
         ]
         demo2 = AnnotationType.objects.get(short_name='demo2')
         annotations_demo2 = [
-            Annotation(start_chr=40, length=10, name='ann1', sequence='DEMO2_ANN1',
-                       type=demo2, chromosome=chromosome),
-            Annotation(start_chr=60, length=10, name='ann2', sequence='DEMO2_ANN2',
-                       type=demo2, chromosome=chromosome)
+            Annotation(start_chr=40, length=10, name='ann1', sequence='CHR1_DEMO2_ANN1',
+                       type=demo2, chromosome=chromosome1),
+            Annotation(start_chr=60, length=10, name='ann2', sequence='CHR1_DEMO2_ANN2',
+                       type=demo2, chromosome=chromosome1)
         ]
         demo3 = AnnotationType.objects.get(short_name='demo3')
         annotations_demo3 = [
-            Annotation(start_chr=5, length=17, name='ann1', sequence='DEMO3_ANN1',
-                       type=demo3, chromosome=chromosome),
-            Annotation(start_chr=24, length=40, name='ann2', sequence='DEMO3_ANN2',
-                       type=demo3, chromosome=chromosome)
+            Annotation(start_chr=5, length=17, name='ann1', sequence='CHR1_DEMO3_ANN1',
+                       type=demo3, chromosome=chromosome1),
+            Annotation(start_chr=24, length=40, name='ann2', sequence='CHR1_DEMO3_ANN2',
+                       type=demo3, chromosome=chromosome1)
         ]
         demo4 = AnnotationType.objects.get(short_name='demo4')
         annotations_demo4 = [
-            Annotation(start_chr=80, length=10, name='ann1', sequence='DEMO4_ANN1',
-                       type=demo4, chromosome=chromosome),
-            Annotation(start_chr=85, length=10, name='ann2', sequence='DEMO4_ANN2',
-                       type=demo4, chromosome=chromosome)
+            Annotation(start_chr=80, length=10, name='ann1', sequence='CHR1_DEMO4_ANN1',
+                       type=demo4, chromosome=chromosome1),
+            Annotation(start_chr=85, length=10, name='ann2', sequence='CHR1_DEMO4_ANN2',
+                       type=demo4, chromosome=chromosome1)
         ]
         return annotations_demo1 + annotations_demo2 + annotations_demo3 + annotations_demo4
 
