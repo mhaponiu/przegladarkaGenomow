@@ -37,11 +37,19 @@
         <tr>
             <th>Chromosom {['CHROMOSOMY' | translate ]}</th>
             <th>Długość</th>
+            <th>Adnotacje</th>
         </tr>
         </thead>
         <tr ng-repeat="ch in chrms">
-            <td><a ng-href="#/organizm/{[id_org]}/chromosom/{[ch.pk]}/scaffoldy">chromosom {[ch.fields.number]}</a></td>
+            <td><a ng-href="#/organisms/{[id_org]}/chromosomes/{[ch.pk]}/types/{[id_type]}/annotations/">chromosom {[ch.number]}</a></td>
             <td>{[ch.fields.length]}</td>
+            <td>
+                <div class="btn-group btn-group-sm" role="group">
+                    <a ng-repeat="t in types[ch.pk]" type="button" class="btn btn-default" ng-href="#/organisms/{[id_org]}/chromosomes/{[ch.pk]}/types/{[t.id]}/annotations">{[t.name]}</a>
+{#                    <a type="button" class="btn btn-default">dwa</a>#}
+                </div>
+{#                <a class="btn btn-sm btn-info" ng-href="www.onet.pl">onet</a>#}
+            </td>
         </tr>
     </table>
 </div>

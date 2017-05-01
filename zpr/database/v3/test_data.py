@@ -62,7 +62,7 @@ class TestDataInserter():
                        type=demo1, chromosome=chromosome1),
             Annotation(start_chr=20, length=10, name='ann2', sequence='1_DEMO1_A2',
                        type=demo1, chromosome=chromosome1),
-            Annotation(start_chr=35, length=60, name='ann1', sequence='2_DE'+"E"*60+'MO1_A1',
+            Annotation(start_chr=35, length=60, name='ann1', sequence='2_DE'+"E"*50+'MO1_A1',
                        type=demo1, chromosome=chromosome2)
         ]
         demo2 = AnnotationType.objects.get(short_name='demo2')

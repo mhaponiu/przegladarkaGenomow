@@ -34,7 +34,7 @@ function cucRouteConfig($routeProvider) {
             controller: ChromosomKontroler,
             templateUrl: 'templates/chromosomy.html'
         }).
-        when('/organizm/:id_org/chromosom/:id_chr/scaffoldy', {
+        when('/organisms/:id_org/chromosomes/:id_chr/types/:id_type/annotations', {
             controller: ScaffoldKontroler,
             templateUrl: 'templates/scaffoldy.html'
         }).

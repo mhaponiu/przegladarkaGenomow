@@ -5,6 +5,19 @@ function ChromosomKontroler($scope, $http, $routeParams) {
     $scope.napis = "ala ma kota";
 
     $scope.id_org = $routeParams.id_org;
+    $scope.types = {} //slownik [id_chr]=lista typow z api
+
+    $scope.loadTypes = function (id_chr) {
+        var request = {
+            method: 'GET',
+            url: 'api/organisms/'+ $scope.id_org + '/chromosomes/' + id_chr + '/annotation_types/',
+        };
+        return $http(request)
+            .success(function (data) {
+                //trzeba odrazu dane wsadzac to obiektu scope - nie potrafie ich przekazac przez returna
+                $scope.types[id_chr] = data;
+            });
+    }
 
     $scope.loadChromosomes = function(id_org){
         var request = {

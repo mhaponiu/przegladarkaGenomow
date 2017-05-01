@@ -53,7 +53,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
     $scope.textarea.loadSequence = function(){
         var request = {
             method: 'GET',
-            url: 'api/organisms/' + $routeParams.id_org + '/chromosomes/' + $routeParams.id_chr + '/annotation_types/' + $scope.tmp_annotation_type + '/sequence/',
+            url: 'api/organisms/' + $routeParams.id_org + '/chromosomes/' + $routeParams.id_chr + '/annotation_types/' + $scope.id_type + '/sequence/',
             params: {
                 start: $scope.settings.widok_od,
                 end: $scope.settings.widok_do
@@ -105,8 +105,8 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
 
     //wywolywanie ma sens dopiero gdy istnieje juz $scope.scflds   =>   $scope.promiseLoadScaffolds
     $scope.canvas.getViewData = function () {
-        console.log("getViewDATA")
-        console.log($scope.scflds)
+        // console.log("getViewDATA")
+        // console.log($scope.scflds)
         $scope.canvas.data = $filter("wytnijNaScaffView")($scope.scflds, $scope.settings.widok_od, $scope.settings.widok_do)
         //sortowanie rosnace po fields.order
         $scope.canvas.data.sort(function(a,b){
