@@ -156,11 +156,11 @@
             </tr>
             </thead>
             {#            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">#}
-            <tr ng-repeat="scf in canvas.data |orderBy: 'fields.start_chr'" class="fx-bounce-left fx-speed-200">
-                <td><a ng-href="#/organizm/{[id_org]}/chromosom/{[chr_id]}/scaffold/{[scf.pk]}/sekwencja">contig
-                    {[scf.pk]}</a></td>
-                <td>{[scf.fields.length]}</td>
-                <td>{[scf.fields.start_chr]}</td>
+            <tr ng-repeat="scf in canvas.data |orderBy: 'start_chr'" class="fx-bounce-left fx-speed-200">
+                <td><a ng-href="api/organisms/{[id_org]}/chromosomes/{[chr_id]}/annotations/{[scf.id]}/sequence/?format=json">contig
+                    {[scf.id]}</a></td>
+                <td>{[scf.length]}</td>
+                <td>{[scf.start_chr]}</td>
 {#                <td>{[scf.fields.order]}</td>#}
             </tr>
 

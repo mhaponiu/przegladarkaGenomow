@@ -53,11 +53,10 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
     $scope.textarea.loadSequence = function(){
         var request = {
             method: 'GET',
-            url: 'ajax_seqSection',
+            url: 'api/organisms/' + $routeParams.id_org + '/chromosomes/' + $routeParams.id_chr + '/annotation_types/' + $scope.tmp_annotation_type + '/sequence/',
             params: {
-                widok_od: $scope.settings.widok_od,
-                widok_do: $scope.settings.widok_do,
-                id_chr: $routeParams.id_chr
+                start: $scope.settings.widok_od,
+                end: $scope.settings.widok_do
             }
         };
         return $http(request)
