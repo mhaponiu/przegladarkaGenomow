@@ -111,7 +111,7 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
         $scope.canvas.data = $filter("wytnijNaScaffView")($scope.scflds, $scope.settings.widok_od, $scope.settings.widok_do)
         //sortowanie rosnace po fields.order
         $scope.canvas.data.sort(function(a,b){
-            return a.fields.order - b.fields.order;
+            return a.start_chr - b.start_chr;
         })
     }
 
@@ -448,18 +448,18 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
         //rysujemy scaffoldy
         for(i = 0;i<=$scope.canvas.data.length-1; i++){
             item = $scope.canvas.data[i];
-            odkad = (item.fields.start - $scope.settings.widok_od)
+            odkad = (item.start_chr - $scope.settings.widok_od)
                     *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
-            dokad = (item.fields.start + item.fields.length - $scope.settings.widok_od)
+            dokad = (item.start_chr + item.length - $scope.settings.widok_od)
                     *(x_to - x_from) / ($scope.settings.widok_do - $scope.settings.widok_od) + x_from;
-            if(i==0 && item.fields.start < $scope.settings.widok_od){
+            if(i==0 && item.start_chr < $scope.settings.widok_od){
                 odkad = x_from;
-                if(item.fields.start + item.fields.length > $scope.settings.widok_do){
+                if(item.start_chr + item.length > $scope.settings.widok_do){
                     dokad = x_to;
                 }
             }
             else{
-                if(i==$scope.canvas.data.length-1 && item.fields.start + item.fields.length > $scope.settings.widok_do){
+                if(i==$scope.canvas.data.length-1 && item.start_chr + item.length > $scope.settings.widok_do){
                     dokad = x_to;
                 }
             }

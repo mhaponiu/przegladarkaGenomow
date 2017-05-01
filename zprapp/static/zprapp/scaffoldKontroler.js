@@ -8,9 +8,8 @@ function ScaffoldKontroler($scope, $routeParams, $http) {
 
     $scope.loadScaffolds = function(id_org, id_chr){
         var request = {
-            method: 'POST',
-            url: 'api/annotations/',
-            data: {id: "id_chr"}
+            method: 'GET',
+            url: 'api/organisms/'+$scope.id_org+'/chromosomes/'+$scope.chr_id+'/annotation_types/49/annotations/' //TODO na sztywno wpisane
         };
         return $http(request)
             .success(function (data) {

@@ -109,8 +109,8 @@ cucModule.filter("wytnijNaScaffView", function(){
             var noweObiekty = [];
             angular.forEach(data, function(item){
                 if (!(
-                    (item.fields.start + item.fields.length <= odkad) ||
-                    (item.fields.start >= dokad)
+                    (item.start_chr + item.length <= odkad) ||
+                    (item.start_chr >= dokad)
                     )){
                     noweObiekty.push(item)
                 }
