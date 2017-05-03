@@ -8,7 +8,7 @@ function OrganizmKontroler($scope, $http) {
     $scope.loadOrganisms = function(){
         var request = {
             method: 'GET',
-            url: 'ajax_orgs'
+            url: 'api/organisms'
         };
         return $http(request)
             .success(function (data) {

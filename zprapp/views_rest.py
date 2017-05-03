@@ -1,5 +1,7 @@
 from pprint import pprint
 
+from django.http.request import RawPostDataException
+from django.http.response import JsonResponse
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route, list_route
 from rest_framework.views import APIView
@@ -119,12 +121,19 @@ class CalcView(APIView):
     }
     def post(self, request):
         print("#"*40)
-        # print(request.body)
-        body = json.loads(request.body)
+
+        try:
+            # jak leci z angulara to post data jest w "data" a jak z httpie to w body, nie wiem o co chodzi
+            body = json.loads(request.body)
+        except RawPostDataException:
+            body = request.data
         alg_id = int(body['alg_id'])
         alg_name = body['alg_name']
         alg_params = body['alg_params']
         pattern = body['pattern']
         pprint(body)
 
-        return Response("CALC")
+        return JsonResponse([{"org_id": 23, "chr_id": 55, "annotation_id": 24159, "pos": [2, 5]}], safe=False)
+        # return Response("CALC")
+        return Response(self.algoritms)
+

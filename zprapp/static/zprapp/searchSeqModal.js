@@ -41,22 +41,28 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function($scope
     $scope.wybranyOrg = $scope.orgs[0]
     $scope.showTable = false
 
+
     // TODO na sztywno wpisany zeby szybciej pokazac -> usunac nizej
     $scope.wzorzec = "CTTCAGCAAAG"
 
     $scope.searchSeq = function(){
         var request = {
             method: 'POST',
-            url: 'ajax_searchSeq',
+            url: '/api/calc',
             //params: {param1: "p1p1p1", param2: "p2p2p2"}, //query string parametr
             data: { pattern: $scope.wzorzec,
-                    // cel: $scope.cel,
-                    org: $scope.wybranyOrg['pk'] } //ukryte data w poscie
+                    alg_id: $scope.wybranyAlg['id'],
+                    alg_name: $scope.wybranyAlg['name'],
+                    alg_params: {dupa: 234},
+                    annotation_params: {
+                        chr_id: $scope.wybranyChr,
+                        org: $scope.wybranyOrg['id']
+                    }
+            } //ukryte data w poscie
         };
         $http(request)
             .success(function (data) {
                 $scope.wynik = $filter("multipleLineWhenManyPos")(data)
-                // console.log($scope.wynik)
                 $scope.showTable = true
             });
     }
@@ -65,8 +71,9 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function($scope
         console.log(item)
         DataBufor.setData('view_from', item['pos']) //pos to pozycja wzgledna wzgledem poczatku scaffoldu
         DataBufor.setData('view_to', item['pos'] + $scope.wzorzec.length)
-        DataBufor.setData('scf_id', item['scf_id'])
-        window.location.replace("#/organisms/" + item['org_id'] +"/chromosomes/" + item['chr_id'] + "/annotations")
+        DataBufor.setData('annotation_id', item['annotation_id'])
+        // window.location.replace("#/organisms/" + item['org_id'] +"/chromosomes/" + item['chr_id'] + "/annotations")
+        window.location.replace("#/organisms/" + item['org_id'] +"/chromosomes/" + item['chr_id'] +'/types/'+ 54 + "/annotations")
 
     }
 
