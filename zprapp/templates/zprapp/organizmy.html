@@ -116,6 +116,10 @@
                 <div class="col-md-12">
                     <select class="form-control" ng-model="wybranyOrg"
                             ng-options="org['name'] for org in orgs"/></select>
+                    <select class="form-control" ng-model="wybranyChr"
+                            ng-options="'chromosome ' + chr['number'] for chr in listChromosomow"/></select>
+                    <select class="form-control" ng-model="wybranyTyp"
+                            ng-options="typ['name'] for typ in listaTypow"/></select>
                     <input class="form-control" placeholder="wzorzec" ng-model="wzorzec">
                     <div class="well" collapse="!showTable" >
                         <table class="table table-striped table-hover">
