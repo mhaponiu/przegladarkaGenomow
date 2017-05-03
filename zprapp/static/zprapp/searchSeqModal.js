@@ -66,6 +66,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
             .success(function (data) {
                 //trzeba odrazu dane wsadzac to obiektu scope - nie potrafie ich przekazac przez returna
                 $scope.chr_types[id_chr] = data;
+                $scope.showTable = false
             });
     }
 
@@ -76,6 +77,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
             $scope.listChromosomow = $scope.org_chromosomes[$scope.wybranyOrg.id]
             // debugger
             $scope.wybranyChr = $scope.listChromosomow[0]
+            $scope.showTable = false
             // console.log($scope.wybranyChr.number)
         })
     })
@@ -84,8 +86,15 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
             $scope.listaTypow = $scope.chr_types[$scope.wybranyChr.id]
             // console.log($scope.listaTypow)
             $scope.wybranyTyp = $scope.listaTypow[0]
+            $scope.showTable = false
             // console.log($scope.wybranyTyp.name)
         })
+    })
+    $scope.$watch('wybranyTyp', function () {
+        $scope.showTable = false
+    })
+    $scope.$watch('wzorzec', function () {
+        $scope.showTable = false
     })
 
 
