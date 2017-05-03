@@ -249,8 +249,9 @@ cucModule.filter("wytnijNaScaffView", function(){
                     new_list.push({
                         'org_id': wiersz['org_id'],
                         'chr_id': wiersz['chr_id'],
-                        'annotation_id': wiersz['annotation_id'],
-                        'pos': p
+                        'ann_id': wiersz['ann_id'],
+                        'pos': p,
+                        'ann_type': wiersz['ann_type']
                     })
                 })
             })

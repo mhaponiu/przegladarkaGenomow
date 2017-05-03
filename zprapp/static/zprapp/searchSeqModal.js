@@ -28,6 +28,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
     $scope.cancel = function () {
         $modalInstance.close();
     }
+    // musi sie pokrywac z lista algorytmow z view_rest.py
     $scope.algorytmy = [
         {name: 'KMP', id: 1, params: {}},
         {name: 'Boyer', id: 2, params: {}},
@@ -131,7 +132,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
         DataBufor.setData('view_to', item['pos'] + $scope.wzorzec.length)
         DataBufor.setData('annotation_id', item['annotation_id'])
         // window.location.replace("#/organisms/" + item['org_id'] +"/chromosomes/" + item['chr_id'] + "/annotations")
-        window.location.replace("#/organisms/" + item['org_id'] + "/chromosomes/" + item['chr_id'] + '/types/' + 54 + "/annotations")
+        window.location.replace("#/organisms/" + item['org_id'] + "/chromosomes/" + item['chr_id'] + '/types/' + item['ann_type'] + "/annotations")
 
     }
 

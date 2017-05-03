@@ -15,6 +15,7 @@ from paginations import MyPagination
 from zprapp.contrib.trimmer import Trimmer
 from zprapp.contrib.layerer import Layerer
 import json
+from zprapp.calc.calc_webomics.build import calc
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -114,14 +115,12 @@ class CalcView(APIView):
     http POST localhost:8000/api/calc/ alg_id=323 pattern=AACCTTGG alg_params:='{"w":7, "t":24}' alg_name=KMP annotations_params:='{"org_id":123, "chr_id":3, "type_id":123}'
     '''
     algoritms = {
-        1: {'name': 'KMP'},
-        2: {'name': 'Boyer'},
-        3: {'name': 'BLAST'},
-        4: {'name': 'SW'}
+        1: {'name': 'KMP'}, # Algorytm Knutha-Morrisa-Pratha
+        2: {'name': 'Boyer'},# Algorytm Boyera-Moore'a
+        3: {'name': 'BLAST'}, # Basic Local Alignment Search Tool
+        4: {'name': 'SW'} # Smitha-Watermana
     }
     def post(self, request):
-        print("#"*40)
-
         try:
             # jak leci z angulara to post data jest w "data" a jak z httpie to w body, nie wiem o co chodzi
             body = json.loads(request.body)
@@ -131,9 +130,39 @@ class CalcView(APIView):
         alg_name = body['alg_name']
         alg_params = body['alg_params']
         pattern = body['pattern']
+        annotation_params = body['annotation_params']
         pprint(body)
 
-        return JsonResponse([{"org_id": 23, "chr_id": 55, "annotation_id": 24159, "pos": [2, 5]}], safe=False)
-        # return Response("CALC")
-        return Response(self.algoritms)
+        # przygotowanie adnotacji do przeszukiwania
+        annotations = Annotation.objects.filter(chromosome__organism= annotation_params['org_id'],
+                                                    chromosome= annotation_params['chr_id'],
+                                                    type=annotation_params['type_id'])
+
+        results = []
+        if alg_id == 1:
+            kmp = calc.KMP()
+            kmp.calculateTable(str(pattern))
+            for a in annotations:
+                ret ={"org_id": a.chromosome.organism_id, "chr_id": a.chromosome_id, "ann_id": a.id, 'ann_type': a.type_id}
+                positions = kmp.compute(str(a.sequence)) # todo wolne -> zmiana z unicode na stringa sekwencji
+                # korekcja pozycji o 1 w lewo (w apce od 0 a algorytm od 1)
+                positions = [p-1 for p in positions]
+                ret['pos'] = list(positions)
+                results.append(ret)
+
+        elif alg_id == 2:
+            bm = calc.BM()
+            bm.prepare(str(pattern))
+            for a in annotations:
+                ret ={"org_id": a.chromosome.organism_id, "chr_id": a.chromosome_id, "ann_id": a.id, 'ann_type': a.type_id}
+                positions = bm.compute(str(a.sequence))  # todo wolne -> zmiana z unicode na stringa sekwencji
+                # korekcja pozycji o 1 w lewo (w apce od 0 a algorytm od 1)
+                positions = [p - 1 for p in positions]
+                ret['pos'] = list(positions)
+                results.append(ret)
+
+        return JsonResponse(results, safe=False)
+        # return JsonResponse([{"org_id": 23, "chr_id": 55, "ann_id": 24159, "pos": [2, 5], 'ann_type':23}], safe=False)
+
+
 
