@@ -21,9 +21,7 @@ function OrganizmKontroler($scope, $http) {
     $scope.deleteOrganism = function(index_in_table){
         var request = {
             method: 'DELETE',
-            url: 'ajax_deleteOrganism',
-            data: {id_org: $scope.orgs[index_in_table]['pk']}
-
+            url: 'api/organisms/'+$scope.orgs[index_in_table]['id']
         };
         return $http(request)
             .success(function (data) {
