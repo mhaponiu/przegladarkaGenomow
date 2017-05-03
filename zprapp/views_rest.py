@@ -1,5 +1,8 @@
+from pprint import pprint
+
 from rest_framework import viewsets
 from rest_framework.decorators import detail_route, list_route
+from rest_framework.views import APIView
 
 from serializers import *
 from django.contrib.auth.models import User, Group
@@ -9,7 +12,7 @@ from rest_framework_extensions.mixins import NestedViewSetMixin, DetailSerialize
 from paginations import MyPagination
 from zprapp.contrib.trimmer import Trimmer
 from zprapp.contrib.layerer import Layerer
-
+import json
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
@@ -26,7 +29,6 @@ class OrganismViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = Organism.objects.all()
     # serializer_class = OrganismSerializer
     serializer_class = OrganismChromosomesSerializer
-
 
 class AnnotationTypeViewSet(NestedViewSetMixin, viewsets.ModelViewSet):
     queryset = AnnotationType.objects.all()
@@ -105,3 +107,24 @@ class PaginatedAnnotationAggregationViewSet(AnnotationAggregationViewSet):
     pagination_class = MyPagination
 
 
+class CalcView(APIView):
+    '''
+    http POST localhost:8000/api/calc/ alg_id=323 pattern=AACCTTGG alg_params:='{"w":7, "t":24}' alg_name=KMP annotations_params:='{"org_id":123, "chr_id":3, "type_id":123}'
+    '''
+    algoritms = {
+        1: {'name': 'KMP'},
+        2: {'name': 'Boyer'},
+        3: {'name': 'BLAST'},
+        4: {'name': 'SW'}
+    }
+    def post(self, request):
+        print("#"*40)
+        # print(request.body)
+        body = json.loads(request.body)
+        alg_id = int(body['alg_id'])
+        alg_name = body['alg_name']
+        alg_params = body['alg_params']
+        pattern = body['pattern']
+        pprint(body)
+
+        return Response("CALC")

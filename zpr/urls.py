@@ -52,6 +52,7 @@ chromosome_routes.register(r'annotation_types', AnnotationTypeSeqSectionViewSet,
 urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(router.urls)),
+    url(r'^api/calc', CalcView.as_view()),
     url(r'^api-auth/', include('rest_framework.urls')),
     url(r'^', include('zprapp.urls')),
 )

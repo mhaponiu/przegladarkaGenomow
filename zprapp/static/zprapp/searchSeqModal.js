@@ -29,9 +29,10 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function($scope
         $modalInstance.close();
     }
     $scope.algorytmy = [
-      {name:'kmp', id:1},
-      {name:'alg2', id:2},
-      {name:'alg3', id:3},
+      {name:'KMP', id:1, params:{} },
+      {name:'Boyer', id:2, params:{} },
+      {name:'SW', id:3, params:{win:2, gap:4} },
+      {name:'BLAST', id:4, params:{w:7, t:3, c:3}},
     ];
     $scope.wybranyAlg = $scope.algorytmy[0]
     $scope.wzorzec;
@@ -48,7 +49,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function($scope
             method: 'POST',
             url: 'ajax_searchSeq',
             //params: {param1: "p1p1p1", param2: "p2p2p2"}, //query string parametr
-            data: { wzorzec: $scope.wzorzec,
+            data: { pattern: $scope.wzorzec,
                     // cel: $scope.cel,
                     org: $scope.wybranyOrg['pk'] } //ukryte data w poscie
         };
@@ -65,7 +66,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function($scope
         DataBufor.setData('view_from', item['pos']) //pos to pozycja wzgledna wzgledem poczatku scaffoldu
         DataBufor.setData('view_to', item['pos'] + $scope.wzorzec.length)
         DataBufor.setData('scf_id', item['scf_id'])
-        window.location.replace("#/organizm/" + item['org_id'] +"/chromosom/" + item['chr_id'] + "/scaffoldy")
+        window.location.replace("#/organisms/" + item['org_id'] +"/chromosomes/" + item['chr_id'] + "/annotations")
 
     }
 
