@@ -14,13 +14,13 @@ namespace algorithms
 		this->similarity = NULL;
 	}
 
-	SW_py::~SW_py()
-	{
-		if(this->similarity != NULL)
-			delete this->similarity;
-		if(this->sw != NULL)
-			delete this->sw;
-	}
+//	SW_py::~SW_py()
+//	{
+//		if(this->similarity != NULL)
+//			delete this->similarity;
+//		if(this->sw != NULL)
+//			delete this->sw;
+//	}
 
 	int SW_py::fastInitAndCompute(int w_match, int w_mismatch, int w_open, int w_extend, std::string text, std::string pattern)
 	{

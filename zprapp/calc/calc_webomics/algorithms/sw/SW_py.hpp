@@ -24,7 +24,7 @@ namespace algorithms
 			/**
 			 * Destruktor
 			 */
-			~SW_py();
+//			~SW_py();
 
 			/**
 			 *
