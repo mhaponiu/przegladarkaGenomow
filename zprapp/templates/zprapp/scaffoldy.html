@@ -54,8 +54,14 @@
                     <button id="toggleTextArea" class="btn btn-primary" ng-click="toggleTextArea()"><span
                             ng-class="textarea.ikona"></span>
                     </button>
-                    <button id="reset" class="btn btn-warning" ng-click="settings.reset()">Reset</button>
+                    <button id="reset" class="btn btn-warning" ng-click="settings.reset()">
+                        Reset
+                    </button>
                 </div>
+                <a class="btn btn-lg" target="_blank"
+                   ng-href="api/organisms/{[route_id_org]}/chromosomes/{[route_id_chr]}/annotation_types/{[id_type]}/sequence/?format=json&start={[settings.widok_od]}&end={[settings.widok_do]}">
+                    <span class="glyphicon glyphicon-share"/>
+                </a>
             </div>
         </div>
 
@@ -79,17 +85,16 @@
 
 
         <div class="row">
-            <div class="col-sm-2">
-                <label>
-                    <input type="checkbox" ng-model="markery.visible"> MARKERY
-                </label>
+            <div class="col-sm-7">
+                <a class="btn btn-lg"
+                   ng-href="api/organisms/{[route_id_org]}/chromosomes/{[route_id_chr]}/annotation_types/{[id_type]}/sequence/?format=json&start={[settings.widok_od]}&end={[settings.widok_do]}"
+                   download="{[route_id_chr]}_{[id_type]}.seq">
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                        Download actual view
+                        <span class="glyphicon glyphicon-download-alt"></span>
+                </a>
             </div>
             <div class="col-sm-5">
-                <button ng-controller="SearchMarkerModalCtrl" class="btn btn-sm btn-primary" ng-click="open()">
-                    wyszukaj
-                </button>
-            </div>
-            <div class="col-sm-5 col-">
                 <label>
                     <span class="glyphicon glyphicon-arrow-left"/>
                     {[ settings.widok_do - settings.widok_od | roundAndFormatBP:2 ]}
@@ -156,9 +161,21 @@
             </tr>
             </thead>
             {#            <tr ng-repeat="scf in scflds | wytnijNaScaffView:settings.widok_od:settings.widok_do  |orderBy: 'fields.order'">#}
-            <tr ng-repeat="scf in canvas.data |orderBy: 'start_chr'" class="fx-bounce-left fx-speed-200">
-                <td><a ng-href="api/organisms/{[id_org]}/chromosomes/{[chr_id]}/annotations/{[scf.id]}/sequence/?format=json">contig
-                    {[scf.id]}</a></td>
+            <tr ng-repeat="scf in canvas.data |orderBy: 'start_chr'" class="fx-bounce-left fx-speed-200"
+                ng-init="showDownloadButton[$index]=false"
+                ng-mouseenter="showDownloadButton[$index]=true"
+                ng-mouseleave="showDownloadButton[$index]=false">
+                <td>
+                    <a target="_blank" style="padding-right: 10px"
+                       ng-href="api/organisms/{[id_org]}/chromosomes/{[chr_id]}/annotations/{[scf.id]}/sequence/?format=json">
+                        contig {[scf.id]}
+                    </a>
+                    <a class="btn btn-sm btn-success" ng-href="api/organisms/{[id_org]}/chromosomes/{[chr_id]}/annotations/{[scf.id]}/sequence/?format=json"
+                        download="{[scf.id]}.seq" ng-show="showDownloadButton[$index]"
+                        popover-placement="right" popover="pobierz" popover-trigger="mouseenter">
+                        <span class="glyphicon glyphicon-download"></span>
+                    </a>
+                </td>
                 <td>{[scf.length]}</td>
                 <td>{[scf.start_chr]}</td>
 {#                <td>{[scf.fields.order]}</td>#}

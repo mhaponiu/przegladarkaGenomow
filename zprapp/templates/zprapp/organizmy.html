@@ -128,7 +128,8 @@
                                 <th>Organism</th>
                                 <th>Chromosome</th>
                                 <th>Annotation</th>
-                                <th>Position</th>
+                                <th>Position start</th>
+                                <th>Position end</th>
                             </tr>
                             </thead>
                             <tr ng-repeat="i in wynik" ng-click="teleport(i)">
@@ -149,7 +150,12 @@
                                 </td>
                                 <td>
                                     <h5>
-                                        {[i['pos']]}
+                                        {[i['pos'][0]]}
+                                    </h5>
+                                </td>
+                                <td>
+                                    <h5>
+                                        {[i['pos'][1]]}
                                     </h5>
                                 </td>
                             </tr>

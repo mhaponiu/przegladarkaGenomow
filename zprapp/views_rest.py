@@ -129,9 +129,9 @@ class CalcView(APIView):
         alg_id = int(body['alg_id'])
         alg_name = body['alg_name']
         alg_params = body['alg_params']
-        pattern = body['pattern']
+        pattern = str(body['pattern'])
         annotation_params = body['annotation_params']
-        pprint(body)
+        # pprint(body)
 
         # przygotowanie adnotacji do przeszukiwania
         annotations = Annotation.objects.filter(chromosome__organism= annotation_params['org_id'],
@@ -140,27 +140,80 @@ class CalcView(APIView):
 
         results = []
         if alg_id == 1:
+            print("KMP")
             kmp = calc.KMP()
-            kmp.calculateTable(str(pattern))
+            kmp.calculateTable(pattern)
+            pattern_length=len(pattern)
             for a in annotations:
                 ret ={"org_id": a.chromosome.organism_id, "chr_id": a.chromosome_id, "ann_id": a.id, 'ann_type': a.type_id}
                 positions = kmp.compute(str(a.sequence)) # todo wolne -> zmiana z unicode na stringa sekwencji
                 # korekcja pozycji o 1 w lewo (w apce od 0 a algorytm od 1)
-                positions = [p-1 for p in positions]
+                positions = [(p-1, p-1+pattern_length) for p in positions]
                 ret['pos'] = list(positions)
                 results.append(ret)
 
         elif alg_id == 2:
+            print("BM")
             bm = calc.BM()
-            bm.prepare(str(pattern))
+            bm.prepare(pattern)
+            pattern_length = len(pattern)
             for a in annotations:
                 ret ={"org_id": a.chromosome.organism_id, "chr_id": a.chromosome_id, "ann_id": a.id, 'ann_type': a.type_id}
                 positions = bm.compute(str(a.sequence))  # todo wolne -> zmiana z unicode na stringa sekwencji
                 # korekcja pozycji o 1 w lewo (w apce od 0 a algorytm od 1)
-                positions = [p - 1 for p in positions]
+                positions = [(p-1, p-1+pattern_length) for p in positions]
                 ret['pos'] = list(positions)
                 results.append(ret)
 
+        elif alg_id == 3:
+            print("BLAST")
+
+        elif alg_id == 4:
+            print("SW")
+            AKCEPTOWALNE_PODOBIENSTWO = float(0.5)
+            sw = calc.SW()
+            match = 2
+            mismach = -1
+            gap_open = -3
+            gap_extended = -1
+
+            for a in annotations:
+                s = sw.fastComputeWithStringsResult(match, mismach, gap_open, gap_extended, str(a.sequence), pattern)
+
+                # score = s.getValue()  # int
+                # print("score (getValue)", score)  # SCORE wartosc podobienstwa porownywanych tekstow -> suma matchy , kar itd dla tekstu
+                pat_after = s.getPattern()  # std::string wspolny podobny fragment patterna
+                # print("pat_after (getPattern)", pat_after)
+                seq_after = s.getText()  # std::string odnaleziony fragment w szukanej sekwencji ale z  "-" tak gdzie znak sie nie zgadza (jest inny albo brakuje)
+                # print("seq_after (getText)", seq_after)
+                align_len = len(s.getText())
+                # print("align_len (len getText)", align_len)
+                gaps = 0
+                same = 0
+                for i, l in enumerate(seq_after):
+                    if l == '-':
+                        gaps += 1
+                    elif l == pat_after[i]:  # takie same
+                        same += 1
+                # print("gaps", gaps)
+                # print("same", same)
+                seq_end_index = s.getPositionJ()
+                aim_end_index = s.getPositionI()
+                aim_start_index = aim_end_index - len(seq_after)
+                seq_start_index = seq_end_index - len(str(seq_after).replace("-", ""))
+                identity = float(same) / float(align_len)
+                print("identity", identity)
+                print("aim start_index", aim_start_index)
+                print("aim end_index", aim_end_index)
+                # print("seq_end_index", seq_end_index)
+                # print("seq_start_index", seq_start_index)
+
+                if identity > AKCEPTOWALNE_PODOBIENSTWO:
+                    ret = {"org_id": a.chromosome.organism_id, "chr_id": a.chromosome_id, "ann_id": a.id,
+                           'ann_type': a.type_id}
+                    ret['identity']=identity
+                    ret['pos']=[(aim_start_index, aim_end_index)]
+                    results.append(ret)
         return JsonResponse(results, safe=False)
         # return JsonResponse([{"org_id": 23, "chr_id": 55, "ann_id": 24159, "pos": [2, 5], 'ann_type':23}], safe=False)
 

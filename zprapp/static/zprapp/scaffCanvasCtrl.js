@@ -50,6 +50,9 @@ function scaffCanvasCtrl($scope, $filter, DataBufor, $http, $routeParams) {
             $scope.textarea.ikona = "glyphicon glyphicon-eye-close"
         }
     }
+
+    $scope.route_id_org = $routeParams.id_org
+    $scope.route_id_chr = $routeParams.id_chr
     $scope.textarea.loadSequence = function(){
         var request = {
             method: 'GET',

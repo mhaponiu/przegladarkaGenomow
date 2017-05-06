@@ -32,8 +32,8 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
     $scope.algorytmy = [
         {name: 'KMP', id: 1, params: {}},
         {name: 'Boyer', id: 2, params: {}},
-        {name: 'SW', id: 3, params: {win: 2, gap: 4}},
-        {name: 'BLAST', id: 4, params: {w: 7, t: 3, c: 3}},
+        {name: 'BLAST', id: 3, params: {w: 7, t: 3, c: 3}},
+        {name: 'SW', id: 4, params: {win: 2, gap: 4}},
     ];
     $scope.wybranyAlg = $scope.algorytmy[0]
     $scope.wzorzec;
@@ -100,7 +100,7 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
 
 
     // TODO na sztywno wpisany zeby szybciej pokazac -> usunac nizej
-    $scope.wzorzec = "CTTCAGCAAAG"
+    $scope.wzorzec = "DEMO"
 
     $scope.searchSeq = function () {
         var request = {
@@ -128,8 +128,8 @@ angular.module('CucModule').controller('SearchSeqModalInstance', function ($scop
 
     $scope.teleport = function (item) {
         console.log(item)
-        DataBufor.setData('view_from', item['pos']) //pos to pozycja wzgledna wzgledem poczatku scaffoldu
-        DataBufor.setData('view_to', item['pos'] + $scope.wzorzec.length)
+        DataBufor.setData('view_from', item['pos'][0]) //pos to pozycja wzgledna wzgledem poczatku scaffoldu
+        DataBufor.setData('view_to', item['pos'][1])
         DataBufor.setData('annotation_id', item['annotation_id'])
         // window.location.replace("#/organisms/" + item['org_id'] +"/chromosomes/" + item['chr_id'] + "/annotations")
         window.location.replace("#/organisms/" + item['org_id'] + "/chromosomes/" + item['chr_id'] + '/types/' + item['ann_type'] + "/annotations")
