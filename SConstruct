@@ -29,7 +29,7 @@ UNIX_SOCKET = 'unix:/tmp/{name}.socket'.format(name=PROJECT_NAME)
 
 # database files, backups
 DATABASE_ROOT_FILES = os.path.abspath(os.path.join(BASE_DIR, '../database'))
-DB_FILES_URL = 'https://www.dropbox.com/sh/r8ihnkc5jenzc37/AACcauRmkCPz1qbxQBqhNthpa?raw=1'
+DB_FILES_URL = 'https://www.dropbox.com/sh/wuyvtb58okw91hy/AAAEbLbhVnTPceFBg-q0fNARa?raw=1'
 
 VIRTUALENV_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../virtualenv'))
 VIRTUALENV_PYTHON = os.path.join(VIRTUALENV_ROOT, 'bin', 'python')

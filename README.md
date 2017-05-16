@@ -25,6 +25,15 @@ licence under Lesser General Public License version 2.0 (LGPLv2)
     używane narzędzia, biblioteki (zostaną doinstalowane przy pierwszym budowaniu):<br>
     <i>django, gunicorn, psycopg2</i> <br>
     </li>
+    <li>
+    Boost library 1.64
+	apt-get install libboost-all-dev
+
+albo: (to nie dzialalo)
+    tar --bzip2 -xf /path/to/boost_1_64_0.tar.bz2
+    ./bootstrap.sh --with-python=python
+    ./b2 install
+    </li>
 </ul>
 
 <h2>Inicjalizacja:</h2>

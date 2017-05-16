@@ -83,10 +83,14 @@ class AppBuilder(object):
             try:
                 with zipfile.ZipFile(path_file, 'r') as z:
                     z.extractall(path=self.db_files_dir)
+                with zipfile.ZipFile(os.path.join(self.db_files_dir, "B10v2_c_corr.fsa.zip"), 'r') as z:
+                    z.extractall(path=self.db_files_dir)
                 self.conf['db']['downloaded_build_files'] = 1
                 self._save()
             finally:
                 os.remove(path_file)
+                os.remove(os.path.join(self.db_files_dir, "B10v2_c_corr.fsa.zip"))
+            
         else:
             print self.JSON_NAME + ': Pliki bazy zostaly juz wczesniej pobrane i wypakowane'
 
