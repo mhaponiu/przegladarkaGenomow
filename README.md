@@ -71,7 +71,8 @@ albo: (to nie dzialalo)
     <li>
          w celu konfiguracji aplikacji oraz serwera www nginx do produkcji <b><i>sudo scons build_deploy=1</i></b> <br>
          uwaga: <i>sudo</i> potrzebne do konfiguracji nginx'a. <br>
-         Nalezy wpisac nazwe hosta w polu WWW_SRV_HOST w SConstruct
+         Nalezy wpisac nazwe hosta w polu WWW_SRV_HOST w SConstruct.
+         W razie HTTP 400 sprawdzić czy w settings.py ALLOWED_HOSTS jest WWW_SRV_HOST wpisany
     </li>
     <li>
          przy pierwszym uruchomieniu zaleca się wygenerowanie nowego klucza zabezpieczeń poleceniem
