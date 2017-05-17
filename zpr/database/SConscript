@@ -1,11 +1,17 @@
 from zpr.database.v3.db_inserter import Inserter
+from zpr.database.v3.test_data import TestDataInserter
+
+from build_tools.build import AppBuilder
 import os
 
 Import('env')
 
+test_data_inserter = TestDataInserter()
 inserter = Inserter()
+
 if env['build_db'] == 1:
     print 'BUILD_DB'
+    test_data_inserter.insert()
     inserter.insert()
     conf = AppBuilder.load_conf()
     conf['db']['built'] = 1

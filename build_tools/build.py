@@ -66,7 +66,7 @@ class AppBuilder(object):
             AppBuilder.gen_conf_file()
 
     def create_dir_structure(self):
-        dirs = [self.virtenv, self.db_files_dir, self.static_root]
+        dirs = [self.virtenv, self.db_files_dir, self.static_root, os.path.join(self.db_files_dir, "v3")]
         for dir in dirs:
             if not os.path.exists(dir):
                 os.mkdir(dir)
@@ -75,21 +75,21 @@ class AppBuilder(object):
 
     def download_and_unzip_db_files(self, url):
         file_name = 'db_files.zip'
-        path_file = os.path.join(self.db_files_dir, file_name)
+        path_file = os.path.join(self.db_files_dir, "v3", file_name)
         if self.conf['db']['downloaded_build_files'] is 0:
             print 'Pobieram pliki do budowania bazy...'
             urllib.urlretrieve(url, path_file)
             print 'Wypakowuje pliki'
             try:
                 with zipfile.ZipFile(path_file, 'r') as z:
-                    z.extractall(path=self.db_files_dir)
-                with zipfile.ZipFile(os.path.join(self.db_files_dir, "B10v2_c_corr.fsa.zip"), 'r') as z:
-                    z.extractall(path=self.db_files_dir)
+                    z.extractall(path=os.path.join(self.db_files_dir, "v3"))
+                with zipfile.ZipFile(os.path.join(self.db_files_dir, "v3", "B10v2_c_corr.fsa.zip"), 'r') as z:
+                    z.extractall(path=os.path.join(self.db_files_dir, "v3"))
                 self.conf['db']['downloaded_build_files'] = 1
                 self._save()
             finally:
                 os.remove(path_file)
-                os.remove(os.path.join(self.db_files_dir, "B10v2_c_corr.fsa.zip"))
+                os.remove(os.path.join(self.db_files_dir, "v3", "B10v2_c_corr.fsa.zip"))
             
         else:
             print self.JSON_NAME + ': Pliki bazy zostaly juz wczesniej pobrane i wypakowane'
