@@ -130,13 +130,13 @@ A ‘zoom’ feature enables subregions of large sequence files to be examined i
 Resarchers from Polish Consortium of Cucumber Genome Sequencing have sequenced nuclear genome of Northern European cucumber.
 Consortium is the free joint-venture of scientists and businessmen from different institutions willing to cooperate in exploration of cucumber genome. The main task of the Consortium is to obtain a new knowledge from the cucumber nuclear genome sequence and implement this knowledge into amelioration of the cucumber breeding technology \cite{pawelkowicz2016next, przybecki2003isolation, przybecki2004polymorphom}. Completing the cucumber genome sequence project should be also helpful in the sequencing projects of other plant genomes.
 
-Data about markers and contigs allowed to map sequenced genome onto chromosomes. Contigs were mapped based on Chinese markers (Ren et al. 2009) . Not every contig has been mapped successfully. Tab.\ref{tab:genome_stat} shows obtained mapping results.
+Data about markers and contigs allowed to map sequenced genome onto chromosomes. Contigs were mapped based on Chinese markers\cite{ren2009integrated} . Not every contig has been mapped successfully. Tab.\ref{tab:genome_stat} shows obtained mapping results.
 General cucumber genome statistics after mapping process:\\
 $\bullet$ All contigs amount: 8035 \\
 $\bullet$ Mapped contigs amount: 116 \\
 $\bullet$ Sum of known contig sequence lengths: 342288160 \\
 $\bullet$ Sum of mapped contig sequence lengths: 196309823 \\
-We have mapped 53.3\% genome ie around 57\% of our contigs. Contig data includes order on chromosomes but does not have real start and stop positions. The genomic draft is a skeleton with physical and structural gaps. Contigs  are arranged in scaffolds and those using anchor markers are assigned to chromosomes. Gaps in the draft between contigs are easier to recognize thanks to experimental methods, for example, using DNA libraries. The best seems to be BAC library due it consists of large insert  between 100 – 300 kbp (Gutman et al. 2008). Sequencing of the clones from BAC library, and anchoring BES (Bac End Sequences) to the pool of contigs is basic steps in building the genome draft, because contigs could be oriented and ordered and consist the scaffold structure. Thus we can estimate the gaps across the scaffold calculating the insert length form BAC library, but this is still approximate value. More problematic are gaps between the scaffolds. In case where is no BAC library available the estmation is very difficult. Thus, to be able to visualize genome in \appName{}, we done some approximates. Between contigs there are gaps, where length of each gap depends on concrete chromosome length. In each chromosome, sum of gaps is equal to one another and sum of all mapped chromosome sequences with gaps are equal to sum of all known contigs.
+We have mapped 53.3\% genome ie around 57\% of our contigs. Contig data includes order on chromosomes but does not have real start and stop positions. The genomic draft is a skeleton with physical and structural gaps. Contigs  are arranged in scaffolds and those using anchor markers are assigned to chromosomes. Gaps in the draft between contigs are easier to recognize thanks to experimental methods, for example, using DNA libraries. The best seems to be BAC library due it consists of large insert  between 100 – 300 kbp\cite{gutman2007construction}. Sequencing of the clones from BAC library, and anchoring BES (Bac End Sequences) to the pool of contigs is basic steps in building the genome draft, because contigs could be oriented and ordered and consist the scaffold structure. Thus we can estimate the gaps across the scaffold calculating the insert length form BAC library, but this is still approximate value. More problematic are gaps between the scaffolds. In case where is no BAC library available the estmation is very difficult. Thus, to be able to visualize genome in \appName{}, we done some approximates. Between contigs there are gaps, where length of each gap depends on concrete chromosome length. In each chromosome, sum of gaps is equal to one another and sum of all mapped chromosome sequences with gaps are equal to sum of all known contigs.
 
 \begin{table}
 	\centering
@@ -155,7 +155,7 @@ We have mapped 53.3\% genome ie around 57\% of our contigs. Contig data includes
       \hline
 	\end{tabular}
 	\caption{Chromosome statistic for mapped contigs of Nothern European cucumber genome.
-      The length of the chromosomes and length of the genome described in \cite{chen1998reevaluation} was used.}
+      The length of the chromosomes and length of the genome described in~Chen's studies\cite{chen1998reevaluation} was used.}
 	\label{tab:genome_stat}
 \end{table}
 
@@ -347,6 +347,7 @@ Further development of \appName{} will be implemented to keep up with genomic an
 \acknowledgments
 
 This work was supported by grants from National Science Center 2013/11/B/NZ/00814 and the statutory funds of Institute of Computer Science of Warsaw University of Technology.
+We thank M.Sc Paweł Osipowski and M.Sc Michał Wojcieszek for helpful comments and analysis.
 
 \bibliographystyle{spiebib}
 \bibliography{webomics.bib}
