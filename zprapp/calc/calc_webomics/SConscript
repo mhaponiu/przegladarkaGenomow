@@ -39,40 +39,29 @@ s = e_calc_webomics.SharedLibrary(source=[files], target=os.path.join(BUILD_DIR,
 
 
 ######################  TESTY   ############################
-e_calc_webomics.Append( LIBS = ['boost_unit_test_framework'])
+#e_calc_webomics.Append( LIBS = ['boost_unit_test_framework'])
 
 
 # KMP
-kmp_files = ['algorithms/kmp/tests/kmp_unit_test.cpp'
-            ,'algorithms/kmp/KMP.cpp']
-e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'KMP_Tests', source=kmp_files)
+#kmp_files = ['algorithms/kmp/tests/kmp_unit_test.cpp'
+#            ,'algorithms/kmp/KMP.cpp']
+#e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'KMP_Tests', source=kmp_files)
 
 # BLAST
-blast_files = ['algorithms/blast/tests/blast_unit_test.cpp', 
-               'algorithms/blast/Alignment.cpp',
-               'algorithms/blast/Word.cpp',
-               'algorithms/blast/Blast.cpp']
-e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'BLAST_Tests', source=blast_files)
+#blast_files = ['algorithms/blast/tests/blast_unit_test.cpp', 
+#               'algorithms/blast/Alignment.cpp',
+#               'algorithms/blast/Word.cpp',
+#               'algorithms/blast/Blast.cpp']
+#e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'BLAST_Tests', source=blast_files)
 
 # SW    
-sw_files = ['algorithms/sw/tests/sw_unit_test.cpp',
-            'algorithms/sw/CellSW.cpp',
-            'algorithms/Similarity.cpp',
-            'algorithms/sw/SW.cpp']
-e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'SW_Tests', source=sw_files)
+#sw_files = ['algorithms/sw/tests/sw_unit_test.cpp',
+#            'algorithms/sw/CellSW.cpp',
+#            'algorithms/Similarity.cpp',
+#            'algorithms/sw/SW.cpp']
+#e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'SW_Tests', source=sw_files)
 
 # BM
-bm_files = ['algorithms/bm/tests/bm_unit_test.cpp',
-            'algorithms/bm/BM.cpp']
-e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'BM_Tests', source=bm_files)
-
-
-
-
-
-
-
-
-
-
-
+#bm_files = ['algorithms/bm/tests/bm_unit_test.cpp',
+#            'algorithms/bm/BM.cpp']
+#e_calc_webomics.Program( target = BUILD_DIR+'/tests/' + 'BM_Tests', source=bm_files)
