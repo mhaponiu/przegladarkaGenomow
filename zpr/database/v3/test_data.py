@@ -50,6 +50,7 @@ class TestDataInserter():
             AnnotationType(name='demo_marker2', short_name='demo2'),
             AnnotationType(name='demo_marker3', short_name='demo3'),
             AnnotationType(name='demo_marker4', short_name='demo4'),
+            AnnotationType(name='alfabet', short_name='abcd'),
             AnnotationType(name='demo_nadmiarowy', short_name='nadmiar')
         ]
 
@@ -86,7 +87,13 @@ class TestDataInserter():
             Annotation(start_chr=85, length=10, name='ann2', sequence='1_DEMO4_A2',
                        type=demo4, chromosome=chromosome1)
         ]
-        return annotations_demo1 + annotations_demo2 + annotations_demo3 + annotations_demo4
+        abcd = AnnotationType.objects.get(short_name='abcd')
+        annotations_abcd = [
+            Annotation(start_chr=20, name='a_z', length=22, sequence="abcdefghijklmoprstwxyz",
+                       type=abcd, chromosome=chromosome1)
+        ]
+        return annotations_demo1 + annotations_demo2 + annotations_demo3 + annotations_demo4 \
+               + annotations_abcd
 
 if __name__ == '__main__':
     t = TestDataInserter()

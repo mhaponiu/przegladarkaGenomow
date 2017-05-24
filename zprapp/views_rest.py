@@ -167,6 +167,42 @@ class CalcView(APIView):
 
         elif alg_id == 3:
             print("BLAST")
+            w = 11
+            t = 0.001
+            c = 5
+            cutoff = 10
+            blast = calc.Blast(w,t,c)
+            blast.prepare(pattern)
+            for a in annotations:
+                blast.addSequence(str(a.id), str(a.sequence))
+            res_search = blast.search()
+            assert res_search is True
+            res_estimate = blast.estimate()
+            assert res_estimate is True
+            res_extend = blast.extend()
+            assert res_extend is True
+            res_evaluate = blast.evaluate()
+            assert res_evaluate is True
+            aligns = blast.getAligns(cutoff)
+            aligns_len = len(aligns)
+            for align in aligns:
+                same = align.getSame()
+                align_len = align.getAlignLength()
+                seq_id = align.getSequenceId()
+                a = Annotation.objects.get(id = seq_id)
+                res = {
+                    'identity': str((float(same) / float(align_len) * 100.00)),
+                    "org_id": a.chromosome.organism_id,
+                    "chr_id": a.chromosome_id,
+                    "ann_id": a.id,
+                    'ann_type': a.type_id,
+                    'pos': [(a.start_chr + align.getSeqStart(), a.start_chr + align.getSeqEnd())],
+                    'length': str(align_len)
+                }
+                results.append(res)
+            return JsonResponse(results, safe=False)
+            # return JsonResponse([{"org_id": 23, "chr_id": 55, "ann_id": 24159, "pos": [2, 5], 'ann_type':23}], safe=False)
+
 
         elif alg_id == 4:
             print("SW")
@@ -212,7 +248,7 @@ class CalcView(APIView):
                     ret = {"org_id": a.chromosome.organism_id, "chr_id": a.chromosome_id, "ann_id": a.id,
                            'ann_type': a.type_id}
                     ret['identity']=identity
-                    ret['pos']=[(aim_start_index, aim_end_index)]
+                    ret['pos']=[(a.start_chr + aim_start_index,  a.start_chr + aim_end_index)]
                     results.append(ret)
         return JsonResponse(results, safe=False)
         # return JsonResponse([{"org_id": 23, "chr_id": 55, "ann_id": 24159, "pos": [2, 5], 'ann_type':23}], safe=False)

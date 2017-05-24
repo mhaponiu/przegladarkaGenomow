@@ -1,6 +1,7 @@
 import time
 import random
 from zprapp.calc.calc_webomics.build import calc
+from pprint import pprint
 
 
 def generuj_string(n):
@@ -67,7 +68,6 @@ def sw_test1():
         print pattern_len, czas
 
 
-
 def sw_test2():
     # wzorzec 500
     # przeszukiwana od 1000, 10000
@@ -89,12 +89,58 @@ def sw_test2():
         print tlo_len, czas
 
 
+def blast_test():
+    w = 11
+    t = 0.001
+    c = 5
+    cutoff = 10
+    results = []
+    # random.seed(time.time())
+    # print(pattern)
+    print "dlugosc tla, czas[s], wzorzec 5000"
+    for tlo_len in range(5000, 5001, 1):
+        res_search = False
+        tlo = generuj_string(tlo_len)
+        while not res_search:
+            pattern = generuj_string(20)
+            blast = calc.Blast(w, t, c)
+            start = time.time()
+            blast.prepare(pattern)
+            blast.addSequence('6969', tlo)
+            res_search = blast.search()
+        assert res_search is True
+        res_estimate = blast.estimate()
+        assert res_estimate is True
+        res_extend = blast.extend()
+        assert res_extend is True
+        res_evaluate = blast.evaluate()
+        assert res_evaluate is True
+
+        aligns = blast.getAligns(cutoff)
+        aligns_len = len(aligns)
+        for align in aligns:
+            same = align.getSame()
+            align_len = align.getAlignLength()
+            seq_id = align.getSequenceId()
+            print same, align_len, seq_id
+            result = {}
+            result['ID'] = str(seq_id)
+            result['SCORE'] = str(align.getScore())
+            result['IDENTITY'] = str((float(same) / float(align_len) * 100.00))
+            result['GAPS'] = str(align.getGaps())
+            result['LENGTH'] = str(align_len)
+            result['SEQ_START_INDEX'] = str(align.getSeqStart())
+            result['SEQ_END_INDEX'] = str(align.getSeqEnd())
+            results.append(result)
+
+        end = time.time()
+        czas = end - start
+        pprint(results)
+        print tlo_len, czas
 
 
-
-
-
-sw_test2()
+# sw_test2()
+blast_test()
 
 # match = 2
 # mismach = -1
