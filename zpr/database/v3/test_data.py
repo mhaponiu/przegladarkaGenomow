@@ -34,8 +34,20 @@ class TestDataInserter():
 
     def delete(self):
         print "delete test data"
-        for i in reversed(self.db_objects):
-            i.delete()
+        try:
+            for i in reversed(self.db_objects):
+                i.delete()
+        except:
+            try:
+                for org in self._organisms():
+                    Organism.objects.get(name=org.name).delete()
+            except:
+                print "brak organizmow do usuniecia lub wiele o tej samej nazwie"
+            try:
+                for type in self._annotation_types():
+                    AnnotationType.objects.get(name=type.name).delete()
+            except:
+                print "brak typow do usuniecia"
 
     def _organisms(self):
         return [Organism(name="demo_organism")]
