@@ -104,7 +104,7 @@ function chrCanvasCtrl($scope, $http, $location, DataBufor, $routeParams) {
                 //console.log("Mysz w : " + mouseX + "," + mouseY + " chromosom=" + napis);
                 //odsylac do odpowiedniego linku ze scaffoldami ->  window.location.replace("#/chromosom/[id_scaff]/scaffoldy")
                 DataBufor.setData("chr_length", chr_tab[i]);
-                window.location.replace("#/organisms/" + $routeParams.id_org +"/chromosomes/" + chr_tab_id[i] + "/types/" + $scope.types[chr_tab_id[i]][0].id + '/annotations')
+                window.location.replace("#/organisms/" + $routeParams.id_org +"/chromosomes/" + chr_tab_id[i] + "/types/")
                 // #/organisms/{[id_org]}/chromosomes/{[ch.pk]}/types/{[t.id]}/annotations
             });
             //rodzic.addRegionEventListener("mouseout", function () {
