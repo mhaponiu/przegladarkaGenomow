@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col-sm-10">
             <canvas id="scribl" width="720" height="400"></canvas>
-            <button ng-click="button()">button</button>
         </div>
     </div>
     <div class="panel">
@@ -13,7 +12,7 @@
             </tr>
             </thead>
             <tr ng-repeat="type in types |orderBy: 'id'" class="fx-bounce-left fx-speed-200">
-                <td style="background: #1fb800">
+                <td ng-style="type.color">
                     {[type.name]}
                 </td>
             </tr>
