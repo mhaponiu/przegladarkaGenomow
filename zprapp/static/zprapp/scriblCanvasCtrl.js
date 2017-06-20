@@ -2,7 +2,7 @@
  * Created by mhaponiu on 25.05.17.
  */
 
-function ScriblCanvasController($scope, $routeParams, $http) {
+function ScriblCanvasController($scope, $routeParams, $http, $q) {
     $scope.id_chr = $routeParams.id_chr;
     $scope.id_org = $routeParams.id_org;
     $scope.test = "TEST"
@@ -27,6 +27,19 @@ function ScriblCanvasController($scope, $routeParams, $http) {
             .success(function (data) {
                 $scope.types = data;
             });
+    }
+
+    // $scope.annotations={} //annotation[type_id]
+    $scope.loadAnnotations = function (type_id, modified_object) {
+        var request = {
+            method: 'GET',
+            url: 'api/organisms/'+  $routeParams.id_org + '/chromosomes/' + $routeParams.id_chr + '/annotation_types/'+
+                type_id + '/annotations/'
+        }
+        return $http(request)
+            .success(function (data) {
+                modified_object['annotations']= data
+            })
     }
     function* randomColor() {
         yield "CadetBlue"; yield "Olive";  yield "Sienna";
@@ -79,46 +92,69 @@ function ScriblCanvasController($scope, $routeParams, $http) {
 
     }
     semafor = true; // do jednorazowego pobrania danych -> nie wiem czemu 2 razy sie wywoluje
+    semafor2 = 2;
     $scope.loadTypes().then(function () {
         colorgenerator = randomColor()
         angular.forEach($scope.types, function (type) {
             type['color'] = {background: colorgenerator.next().value}
         })
     }).then(function () {
-        // todo download annotation for every annotation type
-        // console.log($scope.types)
+        // downloading annotation for every annotation type
         if (semafor){
+            var promises = [];
+            angular.forEach($scope.types, function (type) {
+                promises.push($scope.loadAnnotations(type.id, type))
+            });
+            semafor = false;
+            return $q.all(promises)
+        }
+    }).then(function () {
+        semafor2 -=1;
+        // if (!semafor2) {
+            console.log($scope.types)
+
+            //todo czemu to nie dziala skoro to nizej dziala?!
+            // angular.forEach($scope.types, function (type) {
+            //     var track = chart.addTrack()
+            //     angular.forEach(type['annotations'], function (annotate) {
+            //         console.log(annotate)
+            //         gene1 = track.addFeature( new BlockArrow('track1', 5, 1450 , '-') );
+            //         var rgb = colorToRgbA(type.color.background)
+            //         gene1.setColorGradient(rgb)
+            //         gene1.name= "gen testowy"
+            //         gene1.onMouseover = "fdasfas"
+            //         gene1.onClick = "http://www.google.com"
+            //     })
+            // })
+
             track1 = chart.addTrack();
-            gene1 = track1.addFeature( new BlockArrow('track1', 5, 1450 , '-') );
+            gene1 = track1.addFeature(new BlockArrow('track1', 5, 1450, '-'));
             var rgb = colorToRgbA($scope.types[0].color.background)
             gene1.setColorGradient(rgb)
             gene1.name = "gen_testowy"
             gene1.onMouseover = "Start:900 Length:750";
             gene1.onClick = "http://www.google.com";
-            gene2 = track1.addFeature( new BlockArrow('track1', 3500, 2500, '+') );
+            gene2 = track1.addFeature(new BlockArrow('track1', 3500, 2500, '+'));
             gene2.setColorGradient(rgb)
-            gene3 = track1.addFeature( new BlockArrow('track1', 8100, 1000, '-') );
+            gene3 = track1.addFeature(new BlockArrow('track1', 8100, 1000, '-'));
             gene3.setColorGradient(rgb)
-            gene4 = track1.addFeature( new BlockArrow('track1', 6200, 1500, '+') );
+            gene4 = track1.addFeature(new BlockArrow('track1', 6200, 1500, '+'));
             gene4.setColorGradient(rgb)
             chart.track1.name = 'track 1';
 
             track2 = chart.addTrack();
             var rgb2 = colorToRgbA($scope.types[1].color.background)
-            gene5 = track2.addFeature( new BlockArrow('track2', 100, 1000, '-') );
+            gene5 = track2.addFeature(new BlockArrow('track2', 100, 1000, '-'));
             gene5.setColorGradient(rgb2)
-            gene6 = track2.addFeature( new BlockArrow('track2', 3500, 1500, '-') );
+            gene6 = track2.addFeature(new BlockArrow('track2', 3500, 1500, '-'));
             gene6.setColorGradient(rgb2)
             chart.track2.name = 'track 2';
-
-            semafor = false
-        }
-
+        // }
     }).then(function () {
         chart.scrollable = true;
         chart.scrollValues = [200000, 250000];
         chart.draw()
-        document.getElementById('scroll-wraper').style.width = "900px"
+        // document.getElementById('scroll-wraper').style.width = "900px"
         chart.redraw()
     })
 }
