@@ -2,7 +2,7 @@
  * Created by mhaponiu on 25.05.17.
  */
 
-function ScriblCanvasController($scope, $routeParams, $http, $q) {
+function ScriblCanvasController($scope, $routeParams, $http, $q, DataBufor) {
     $scope.id_chr = $routeParams.id_chr;
     $scope.id_org = $routeParams.id_org;
     $scope.test = "TEST"
@@ -91,6 +91,17 @@ function ScriblCanvasController($scope, $routeParams, $http, $q) {
         }
 
     }
+
+    function teleport(view_from, view_to, type_id) {
+        console.log("teleport")
+        DataBufor.setData('view_from', view_from) //pos to pozycja wzgledna wzgledem poczatku scaffoldu
+        DataBufor.setData('view_to', view_to)
+        DataBufor.setData('annotation_id', "")
+        // window.location.replace("#/organisms/" + item['org_id'] +"/chromosomes/" + item['chr_id'] + "/annotations")
+        window.location.replace("#/organisms/" + $scope.id_org + "/chromosomes/" + $scope.id_chr + '/types/' + type_id + "/annotations")
+
+    }
+
     semafor = true; // do jednorazowego pobrania danych -> nie wiem czemu 2 razy sie wywoluje
     semafor2 = 2;
     $scope.loadTypes().then(function () {
@@ -132,10 +143,10 @@ function ScriblCanvasController($scope, $routeParams, $http, $q) {
             console.log($scope.types[0].annotations.length)
             for(var i=0; i<$scope.types.length; i++) {
                 var type = $scope.types[i]
-                console.log("type" + i)
+                // console.log("type" + i)
                 var track = chart.addTrack()
                 for (var j = 0; j < type.annotations.length; j++) {
-                    console.log("type" + i + " annotation: " + j)
+                    // console.log("type" + i + " annotation: " + j)
                     var annotation = type.annotations[j]
                     var start = annotation.start_chr
                     var length = annotation.length
@@ -145,27 +156,14 @@ function ScriblCanvasController($scope, $routeParams, $http, $q) {
                     gene.setColorGradient(rgb)
                     gene.name = annotation.name
                     gene.onMouseover = "Start: " + start + " end: " + end
-                    gene.onClick = "http://www.google.com"
+                    gene.type_id = type.id
+                    gene.annotation_id = annotation.id
+                    gene.onClick = function (item) {
+                        // item to przekazany "gene"
+                        teleport(item.position, item.position + item.length, item.type_id)
+                    }
                 }
             }
-
-
-            // var track1 = chart.addTrack();
-            // var gene1 = track1.addFeature(new BlockArrow('track1', 5, 1450, '-'));
-            // var rgb = colorToRgbA($scope.types[0].color.background)
-            // gene1.setColorGradient(rgb)
-            // gene1.name = "gen_testowy"
-            // gene1.onMouseover = "Start:900 Length:750";
-            // gene1.onClick = "http://www.google.com";
-            // var gene2 = track1.addFeature(new BlockArrow('track1', 3500, 2500, '+'));
-            // gene2.setColorGradient(rgb)
-            // gene3 = track1.addFeature(new BlockArrow('track1', 8100, 1000, '-'));
-            // gene3.setColorGradient(rgb)
-            // gene4 = track1.addFeature(new BlockArrow('track1', 6200, 1500, '+'));
-            // gene4.setColorGradient(rgb)
-            // chart.track1.name = 'track 1';
-
-
 
             // track1 = chart.addTrack();
             // gene1 = track1.addFeature(new BlockArrow('track1', 5, 1450, '-'));
