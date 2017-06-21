@@ -111,6 +111,7 @@ function ScriblCanvasController($scope, $routeParams, $http, $q) {
     }).then(function () {
         semafor2 -=1;
         // if (!semafor2) {
+        if ('annotations' in $scope.types[0]){
             console.log($scope.types)
 
             //todo czemu to nie dziala skoro to nizej dziala?!
@@ -118,7 +119,7 @@ function ScriblCanvasController($scope, $routeParams, $http, $q) {
             //     var track = chart.addTrack()
             //     angular.forEach(type['annotations'], function (annotate) {
             //         console.log(annotate)
-            //         gene1 = track.addFeature( new BlockArrow('track1', 5, 1450 , '-') );
+            //         var gene1 = track.addFeature( new BlockArrow('track1', 5, 1450 , '-') );
             //         var rgb = colorToRgbA(type.color.background)
             //         gene1.setColorGradient(rgb)
             //         gene1.name= "gen testowy"
@@ -127,34 +128,76 @@ function ScriblCanvasController($scope, $routeParams, $http, $q) {
             //     })
             // })
 
-            track1 = chart.addTrack();
-            gene1 = track1.addFeature(new BlockArrow('track1', 5, 1450, '-'));
-            var rgb = colorToRgbA($scope.types[0].color.background)
-            gene1.setColorGradient(rgb)
-            gene1.name = "gen_testowy"
-            gene1.onMouseover = "Start:900 Length:750";
-            gene1.onClick = "http://www.google.com";
-            gene2 = track1.addFeature(new BlockArrow('track1', 3500, 2500, '+'));
-            gene2.setColorGradient(rgb)
-            gene3 = track1.addFeature(new BlockArrow('track1', 8100, 1000, '-'));
-            gene3.setColorGradient(rgb)
-            gene4 = track1.addFeature(new BlockArrow('track1', 6200, 1500, '+'));
-            gene4.setColorGradient(rgb)
-            chart.track1.name = 'track 1';
 
-            track2 = chart.addTrack();
-            var rgb2 = colorToRgbA($scope.types[1].color.background)
-            gene5 = track2.addFeature(new BlockArrow('track2', 100, 1000, '-'));
-            gene5.setColorGradient(rgb2)
-            gene6 = track2.addFeature(new BlockArrow('track2', 3500, 1500, '-'));
-            gene6.setColorGradient(rgb2)
-            chart.track2.name = 'track 2';
-        // }
+            console.log($scope.types[0].annotations.length)
+            for(var i=0; i<$scope.types.length; i++) {
+                var type = $scope.types[i]
+                console.log("type" + i)
+                var track = chart.addTrack()
+                for (var j = 0; j < type.annotations.length; j++) {
+                    console.log("type" + i + " annotation: " + j)
+                    var annotation = type.annotations[j]
+                    var start = annotation.start_chr
+                    var length = annotation.length
+                    var end = start + annotation.length
+                    var gene = track.addFeature(new BlockArrow('track', start, length, '+'))
+                    var rgb = colorToRgbA(type.color.background)
+                    gene.setColorGradient(rgb)
+                    gene.name = annotation.name
+                    gene.onMouseover = "Start: " + start + " end: " + end
+                    gene.onClick = "http://www.google.com"
+                }
+            }
+
+
+            // var track1 = chart.addTrack();
+            // var gene1 = track1.addFeature(new BlockArrow('track1', 5, 1450, '-'));
+            // var rgb = colorToRgbA($scope.types[0].color.background)
+            // gene1.setColorGradient(rgb)
+            // gene1.name = "gen_testowy"
+            // gene1.onMouseover = "Start:900 Length:750";
+            // gene1.onClick = "http://www.google.com";
+            // var gene2 = track1.addFeature(new BlockArrow('track1', 3500, 2500, '+'));
+            // gene2.setColorGradient(rgb)
+            // gene3 = track1.addFeature(new BlockArrow('track1', 8100, 1000, '-'));
+            // gene3.setColorGradient(rgb)
+            // gene4 = track1.addFeature(new BlockArrow('track1', 6200, 1500, '+'));
+            // gene4.setColorGradient(rgb)
+            // chart.track1.name = 'track 1';
+
+
+
+            // track1 = chart.addTrack();
+            // gene1 = track1.addFeature(new BlockArrow('track1', 5, 1450, '-'));
+            // var rgb = colorToRgbA($scope.types[0].color.background)
+            // gene1.setColorGradient(rgb)
+            // gene1.name = "gen_testowy"
+            // gene1.onMouseover = "Start:900 Length:750";
+            // gene1.onClick = "http://www.google.com";
+            // gene2 = track1.addFeature(new BlockArrow('track1', 3500, 2500, '+'));
+            // gene2.setColorGradient(rgb)
+            // gene3 = track1.addFeature(new BlockArrow('track1', 8100, 1000, '-'));
+            // gene3.setColorGradient(rgb)
+            // gene4 = track1.addFeature(new BlockArrow('track1', 6200, 1500, '+'));
+            // gene4.setColorGradient(rgb)
+            // chart.track1.name = 'track 1';
+
+            // track2 = chart.addTrack();
+            // var rgb2 = colorToRgbA($scope.types[1].color.background)
+            // gene5 = track2.addFeature(new BlockArrow('track2', 100, 1000, '-'));
+            // gene5.setColorGradient(rgb2)
+            // gene6 = track2.addFeature(new BlockArrow('track2', 3500, 1500, '-'));
+            // gene6.setColorGradient(rgb2)
+            // chart.track2.name = 'track 2';
+        }
     }).then(function () {
-        chart.scrollable = true;
-        chart.scrollValues = [200000, 250000];
-        chart.draw()
-        // document.getElementById('scroll-wraper').style.width = "900px"
-        chart.redraw()
+        if ('annotations' in $scope.types[0]) {
+            console.log('draw')
+            chart.scrollable = true;
+            // chart.scrollValues = [200000, 250000];
+            chart.draw()
+            // document.getElementById('scroll-wraper').style.width = "900px"
+            // chart.redraw()
+        }
     })
 }
