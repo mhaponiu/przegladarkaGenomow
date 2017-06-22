@@ -125,20 +125,26 @@ function ScriblCanvasController($scope, $routeParams, $http, $q, DataBufor) {
         if ('annotations' in $scope.types[0]){
             console.log($scope.types)
 
-            //todo czemu to nie dziala skoro to nizej dziala?!
+            // ta sama petla co nizej tylko z uzyciem "angular"
             // angular.forEach($scope.types, function (type) {
             //     var track = chart.addTrack()
             //     angular.forEach(type['annotations'], function (annotate) {
-            //         console.log(annotate)
-            //         var gene1 = track.addFeature( new BlockArrow('track1', 5, 1450 , '-') );
+            //         var start = annotate.start_chr
+            //         var length = annotate.length
+            //         var end = start + annotate.length
+            //         var gene = track.addFeature(new BlockArrow('track', start, length, '+'))
             //         var rgb = colorToRgbA(type.color.background)
-            //         gene1.setColorGradient(rgb)
-            //         gene1.name= "gen testowy"
-            //         gene1.onMouseover = "fdasfas"
-            //         gene1.onClick = "http://www.google.com"
+            //         gene.setColorGradient(rgb)
+            //         gene.name = annotate.name
+            //         gene.onMouseover = "Start: " + start + " end: " + end
+            //         gene.type_id = type.id
+            //         gene.annotation_id = annotate.id
+            //         gene.onClick = function (item) {
+            //             // item to przekazany "gene"
+            //             teleport(item.position, item.position + item.length, item.type_id)
+            //         }
             //     })
             // })
-
 
             console.log($scope.types[0].annotations.length)
             for(var i=0; i<$scope.types.length; i++) {
