@@ -73,7 +73,9 @@
                 </progressbar>
             </div>
             <div collapse="!buttonyVisible">
-                {#                    <button class="btn btn-success" ng-click="test()">TEST</button>#}
+                <a type="button" class="btn btn-default" download="example.zip" ng-href="static/zprapp/example.zip/">
+                    Examples <span class="glyphicon glyphicon-circle-arrow-down"></span>
+                </a>
                 <button class="btn btn-success" ng-class="disabledUpload" ng-click="uploadStart()">Upload <span
                         class="glyphicon glyphicon-cloud-upload"></span></button>
                 <button class="btn btn-warning" ng-click="cancel()">Cancel <span

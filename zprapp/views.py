@@ -208,25 +208,28 @@ def ajaxNewOrganism(request):
     if request.method == 'POST':
         try:
             files = request.FILES.getlist('file') #lista plikow w kolejnosci jak wysylalismy
-            obj_list = None # domyslna lista obj_list -> DataMigrations.obj_list
-            obj_list = [Organizm(), Chromosom(), ScaffoldImpExp(), SekwencjaGff(), SekwencjaFastaImpExp()]
+            print files
+            raise IndexError
+            # TODO
+            # obj_list = None # domyslna lista obj_list -> DataMigrations.obj_list
+            # obj_list = [Organizm(), Chromosom(), ScaffoldImpExp(), SekwencjaGff(), SekwencjaFastaImpExp()]
             # for f in files:
             #     print "plik: ", f, " zawartosc: ", f.read()
             # print "plik: ", files[0], " zawartosc: ", files[0].read()
 
             # obj_list = [SekwencjaFastaImpExp()]
 
-            data_migr = DataMigrations()
+            # data_migr = DataMigrations()
             # obj_list domyslnie w data_migr => musi byc zgodne z pozycjami przeslanymi od klienta
-            data_migr.check(file_list=files, obj_list=obj_list) #sprawdza poprawnosc struktur plikow
+            # data_migr.check(file_list=files, obj_list=obj_list) #sprawdza poprawnosc struktur plikow
 
             # zapisuje dane do bazy
-            data_migr.imports(file_list=files, obj_list=obj_list)
+            # data_migr.imports(file_list=files, obj_list=obj_list)
 
-        except CheckError as error:
-            wynik = False
-            wiadomosc = error.msg + ". Blad w rekordzie " + str(error.n_record)
-            # wiadomosc = error.msg
+        # except CheckError as error:
+        #     wynik = False
+        #     wiadomosc = error.msg + ". Blad w rekordzie " + str(error.n_record)
+        #     # wiadomosc = error.msg
         except:
             wynik = False
             wiadomosc = "SERWER ERROR, blad przetwarzania plikow"

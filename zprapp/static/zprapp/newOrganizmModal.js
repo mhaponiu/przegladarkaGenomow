@@ -28,10 +28,10 @@ angular.module('CucModule').controller('NewOrganizmModalInstance', function($sco
     //tablica plikow do wyslania -> wazna kolejnosc
     $scope.files = [] //to lista list jednoelementowych -> potem przefiltruje zeby byla zwykla pojedyncza lista
 
-    $scope.opisPlikow = [["organizm","gff"], ["chromosom", "gff"], ["scaffold", "gff"],
-                         ["marker", "gff"], ["meaning","gff"], ["sequence" ,"gff"],
-                         ["sequence", "fasta"]]
-    $scope.opisPlikow = [['org', 'gff'],["chr", 'gff'], ["scaffold", "gff"], ["seq", 'gff'], ['seq', 'fasta']]
+    // $scope.opisPlikow = [["organizm","gff"], ["chromosom", "gff"], ["scaffold", "gff"],
+    //                      ["marker", "gff"], ["meaning","gff"], ["sequence" ,"gff"],
+    //                      ["sequence", "fasta"]]
+    $scope.opisPlikow = [['organizm info', 'gff / xls'],['sekwencja', 'fasta']]
     //$scope.opisPlikow = [["seq", 'fasta']]
 
     $scope.name = "" //nazwa nowego organizmu
