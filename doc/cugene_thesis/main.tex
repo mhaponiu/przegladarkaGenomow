@@ -1,0 +1,263 @@
+\pdfoutput=1
+\pdfcompresslevel=9
+\pdfinfo
+{
+    /Author (Autor)
+    /Title (Tytuł pracy magisterskiej)
+    /Subject (Bioinformatyka)
+    /Keywords (DNAASM)
+}
+%\documentclass[a4paper,polish,onecolumn,oneside,floatssmall,11pt,titleauthor,wide,openright]{mwrep}
+%\usepackage[scale={0.7,0.8},paper=a4paper,twoside]{geometry}
+\documentclass[a4paper,onecolumn,twoside,openright,11pt,wide,floatssmall]{mwrep}
+% \usepackage{polish}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bookman}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{geometry}
+\usepackage{placeins}
+%\usepackage{slashbox}
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{footnote}
+% \usepackage{fancyvrb}
+% \usepackage{t1enc}
+% \usepackage[pdftex, bookmarks]{hyperref}
+\usepackage[pdftex, bookmarks=false]{hyperref}
+
+\floatname{algorithm}{Algorytm}
+\renewcommand{\algorithmicforall}{\textbf{for each}}
+
+\usepackage{caption}
+%\usepackage[vlined]{algorithm2e}
+
+\def\url#1{{ \tt #1}}
+
+\usepackage{listings}
+
+
+
+
+
+
+
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[CE,CO]{\leftmark}
+\fancyfoot[LE,RO]{\thepage}
+\usepackage[toc,page]{appendix}
+
+\fancypagestyle{plain}{%
+\fancyhf{}%
+\fancyfoot[LE,RO]{\thepage}}
+
+
+
+
+
+
+
+% marginesy
+\textwidth\paperwidth
+\advance\textwidth -55mm
+\oddsidemargin-0.9in
+\advance\oddsidemargin33mm
+\evensidemargin0.9in
+\advance\evensidemargin-33mm
+
+\topmargin -1in
+\advance\topmargin 25mm
+\setlength\textheight{48\baselineskip}
+\addtolength\textheight{\topskip}
+\marginparwidth15mm
+
+\clubpenalty=10000 % to kara za sierotki
+\widowpenalty=10000 % nie pozostawia wdów
+\brokenpenalty=10000 % nie dzieli wyrazów pomiędzy stronami
+\sloppy
+
+\tolerance4500
+\pretolerance250
+\hfuzz=1.5pt
+\hbadness1450
+
+\linespread{1.5} %interlinia
+% ŻYWA PAGINA
+\renewcommand{\chaptermark}[1]{\markboth{\scshape\small\bfseries \
+#1}{\small\bfseries \ #1}}
+\renewcommand{\sectionmark}[1]{\markboth{\scshape\small\bfseries\thesection.\
+#1}{\small\bfseries\thesection.\ #1}}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.pt}
+%%\pagestyle{uheadings}
+
+\usepackage[pdftex]{color,graphicx}
+\usepackage[polish]{babel}
+
+% \textheight232mm
+% \setlength{\textwidth}{\textwidth}
+% \setlength{\oddsidemargin}{\evensidemargin}
+% \setlength{\evensidemargin}{0.3cm}
+\usepackage[sort, compress]{cite}
+
+%\usepackage{multibib}
+%\newcites{bk,st,doc,web}{Książki i~artykuły,Standardy i~zalecenia,Dokumentacja produktów,Publikacje i~serwisy internetowe}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definicja}[chapter]
+\newtheorem{conj}{Teza}[section]
+\newtheorem{conjmain}{Teza}
+\newtheorem{exmp}{Przykład}[chapter]
+
+\theoremstyle{plain}% default
+\newtheorem{thm}{Twierdzenie}[section]
+\newtheorem{lem}[thm]{Lemat}
+\newtheorem{prop}[thm]{Hipoteza}
+\newtheorem*{cor}{Wniosek}
+
+\theoremstyle{remark}
+\newtheorem*{rem}{Uwaga}
+\newtheorem*{note}{Uwaga}
+\newtheorem{case}{Przypadek}[chapter]
+
+\definecolor{ListingBackground}{rgb}{0.95,0.95,0.95}
+
+\begin{document}
+
+% kody źródłowe wplatane w tekst
+\lstdefinestyle{incode}
+{
+basicstyle={\footnotesize},
+keywordstyle={\bf\footnotesize\color{blue}},
+commentstyle={\em\footnotesize\color{magenta}},
+numbers=left,
+stepnumber=5,
+firstnumber=1,
+numberfirstline=true,
+numberblanklines=true,
+numberstyle={\sf\tiny},
+numbersep=10pt,
+tabsize=2,
+xleftmargin=17pt,
+framexleftmargin=3pt,
+framexbottommargin=2pt,
+framextopmargin=2pt,
+framexrightmargin=0pt,
+showstringspaces=true,
+backgroundcolor={\color{ListingBackground}},
+extendedchars=true,
+% title=\lstname,
+captionpos=b,
+% abovecaptionskip=1pt,
+% belowcaptionskip=1pt,
+frame=tb,
+framerule=0pt,
+}
+
+% kody źródłowe z podpisem
+\lstdefinestyle{outcode}
+{
+basicstyle={\footnotesize},
+keywordstyle={\bf\footnotesize\color{blue}},
+commentstyle={\em\footnotesize\color{magenta}},
+numbers=left,
+stepnumber=5,
+firstnumber=1,
+numberfirstline=true,
+numberblanklines=true,
+numberstyle={\sf\tiny},
+numbersep=10pt,
+tabsize=2,
+xleftmargin=17pt,
+framexleftmargin=3pt,
+framexbottommargin=2pt,
+framextopmargin=2pt,
+framexrightmargin=0pt,
+showstringspaces=true,
+backgroundcolor={\color{ListingBackground}},
+extendedchars=true,
+% title=\lstname,
+captionpos=b,
+% abovecaptionskip=1pt,
+% belowcaptionskip=1pt,
+frame=tb,
+framerule=0.1pt,
+}
+
+%\counterwithin{exmp}{chapter}
+%\counterwithout{exmp}{section}
+\renewcommand*\lstlistingname{Wydruk}
+\renewcommand*\lstlistlistingname{Spis wydruków}
+
+\pagenumbering{roman}
+\renewcommand{\baselinestretch}{1.0}
+\raggedbottom
+\input {title}
+
+%\newpage\null\thispagestyle{empty}\newpage
+
+\input{podziekowania}
+\tableofcontents
+% \addcontentsline{toc}{chapter}{{Przedmowa1}{vii}}{vii}
+
+% \chapter*{Spis tablic, rysunków i~wydruków}
+% \listoftables
+% \listoffigures
+% \listofalgorithms
+% \lstlistoflistings
+
+%\setlength{\baselineskip}{7mm}
+\newpage
+\pagenumbering{arabic}
+\raggedbottom{}
+\setcounter{page}{1}
+
+
+
+
+\input{entry}
+
+\input{theory}
+
+\input{algorithms}
+
+\input{design}
+
+\input{research}
+
+\input{summary}
+
+%\chapter*{Bibliografia}
+\nocite{*}
+\bibliographystyle{plplain}
+%\bibliographystylebk{plplain}
+%\bibliographystylest{plplain}
+%\bibliographystyledoc{plplain}
+% \bibliographystyleweb{plplain}
+%\bibliographybk{BIB/books}
+%\bibliographyst{BIB/books}
+%\bibliographydoc{BIB/books}
+% \bibliographyweb{BIB/books}
+
+\bibliography{bib/mgr}
+
+\appendix
+
+%% \input{spis_rysunkow}
+
+%% \input{spis_tabel}
+
+%\input {spis_zalacznikow}
+
+\input{instructions}
+
+\end{document}
+
+% ex: set tabstop=4 shiftwidth=4 softtabstop=4 noexpandtab fileformat=unix filetype=tex spelllang=pl,en spell:
+
