@@ -63,22 +63,18 @@ class GffData():
         return self.record_list
 
     @property
+    @singleton
     def contigs_id_list(self):
-        # singleton pattern
-        if (getattr(self, '_contigs_id_list', None)):
-            return self._contigs_id_list
-        else:
-            s = set()
-            for r in self.records:
-                s.add(r.ctg_id)
-                self._contigs_id_list = sorted(list(s))
-
-            return self._contigs_id_list
+        s = set()
+        for r in self.records:
+            s.add(r.ctg_id)
+        return sorted(list(s))
 
     def contigs_amount(self):
         return len(self.contigs_id_list)
 
-
+    @property
+    @singleton
     def types(self):
         s = set()
         for r in self.records:
