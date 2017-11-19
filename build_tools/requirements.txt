@@ -9,3 +9,5 @@ django-filter==0.15.3
 coreapi==2.0.9
 coreapi-cli==1.0.6
 drf-extensions
+ipython==5.0
+django-extensions
