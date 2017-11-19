@@ -19,8 +19,8 @@ def singleton(func):
             return getattr(self, _func_name)
     return wrapper
 
-class FastaData():
 
+class FastaData():
     def __init__(self):
         generator = parser.Fasta_454().generator()
         self.record_list = list(generator) #fasta records from file
@@ -29,40 +29,23 @@ class FastaData():
     def __len__(self):
         return len(self.records)
 
-    # @property
-    # def dict(self):
-    #     # singleton pattern
-    #     if(getattr(self, '_dict', None)):
-    #         return self._dict
-    #     else:
-    #         self._dict = {record.id:record.sequence for record in self.records}
-    #         return self._dict
-
     @property
     @singleton
     def dict(self):
         return {record.id: record.sequence for record in self.records}
 
     @property
+    @singleton
     def contigs_id_list(self):
-        # singleton pattern
-        if (getattr(self, '_contigs_id_list', None)):
-            return self._contigs_id_list
-        else:
-            self._contigs_id_list = [record.id for record in self.records]
-            return self._contigs_id_list
+        return [record.id for record in self.records]
 
     @property
     def records(self):
         return self.record_list
 
+    @singleton
     def sum_all_sequences(self):
-        # singleton pattern
-        if (getattr(self, '_sum_all_sequences', None)):
-            return self._sum_all_sequences
-        else:
-            self._sum_all_sequences = sum([len(seq) for seq in self.records])
-            return self._sum_all_sequences
+        return sum([len(seq) for seq in self.records])
 
 
 class GffData():
