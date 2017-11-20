@@ -51,7 +51,7 @@ class FastaData():
 
     @singleton
     def sum_all_sequences(self):
-        return sum([len(seq) for seq in self.records])
+        return sum([len(r.sequence) for r in self.records])
 FastaData = FastaData()
 
 
