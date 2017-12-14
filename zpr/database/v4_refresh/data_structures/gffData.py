@@ -39,8 +39,5 @@ class GffData():
             s.add(r.type)
         return list(s)
 
-    def types_amount(self):
-        # todo
-        pass
 
 GffData = GffData()

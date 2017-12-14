@@ -11,7 +11,7 @@ class FastaData():
         print('wczytywanie fasta...')
         generator =  parser.Fasta_B10v2_c_corr().generator()
         self.record_list = list(generator) #fasta records from file
-        ''' FastaRecord, ["id_from_file", "id", "sequence"] '''
+        ''' FastaRecord, ["ctg_id", "id_from_file", "sequence"] '''
         print('...koniec wczytywania fasta')
 
     def __len__(self):
@@ -20,12 +20,12 @@ class FastaData():
     @property
     @singleton
     def dict(self):
-        return {record.id: record.sequence for record in self.records}
+        return {record.ctg_id: record.sequence for record in self.records}
 
     @property
     @singleton
     def contigs_id_list(self):
-        return [record.id for record in self.records]
+        return [record.ctg_id for record in self.records]
 
     @property
     def records(self):

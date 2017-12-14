@@ -60,7 +60,7 @@ class Fasta():
                             line = f.readline()
                             if line == '' or line[0] == '>': break
                             s.write(unicode(line[:-1]))
-                        yield self.FastaRecord(ctg_id, id_from_file, s.getvalue())
+                        yield self.FastaRecord(int(ctg_id), id_from_file, s.getvalue())
                     if line == '': break
                 except IndexError:
                     raise StopIteration
