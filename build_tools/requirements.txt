@@ -11,3 +11,4 @@ coreapi-cli==1.0.6
 drf-extensions
 ipython==5.0
 django-extensions
+anytree
