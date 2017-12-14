@@ -26,7 +26,8 @@ class Fasta_454(Fasta):
 
 
 class Gff_annotation_abinitio_ill1():
-    FileGffRecord = namedtuple('FileGffRecord', ['ctg', 'augustuts', 'type', 'start', 'end', 'cos3', 'direction', 'cos4', 'info'])
+    FileGffRecord = namedtuple('FileGffRecord',
+                               ['ctg', 'augustuts', 'type', 'start', 'end', 'cos3', 'direction', 'cos4', 'info'])
     GffRecord = namedtuple('GffRecord', ['ctg_id','type', 'start', 'end', 'info'])
 
     def generator(self):
