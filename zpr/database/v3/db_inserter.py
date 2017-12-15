@@ -9,7 +9,7 @@ django.setup() #bez tego AppRegistryNotReady: Models aren't loaded yet.
 
 from zprapp.models import *
 
-class Inserter():
+class Inserter(object):
     def __init__(self):
         contigs_factory = ChromosomesContigFactory()
         self.chr_contig = contigs_factory.produce_chromosomes()
@@ -24,7 +24,8 @@ class Inserter():
         self._save_elements(chrs)
         self.db_objects += chrs
 
-        types = self._annotation_types()
+        types_data = self._annotation_types()
+        types = [AnnotationType.objects.get_or_create(**dict(data))[0] for data in types_data]
         self._save_elements(types)
         self.db_objects += types
 
@@ -55,7 +56,7 @@ class Inserter():
         return ret_chrs
 
     def _annotation_types(self):
-        return [AnnotationType(name="contig", short_name='ctg')]
+        return [ [('name', "contig"), ('short_name', 'ctg')] ]
 
     def _contigs(self, chr, type):
         if chr.number == 0:
