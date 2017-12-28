@@ -18,3 +18,4 @@ zprapp/migrations/__init__.py
 /zpr/database/v3/genom.zip
 !/zprapp/calc/calc_webomics/build/__init__.py
 /zprapp/calc/calc_webomics/build/tests/
+/doc/praca_dypl/praca_inzynierska.pdf
