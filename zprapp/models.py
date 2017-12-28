@@ -33,6 +33,7 @@ class Annotation(models.Model):
     type = models.ForeignKey(AnnotationType, related_name="annotations", on_delete=models.CASCADE)
     chromosome = models.ForeignKey(Chromosome, related_name="annotations", on_delete=models.CASCADE)
 
+
     def __unicode__(self):
         return self.name
 
@@ -40,3 +41,6 @@ class Aggregation(models.Model):
     start_local = models.IntegerField(null=True)
     annotation_slave = models.OneToOneField(Annotation, related_name='aggregated_by')
     annotation_master = models.ForeignKey(Annotation, related_name='aggregation_slaves')
+
+    def __unicode__(self):
+        return str(self.annotation_master) + "->" + str(self.annotation_slave)

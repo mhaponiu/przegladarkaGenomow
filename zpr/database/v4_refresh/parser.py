@@ -10,13 +10,17 @@ class Gff_annotation():
     GffRecord = namedtuple('GffRecord', ['ctg_id','type', 'start', 'end', 'info'])
 
     def generator(self):
-        gen_from_file = self._gen_record_from_file(
-            # filename=os.path.join(BASE_DIR, '..', 'database', 'v4_refresh', 'annotation.gff3') todo uncomment me !
-            filename=os.path.join(BASE_DIR, '..', 'database', 'v4_refresh', 'h500_annotation.gff3') #todo it's for test
-        )
+        print "Gff_annotation.generator start"
+        # filename = os.path.join(BASE_DIR, '..', 'database', 'v4_refresh', 'annotation.gff3')  # todo uncomment me !
+        filename = os.path.join(BASE_DIR, '..', 'database', 'v4_refresh', 'h30k_annotation.gff3') #todo it's for test
+        # filename = os.path.join(BASE_DIR, '..', 'database', 'v4_refresh', 'h100_annotation.gff3')  # todo it's for test
+        print filename
+
+        gen_from_file = self._gen_record_from_file(filename=filename)
         for file_gff_record in gen_from_file:
             new_gff_record = self.new_GffRecord(file_gff_record)
             yield new_gff_record
+        print "Gff_annotation.generator end"
 
     @staticmethod
     def new_GffRecord(file_gff):
