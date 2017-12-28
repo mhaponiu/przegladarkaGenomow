@@ -1,3 +1,5 @@
+from time import time
+
 from django.db import transaction
 from pprint import pprint
 from drop_exception import drop_exception
@@ -29,48 +31,69 @@ def run():
     # pprint(g.records[:3])
     # pprint(g.types)
 
+    t_start = time()
+
     t = Tree()
     t.create()
     # print t.render()
 
 
     org = Organism.objects.get(id=58)
+
+    n=0
     for i in t.preorder_iter():
+        n += 1
+        if n % 1000 == 0: print "poszlo " + str(n) + " k recordow"
+
+        if n % 10000 == 0: print "dzialam juz ", time() - t_start, " s"
+
         if i.name == t.start_node.name: continue
 
         record = i.record
 
         parent = i.parent
-        if parent.name == t.start_node.name:
-            annotation_master = Annotation.objects.get(
-                name=record.ctg_id,
-                chromosome__organism=org)
-        else:
-            parent_name = parent.record.info['ID']
-            annotation_master = Annotation.objects.get(
-                name= parent_name,
-                chromosome__organism=org
-            )
+
+        try:
+            if parent.name == t.start_node.name:
+                annotation_master = Annotation.objects.get(
+                    name=record.ctg_id,
+                    chromosome__organism=org)
+            else:
+                parent_name = parent.record.info['ID']
+                annotation_master = Annotation.objects.get(
+                    name= parent_name,
+                    chromosome__organism=org
+                )
+        except Exception:
+            continue
+
         ann_type = AnnotationType.objects.get_or_create(name=record.type)[0]
 
         start_chr = annotation_master.start_chr + record.start
         length = record.end - record.start
-        assert length > 0
+        # assert length > 0
         # assert  start_chr + length < annotation_master.start_chr + annotation_master.length
-        annotation = Annotation.objects.create(
-            type=ann_type,
-            chromosome=annotation_master.chromosome,
-            start_chr=start_chr,
-            length=length,
-            name=record.info['ID']
-        )
-        aggregation = Aggregation.objects.create(
-            start_local=record.start,
-            annotation_slave=annotation,
-            annotation_master=annotation_master
-        )
-        print record
+        try:
+            annotation = Annotation.objects.create(
+                type=ann_type,
+                chromosome=annotation_master.chromosome,
+                start_chr=start_chr,
+                length=length,
+                name=record.info['ID']
+            )
+            aggregation = Aggregation.objects.create(
+                start_local=record.start,
+                annotation_slave=annotation,
+                annotation_master=annotation_master
+            )
+        except Exception:
+            continue
 
+        if n == 1: print "pierwsza aggregacja id: ", aggregation.id
 
+    t_end = time()
+    print "czas wykonania: ", t_end - t_start
 
-    # raise Exception
+    print "ostatnia aggregacja: ", aggregation.id
+    print "<< koniec, wszystkich jest: ", len(Annotation.objects.all())
+    raise Exception
