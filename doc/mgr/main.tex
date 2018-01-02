@@ -24,6 +24,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{footnote}
+\usepackage{enumerate}
 % \usepackage{fancyvrb}
 % \usepackage{t1enc}
 % \usepackage[pdftex, bookmarks]{hyperref}
@@ -190,11 +191,14 @@ framerule=0.1pt,
 \pagenumbering{roman}
 \renewcommand{\baselinestretch}{1.0}
 \raggedbottom
-\input {title}
+
+% todo odkomentować strony tytulowe !
+% \input {title}
 
 %\newpage\null\thispagestyle{empty}\newpage
 
-\input{podziekowania}
+% \input{podziekowania}
+
 \tableofcontents
 % \addcontentsline{toc}{chapter}{{Przedmowa1}{vii}}{vii}
 
@@ -211,19 +215,17 @@ framerule=0.1pt,
 \setcounter{page}{1}
 
 
+\input{wstep}
 
+% \input{theory}
 
-\input{entry}
+% \input{algorithms}
 
-\input{theory}
+% \input{design}
 
-\input{algorithms}
+% \input{research}
 
-\input{design}
-
-\input{research}
-
-\input{summary}
+% \input{summary}
 
 %\chapter*{Bibliografia}
 \nocite{*}
@@ -247,7 +249,7 @@ framerule=0.1pt,
 
 %\input {spis_zalacznikow}
 
-\input{instructions}
+% \input{instructions}
 
 \end{document}
 
