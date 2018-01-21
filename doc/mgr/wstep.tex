@@ -2,8 +2,12 @@
 \chapter{Wstęp}
 \label{section:wstep}
 
+Obecnie żyjemy w epoce dynamicznego rozwoju technologicznego i nauk przyrodniczych. Spowodowało to rozwój i powstanie nowych dziedzin naukowych a wśród nich bioinformatyki. Z pomocą metod matematycznych i informatycznych jest wykorzystywana do przetwarzania ogromnych zbiorów danych uzyskiwanych podczas badań naukowych. Konieczność przechowywania, sprawnego przeglądania, udostępniania pozyskanych danych zrodziła potrzebę powstawania narzędzi zwanymi przeglądarkami genomów.
+% https://www.kierunki.net/bioinformatyka
+
 \section{Cel i zakres pracy}
 \label{section:cel_i_zakres_pracy}
+W celu zsekwencjonowania genomu ogórka, w 2008r. zostało powołane Polskie Konsorcjum Sekwencjonowania Genomu Jądrowego Ogórka. Znaczna część jego członków to pracownicy Katedry Genetyki, Hodowli i Biotechnologii Roślin Szkoły Głównej Gospodarstwa Wiejskiego w Warszawie. Praca jest naturalną odpowiedzią na zapotrzebowanie na nowe narzędzia niezbędne do wygodniejszego i efektywniejszego  wykonywania badań nad otrzymanym genomem. Aplikacja została wykonana we współpracy z pracownikami SGGW. Jednym z głównych założeń jest to, aby przeglądarka była użyteczna dla innych zespółów naukowych badających genomy różnych organizmów.
 
 \subsection{Hipotezy}
 
@@ -11,17 +15,27 @@
 	\item \textit{
 		Można zaproponować strukturę bazy danych do przechowywania informacji opisujących genomy, taką że będzie ona elastyczna, łatwa w modyfikacji i~uniezależniona od semantyki przechowywanych struktur biologicznych.
 		} \\
-	\todo{krótki opis - duże dane, często nieznana struktura docelowa, wiele standardów, zanieczyszczone dane}
+	%\todo{krótki opis - duże dane, często nieznana struktura docelowa, wiele standardów, zanieczyszczone dane}
+	\break
+	Dane opisujące genomy są mocno zróżnicowane pod względem struktury w zależności od ich znaczenia biologicznego. Bazy danych projektowane pod kątem przechowywania genomu konkretnego organizmu bądź ograniczonego zbioru typów sekwencji dość mocno specjalizują aplikację i ograniczają lub utrudniają stosowanie jej w bardziej ogólnych zastosowaniach. Jednym z celów pracy jest próba rozwiązania tego problemu poprzez zaproponowanie elastycznej struktury bazodanowej oraz weryfikacja jej przez import rzeczywistych danych.\\
 	
 	\item \textit{
 		Można dostarczyć abstrakcję widoków na dane genetyczne, umożliwiające analizę danych z różnych perspektyw w kontekście licznych zbiorów
 		danych genetycznych.
 		} \\
-	\todo{różne podłoże semantyczne sekwencji, często sprzeczne niepełne informację, potrzeba różnych perspektyw na ten sam chromosom }
+	%\todo{różne podłoże semantyczne sekwencji, często sprzeczne niepełne informację, potrzeba różnych perspektyw na ten sam chromosom }
+	\break
+	Informacje genetyczne pozyskiwane przez badaczy są na początkowych stadiach często niespójne, niekompletne i zanieczyszczone. Składanie sekwencji nadrzędnych z podrzędnych można zrobić na wiele sposobów. Celem jest dostarczenie mechanizmu umożliwiającego użytkownikowi patrzenie na ten sam genom z różnych perspektyw poprzez priorytetyzację wybranych typów podrzędnych sekwencji co nada analizowanym danym wielowymiarowości.\\
 	
 	\item \textit{
 		Można dostarczyć aplikację do przechowywania i analizy genomów, która w~przystępny sposób umożliwi przeglądanie sekwencji genetyczych bez konieczności posiadania wydajnej maszyny klienckiej. 
 		} \\
+		\break
+	%todo
+	Możność szybkiego i prezycyjnego przeglądania obszernych genomów o zróżnicowanej strukturze wraz ze sposobnością ich analizy przy wymaganiach zachowania płynności aplikacji stawia wyzwanie architektoniczne.
+	
+	Szybkie i precyzyjne przeglądanie genomu jest bardzo porządaną funkcjonalnością przez biologów w ich codziennej pracy. Pnalizy obszernych genomów w połączeniu
+	Celem jest stworzenie aplikacji pozwalającej na interaktywne wyświetlanie genomów i adnotacji w makro i mikro 
 	\todo{duże dane, muszą być wydajne algorytmy, aplikacja lekka, intuicyjna, z dobrym api do dzielenia się z innymi zespołami}
 	
 \end{enumerate}
