@@ -77,8 +77,24 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 
 \section{Przegląd literatury - istniejące rozwiązania}
 \begin{itemize}
-	\item \href{https://genome.ucsc.edu}{\emph{UCSC browser}} \label{UCSC}
-	autorstwa Jima Kenta, napisana w~większości w~języku~C w~2000~roku. Udostępniana darmowo dla akademickich zastosowań. Dla komercyjnych zastosowań wymagana licencja \emph{Kent Informatics}. %\cite{pdf-mimuw}
+	% https://en.wikipedia.org/wiki/UCSC_Genome_Browser
+	% http://genome.ucsc.edu/
+	\item \href{https://genome.ucsc.edu}{\emph{UCSC browser}} \label{przegladarka-UCSC}\\
+	przeglądarka on-line, opracowana na Uniwersytecie Kalifornijskim w~Santa Cruz w 2000 roku; główni autorzy - Jim Kent, David Haussler; zaimplementowana w~większości w~języku~C. Udostępniana darmowo dla akademickich zastosowań, dla komercyjnych wymagana licencja \emph{Kent Informatics}. Zawiera 46 gatunków organizmów. Pozwala wyświetlać sekwencje o dowolnym rozmiarze - od pojedynczych zasad po chromosomy. Badacze mogą wyświetlać własne dane i wyświetlać je w kontekście referencyjnego genomu. Widoki tworzone przez użytkowników mogą być udostępniane innym użytkownikom.
+	
+	W porównaniu do CuGene:
+	brak możliwości wyprodukowania fragmentów genomu z priorytetyzacją nakładających się na siebie typów danych. Brak algorytmów wyszukiwania Knutha-Morrisa-Pratta i Smitha-Watermana. Skomplikowane narzędzie, trudne dla początkujących użytkowników.
+	
+	\begin{figure}[h]
+		% https://en.wikipedia.org/wiki/UCSC_Genome_Browser#/media/File:BrowserFoxp2.jpg
+		\centering
+		\includegraphics[width=0.75\textwidth]{img/browser-UCSC.jpg}
+		\caption{Przeglądarka UCSC.}
+		\vspace{-0.5cm}
+		\caption*{\scriptsize Źródło: \url{https://en.wikipedia.org/wiki/UCSC\_Genome\_Browser\#/media/File:BrowserFoxp2.jpg}}
+		\label{img:przegladarka-UCSC}
+	\end{figure}
+	
 	
 	\item \href{http://gbrowse.org}{\emph{Gbrowse}} - \label{Gbrowse}
 	największa część kodu to Perl, z~czasem coraz więcej JavaScriptu. Prace rozpoczęto w~2002 roku, funkcjonuje na licencji \emph{PERL artistic license}. %\cite{pdf-mimuw}
