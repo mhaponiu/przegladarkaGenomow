@@ -79,12 +79,12 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 \begin{itemize}
 	% https://en.wikipedia.org/wiki/UCSC_Genome_Browser
 	% http://genome.ucsc.edu/
-	\item \href{https://genome.ucsc.edu}{\emph{UCSC browser}} \label{przegladarka-UCSC}\\
+	\item \href{https://genome.ucsc.edu}{\emph{UCSC browser}} (rys.\ref{img:przegladarka-UCSC}) \label{przegladarka-UCSC}
+	
 	przeglądarka on-line, opracowana na Uniwersytecie Kalifornijskim w~Santa Cruz w 2000 roku; główni autorzy - Jim Kent, David Haussler; zaimplementowana w~większości w~języku~C. Udostępniana darmowo dla akademickich zastosowań, dla komercyjnych wymagana licencja \emph{Kent Informatics}. Zawiera 46 gatunków organizmów. Pozwala wyświetlać sekwencje o dowolnym rozmiarze - od pojedynczych zasad po chromosomy. Badacze mogą wyświetlać własne dane i wyświetlać je w kontekście referencyjnego genomu. Widoki tworzone przez użytkowników mogą być udostępniane innym użytkownikom.
 	
 	W porównaniu do CuGene:
-	brak możliwości wyprodukowania fragmentów genomu z priorytetyzacją nakładających się na siebie typów danych. Brak algorytmów wyszukiwania Knutha-Morrisa-Pratta i Smitha-Watermana. Skomplikowane narzędzie, trudne dla początkujących użytkowników.
-	
+	brak funkcjonalności widoków z priorytetyzacją nakładających się na siebie typów danych. Brak algorytmów wyszukiwania Knutha-Morrisa-Pratta i Smitha-Watermana. Skomplikowane narzędzie, trudne dla początkujących użytkowników.
 	\begin{figure}[h]
 		% https://en.wikipedia.org/wiki/UCSC_Genome_Browser#/media/File:BrowserFoxp2.jpg
 		\centering
@@ -96,11 +96,45 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 	\end{figure}
 	
 	
-	\item \href{http://gbrowse.org}{\emph{Gbrowse}} - \label{Gbrowse}
-	największa część kodu to Perl, z~czasem coraz więcej JavaScriptu. Prace rozpoczęto w~2002 roku, funkcjonuje na licencji \emph{PERL artistic license}. %\cite{pdf-mimuw}
+	\item \href{http://gbrowse.org}{\emph{Gbrowse}} (rys.\ref{img:przegladarka-gbrowse})
+	\label{Gbrowse}
+	% http://gmod.org/wiki/GBrowse
 	
-	\item \href{http://www.ensembl.org}{\emph{ENSEMBL}} \label{ENSEMBL}
-	- funkcjonuje na licencji Apache, dopuszczającej użycie kodu źródłowego zarówno na potrzeby wolnego oprogramowania, jak i~zamkniętego oprogramowania komercyjnego. Znaczna część kodu napisana w~Perlu, schemat bazy danych w~MySQl. %\cite{pdf-mimuw, pl-wiki-apache}
+	projekt napisany w Pearlu, przeglądarka on-line; powstała w 2002 roku; funkcjonuje na licencjach \textit{GPL 2.0} oraz \textit{Artistic Licence 2.0}; wielojęzykowa; aktywnie wspierana i wykorzystywana, jedna z najpopularniejszych, aczkolwiek w czasie pisania pracy, główna strona projektu (\textit{http://gbrowse.org/}) była nieosiągalna. Pozwala m.in. na tworzenie linków do dowolnych adnotacji, nawigację poprzez przewijanie, przybliżanie, wspiera format danych GFF, zapamiętuje ustawienia użytkownika podczas trwania sesji. Łączy się z różnymi publicznymi bazami danych (\textit{BioSQL}, \textit{Chado}) Na tle innych przeglądarek wyróżnia się architekturą umożliwiającą wykorzystanie edytowalnych pluginów firm trzecich.
+	\begin{figure}[h]
+		% http://gmod.org/mediawiki/images/1/10/GBrowse_screenshot1.png
+		\centering
+		\includegraphics[width=0.75\textwidth]{img/browser-gbrowse.png}
+		\caption{Przeglądarka GBrowse.}
+		\vspace{-0.5cm}
+		\caption*{\scriptsize Źródło: \url{http://gmod.org/mediawiki/images/1/10/GBrowse\_screenshot1.png}}
+		\label{img:przegladarka-gbrowse}
+	\end{figure}
+	
+	W porównaniu do CuGene:
+	brak funkcjonalności widoków z priorytetyzacją nakładających się na siebie typów danych. Brak algorytmów wyszukiwania Knutha-Morrisa-Pratta i Smitha-Watermana.	
+	\\
+	
+	\item \href{http://www.ensembl.org}{\emph{ENSEMBL}} \label{ENSEMBL} (rys.\ref{img:przegladarka-ensembl})
+	% http://www.ensembl.info/about/
+	% https://en.wikipedia.org/wiki/European_Bioinformatics_Institute
+	
+	projekt rozpoczęty w 1999 roku, w celu opisania genomu człowieka i~udostępnienia go w sieci. Powstał we współpracy pomiędzy EMBL-EBI\footnote{EBI (ang. European Bioinformatics Institute), jest częścią EMBL (ang. European Molecular Biology Laboratory)} a WSI\footnote{WSI (ang. Wellcome Sanger Institute)}. W projekcie uczestniczy 8 zespołów - łącznie około 50 członków. Udostępnione genomy są w większości takie jak w przelgądarce UCSC. Udostępnia API pozwalające pisać samodzielnie skrypty do pozyskiwania interesujących porcji danych.
+	
+	Zasadniczą różnicą w porównaniu do CuGene jest struktura bazy danych. W projekcie ENSEMBL zastosowano klasyczne podejście polegające na zaprojektowaniu bazy w formie  odzwierciedlającej biologiczne obiekty takie jak markery \todo{...}
+	%https://www.ensembl.org/info/docs/api/core/features_analyses_core.pdf
+	
+	\begin{figure}[h]
+		% https://en.wikipedia.org/wiki/File:Ensembl_release58_sgcb_screenshot.png
+		\centering
+		\includegraphics[width=0.75\textwidth]{img/browser-ensembl.png}
+		\caption{Przeglądarka EMSEMBL.}
+		\vspace{-0.5cm}
+		\caption*{\scriptsize Źródło: \url{https://en.wikipedia.org/wiki/File:Ensembl\_release58\_sgcb\_screenshot.png}}
+		\label{img:przegladarka-ensembl}
+	\end{figure}
+	
+	- funkcjonuje na licencji Apache, dopuszczającej użycie kodu źródłowego zarówno na potrzeby wolnego oprogramowania, jak i~zamkniętego oprogramowania komercyjnego. Znaczna część kodu napisana w~Perlu, schemat bazy danych w~MySQl.
 	
 	\item \href{http://bioviz.org/igb/index.html}{\emph{Integrated Genome Browser}} \label{IGB}
 	- projekt rozpoczęty przez firmę \emph{Affymetrix}, jednak porzucony przez nią i~rozwijany w~środowisku akademickim. Przeglądarka napisana w~Javie, obecnie na prawach Academic free license. %\cite{pdf-mimuw}
