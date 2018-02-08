@@ -76,6 +76,8 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 
 
 \section{Przegląd literatury - istniejące rozwiązania}
+
+\subsection{Najpopularniejsze przeglądarki}
 \begin{itemize}
 	% https://en.wikipedia.org/wiki/UCSC_Genome_Browser
 	% http://genome.ucsc.edu/
@@ -95,9 +97,9 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 		\label{img:przegladarka-UCSC}
 	\end{figure}
 	
-	
+%%%%%%%%%%%%%%%%%%
 	\item \href{http://gbrowse.org}{\emph{Gbrowse}} (rys.\ref{img:przegladarka-gbrowse})
-	\label{Gbrowse}
+	\label{przegladarka-Gbrowse}
 	% http://gmod.org/wiki/GBrowse
 	
 	projekt napisany w Pearlu, przeglądarka on-line; powstała w 2002 roku; funkcjonuje na licencjach \textit{GPL 2.0} oraz \textit{Artistic Licence 2.0}; wielojęzykowa; aktywnie wspierana i wykorzystywana, jedna z najpopularniejszych, aczkolwiek w czasie pisania pracy, główna strona projektu (\textit{http://gbrowse.org/}) była nieosiągalna. Pozwala m.in. na tworzenie linków do dowolnych adnotacji, nawigację poprzez przewijanie, przybliżanie, wspiera format danych GFF, zapamiętuje ustawienia użytkownika podczas trwania sesji. Łączy się z różnymi publicznymi bazami danych (\textit{BioSQL}, \textit{Chado}) Na tle innych przeglądarek wyróżnia się architekturą umożliwiającą wykorzystanie edytowalnych pluginów firm trzecich.
@@ -115,13 +117,14 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 	brak funkcjonalności widoków z priorytetyzacją nakładających się na siebie typów danych. Brak algorytmów wyszukiwania Knutha-Morrisa-Pratta i Smitha-Watermana.	
 	\\
 	
-	\item \href{http://www.ensembl.org}{\emph{ENSEMBL}} \label{ENSEMBL} (rys.\ref{img:przegladarka-ensembl})
+%%%%%%%%%%%%%%%%
+	\item \href{http://www.ensembl.org}{\emph{ENSEMBL}} \label{przegladarka-ENSEMBL} (rys.\ref{img:przegladarka-ensembl})
 	% http://www.ensembl.info/about/
 	% https://en.wikipedia.org/wiki/European_Bioinformatics_Institute
 	
-	projekt rozpoczęty w 1999 roku, w celu opisania genomu człowieka i~udostępnienia go w sieci. Powstał we współpracy pomiędzy EMBL-EBI\footnote{EBI (ang. European Bioinformatics Institute), jest częścią EMBL (ang. European Molecular Biology Laboratory)} a WSI\footnote{WSI (ang. Wellcome Sanger Institute)}. W projekcie uczestniczy 8 zespołów - łącznie około 50 członków. Udostępnione genomy są w większości takie jak w przelgądarce UCSC. Udostępnia API pozwalające pisać samodzielnie skrypty do pozyskiwania interesujących porcji danych.
+	projekt rozpoczęty w celu opisania genomu człowieka i~udostępnienia go w sieci w 1999 roku. Powstał we współpracy pomiędzy EMBL-EBI\footnote{EBI (ang. European Bioinformatics Institute), jest częścią EMBL (ang. European Molecular Biology Laboratory)} a WSI\footnote{WSI (ang. Wellcome Sanger Institute)}. W projekcie uczestniczy 8 zespołów - łącznie około 50 członków. Udostępnione genomy są w większości takie jak w przelgądarce UCSC. Udostępnia API pozwalające pisać samodzielnie skrypty do pozyskiwania interesujących porcji danych.
 	
-	Zasadniczą różnicą w porównaniu do CuGene jest struktura bazy danych. W projekcie ENSEMBL zastosowano klasyczne podejście polegające na zaprojektowaniu bazy w formie  odzwierciedlającej biologiczne obiekty takie jak markery \todo{...}
+	Zasadniczą różnicą w porównaniu do CuGene jest struktura bazy danych. W projekcie ENSEMBL zastosowano klasyczne podejście polegające na zaprojektowaniu bazy w formie niegenerycznej, odzwierciedlającej biologiczne obiekty w naturze. Na diagramie bazodanowym (rys.\ref{img:db-ensebl}) widać takie tabele jak markery, eksony, transkryptomy, allele, geny itd.
 	%https://www.ensembl.org/info/docs/api/core/features_analyses_core.pdf
 	
 	\begin{figure}[h]
@@ -133,12 +136,38 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 		\caption*{\scriptsize Źródło: \url{https://en.wikipedia.org/wiki/File:Ensembl\_release58\_sgcb\_screenshot.png}}
 		\label{img:przegladarka-ensembl}
 	\end{figure}
+	\begin{figure}[h]
+		% https://www.ensembl.org/info/docs/api/core/core_schema.html
+		\centering
+		\includegraphics[width=1\textwidth]{img/db-ensembl.png}
+		\caption{Fragment schematu bazdy danych EMSEMBL.}
+		\vspace{-0.5cm}
+		\caption*{\scriptsize Źródło: \url{https://www.ensembl.org/info/docs/api/core/core\_schema.html}}
+		\label{img:db-ensebl}
+	\end{figure}
+		
+%%%%%%%%%%%%%%%
+	\item \href{http://bioviz.org/igb/index.html}{\emph{IGB}} \label{IGB}
+	(rys.\ref{img:przegladarka-igb})
+	% https://en.wikipedia.org/wiki/Integrated_Genome_Browser
+	% https://bitbucket.org/lorainelab/genoviz-sdk/src
+	% https://sourceforge.net/projects/genoviz/
 	
-	- funkcjonuje na licencji Apache, dopuszczającej użycie kodu źródłowego zarówno na potrzeby wolnego oprogramowania, jak i~zamkniętego oprogramowania komercyjnego. Znaczna część kodu napisana w~Perlu, schemat bazy danych w~MySQl.
+	%Integrated Genome Browser to projekt rozpoczęty przez firmę \emph{Affymetrix}, jednak porzucony przez nią i~rozwijany w~środowisku akademickim. Przeglądarka napisana w~Javie, obecnie na prawach Academic free license.
 	
-	\item \href{http://bioviz.org/igb/index.html}{\emph{Integrated Genome Browser}} \label{IGB}
-	- projekt rozpoczęty przez firmę \emph{Affymetrix}, jednak porzucony przez nią i~rozwijany w~środowisku akademickim. Przeglądarka napisana w~Javie, obecnie na prawach Academic free license. %\cite{pdf-mimuw}
+	Integrated Genome Browser to projekt używany przez wiele uniwersytetów na całym świecie. Zapoczątkowany przez \emph{Affymetrix}, jednak od 2004 roku jego kod został upubliczniony. Ostatnie wiadomości\footnote{\url{http://bioviz.org/igb/news.html}} odnośnie rozwoju projektu publikowane były w połowie 2016 roku. Oparty na platformie \textit{GenoViz}\footnote{\url{https://sourceforge.net/projects/genoviz/}} dostarczającej re-używalnych komponentów do wizualizacji danych genetycznych. Rozwój platformy zatrzymał się na początku 2016 roku (stwierdzono na podstawie ostatnich commitów\footnote{\url{https://bitbucket.org/lorainelab/genoviz-sdk/commits/all}}) Przeglądarka jest bardzo funkcjonalna - pozwala m.in. na: interaktywną prezentację danych użytkownika akceptowanych w wielu formatach, tworzenie map cieplnych, korzystanie z genomów publicznie dostępnych, wyszukiwanie podobieństw algorytmem BLAST, tworzenie i eksportowanie własnych widoków, udostępnianie danych między współpracownikami, integrację z usługami przechowywania danych, tworzenie własnych pluginów i skryptów.
+	\begin{figure}[h]
+	% http://bioviz.org/igb/less/images/SlicedView.png
+		\centering
+		\includegraphics[width=1\textwidth]{img/browser-igb.png}
+		\caption{Przeglądarka IGB.}
+		\vspace{-0.5cm}
+		\caption*{\scriptsize Źródło: \url{http://bioviz.org/igb/less/images/SlicedView.png}}
+		\label{img:przegladarka-igb}
+	\end{figure}
 	
+	
+\subsection{Inne narzędzia}	
 	\item \href{http://www.interactive-biosoftware.com/alamut-visual/features/}{\emph{Alamut}} \label{alamut}- przeglądarka z~prostym interfejsem użytkownika z~adnotacjami pobieranymi z~publicznie dostępnych baz NCBI, EBI, UCSC. Zgodna z~nomenklaturą HGVS (ang. \emph{Human Genome Variation Society}). Funkcjonalność obliczeniowa oparta o~narzędzia predykcyjne.
 	
 	\item \href{http://www.broadinstitute.org/annotation/argo/}{\emph{Argo Genome Browser}} \label{argo-genome-browser}- narzędzie służące do wizualizacji i~manualnego dodawania adnotacji genomów. Oprogramowanie open-source na licencji LGPL, napisane w~języku \emph{Java}.
