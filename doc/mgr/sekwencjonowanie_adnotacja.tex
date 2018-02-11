@@ -1,7 +1,57 @@
 \chapter{Sekwencjonowanie i adnotacja genomu}
-\label{section:biologiny_wstep}
+\label{section:sekwencjonowanie_i_adnotacja}
 
-\info{X Y cel}
+\subsection*{Centralny dogmat bioinformatyki}
+Podstawowym założeniem w bioinformatyce jest następująca zależność:
+Informacja, która jest zawarta w sekwencji nukleotydowej bezpośrednio przekłada się na strukturę przestrzenną białek i innych cząsteczek, które są w genomie zakodowane. Dzięki strukturze przestrzennej, białka mogą na siebie bezpośrednio oddziaływać, co oznacza że pełnią one pewne funkcje biochemiczne. Funkcją biochemiczną może być np. reakcja w którą wchodzi dane białko łącząc się z inną substancją. Efekt końcowy oddziaływań zbioru wybranych białek obserwujemy w postaci np. wyglądu zewnętrznego, zachowania, funkcjonowania organizmu.
+
+Informacje sekwencyjne jesteśmy w stanie eksperymentalnie pozyskać bardzo łatwo. Trudniej jest określić struktury przestrzenne i funkcje biochemiczne jakie pełnią.
+Obecnie nacisk jest wywierany na ustalenie procesu w jaki sposób na podstawie sekwencji możemy określić strukturę przestrzenną bądź później, funkcję danego związku chemicznego.
+Z samej obserwacji fenotypu nic nie wynosimy. Dążymy do tego aby dowiedzieć się jakie konkretne białka odpowiadają za dany fenotyp. Chcemy posiąść kompletną wiedzę na temat funkcjonowania organizmu. Kryje się za tym znajomość wszystkich genów jakie mogą w tym organiźmie występować, odmian, mutacji i ch wzajemnych wpływów.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{img/centralny-dogmat.png}
+	\caption{Centralny dogmat bioinformatyki}
+	\vspace{-0.5cm}
+	\caption*{\scriptsize Źródła: 
+		\url{http://www.wikiwand.com/en/DNA},
+		\url{http://igoscience.com/dna-sequence-genetic-code/} \\
+		\url{https://commons.wikimedia.org/wiki/File\%3AReakcja\_ksantoproteinowa\_dla\_tryptofanu.jpg}, \\
+		\url{https://www.russell-terrier.org/index.php/blog/56-maść-jrt-i-prt-w-praktyce-część-vi-fenotyp}
+	}
+	\label{img:centralny-dogmat}
+\end{figure}
+
+\subsection*{Problemy bioinformatyki}
+Bioinformatyka, jak każda dziedzina naukowa boryka się z pewnymi problemami. 
+Problem dotyczący baz danych polega na tym, że wiele baz powstaje jako wynik grantu badawczego a potem z tymi danymi często nic się nie dzieje.
+\przeredagowac{Z każdym dniem poznajemy tysiące nowych sekwencji, które są deponowane w cyfrowych przechowalniach. 
+Te podstawowe bazy są utrzymywane i z powodzeniem wykorzystywane do naukowych doświadczeń, jednakże problemem są bazy wtórne, bazujące na wynikach z wcześniejszych, podstawowych eksperymentów. 
+Gromadzą one najczęściej zbiór informacji pochodzący z różnych miejsc i często są one po stosunkowo niedługim czasie nieaktualne.}
+
+\przeredagowac{Projekty bioinformatyczne często zostają zakończone opracowaniem bazy danych, po czym finansowanie projektu kończy się, projekt nie jest kontynuowany.
+Jako, że mamy do czynienia z danymi biologicznymi oznacza to, że eksperymenty zazwyczaj obarczone są jakimś ryzykiem błędu. 
+Niejednokrotnie zdarza się, że do bazy pierwotnej są wprowadzane modyfikacje, które nie zostają już uwzględnione w późniejszych bazach wtórnych. 
+Błędy te propagują się na następne projekty. 
+W~przypadku zakończenia projektu bazy wtórnej, pomimo aktualizacji danych pierwotnych, na których się opierała, informacje wtórne nie zostają już zmienione. 
+Jest to dość poważny problem z jakim obecnie świat bioinformatyki boryka się.}
+
+\przeredagowac{Wspomniane zbiory danych często są ogromne. 
+	Sekwencja przykładowego genomu człowieka zajmuje ponad 3GB, natomiast opis samego eksperymentu sekwencjonowania może zająć nawet kilkaset gigabajtów. 
+	Pojawiający się problem jest natury technicznej - chodzi o sposób przechowywania danych. Okazuje się, że często bardziej opłaca się laboratorium ponownie przeprowadzić eksperyment sekwencjonowania, niż przechowywać wyniki doświadczeń na dyskach, gdyż jest to zbyt kosztowne.}
+
+Kolejnym problemem jest mnogość standardów. 
+Często gdy jest jakiś problem, rozwiązanie projektowane jest od podstaw. 
+Takie podejście skutkuje tym, że dla pojedynczego zadania, mamy kilkanaście bądź kilkadziesiąt różnych metod, które nie koniecznie są ze sobą kompatybilne. 
+Jednym z głównych problemów, z jakim zmagają się biolodzy przy analizie danych jest to, że wyjście z jednego programu nie jest kompatybilne z wejściem drugiego programu, który potrzebują aktualnie wykorzystać. 
+Próby rozwiązania takiego kłopotu skutkują często zdefiniowaniem kolejnego standardu, co może jeszcze bardziej skomplikować sytuację jeśli nowy sposób się nie zostanie przyjęty przez większe grono naukowców.
+
+%-niekontynuowane projekty \\
+%-dane bazują na eksperymentach, błędy propagujące się \\
+%-wiele różnych standardów, niekompatybilne \\
+%-nieinformatyczni biolodzy \\
+%-sposoby finansowania nauki \\
 
 \section{Sekwencjonowanie i asembling DNA}
 Sekwencjonowanie to jedna z technik biologii molekularnej, pozwalająca na odczytanie kolejności nukleotydów w cząsteczce DNA.
@@ -79,7 +129,7 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 
 \section{Przegląd literatury - istniejące rozwiązania}
 
-\subsection{Najpopularniejsze przeglądarki}
+\subsection*{Najpopularniejsze przeglądarki}
 \begin{itemize}
 	% https://en.wikipedia.org/wiki/UCSC_Genome_Browser
 	% http://genome.ucsc.edu/
@@ -168,8 +218,7 @@ Dane wizualizowane są najczęściej w sposób interaktywny pozwalając na obser
 		\label{img:przegladarka-igb}
 	\end{figure}
 	
-	
-\subsection{Inne narzędzia}	
+\subsection*{Inne narzędzia}	
 	\item \href{http://www.interactive-biosoftware.com/alamut-visual/features/}{\emph{Alamut}} \label{alamut}- przeglądarka z~prostym interfejsem użytkownika z~adnotacjami pobieranymi z~publicznie dostępnych baz NCBI, EBI, UCSC. Zgodna z~nomenklaturą HGVS (ang. \emph{Human Genome Variation Society}). Funkcjonalność obliczeniowa oparta o~narzędzia predykcyjne.
 	
 	\item \href{http://www.broadinstitute.org/annotation/argo/}{\emph{Argo Genome Browser}} \label{argo-genome-browser}- narzędzie służące do wizualizacji i~manualnego dodawania adnotacji genomów. Oprogramowanie open-source na licencji LGPL, napisane w~języku \emph{Java}.
