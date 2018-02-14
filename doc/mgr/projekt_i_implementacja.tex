@@ -1,7 +1,29 @@
 \chapter{Projekt i implementacja}
-\label{section:projekt_i_implementacja}
+
 
 \section{Architektura}
+
+Przeglądarka została zaimplementowana w wielowarstwowej architekturze klient-serwer.
+Kod został podzielony na moduły, aby jak najbardziej oddzielić od siebie niezależne fragmenty aplikacji zachowując przy tym dobre praktyki programistyczne.
+Rozróżniamy w pracy 3 główne warstwy odpowiadające za:
+\begin{itemize}
+	\item prezentację
+	\item obsługę danych
+	\item logikę biznesową
+\end{itemize}
+
+\subsection*{BioWeb}
+\todo{todo - bioweb, rysunek - model aplikacji trójwarstwowej}
+
+\subsection*{Klient, warstwa prezentacji}
+Moduł klienta znajdujący się w warstwie prezentacji możemy zaliczyć do grupy klientów cienkich.
+Odpowiada on za ilustrowanie danych pobranych z serwera wykonując operacje renderowania elementów graficznych oraz zapewnia interaktywną komunikację użytkownika z systemem.
+W obecnych czasach, praktycznie każdy komputer stacjonarny a nawet urządzenia mobilne posiadają stosunkowo dużą moc obliczeniową pozwalającą na proste przetwarzanie.
+Realizując projekt, zastosowano podejście, w którym odpowiedzialność za operacje takie jak walidacja danych, generowanie rysunków czy animacje pozostają na barkach modułu klienckiego. 
+Tym samym, odciążony zostaje serwer, przez co podwyższamy jego możliwości wydajnościowe co sprowadza się do zwiększenia potencjalnej liczby jednocześnie obsługiwanych użytkowników.
+
+Do implementacji warstwy prezentacji zostały użyte technologie webowe, wykorzystujące jako środowisko uruchomieniowe przeglądarkę internetową. Użytkownikowi wystarczy jedynie maszyna z dostępem do internetu i nowoczesną przeglądarką internetową wpierająca HTML5. 
+Klient może być uruchomiony na dowolnym popularnym systemie operacyjnym \mbox{(Linux/Mac/Windows)} i zwolniony jest potrzeby aktualizowania aplikacji - wszystkie moduły ładowane są podczas inicjacji przeglądarki genomu.
 
 \section{Wykorzystane technologie}
 
