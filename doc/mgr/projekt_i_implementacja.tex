@@ -13,7 +13,16 @@ Rozróżniamy w pracy 3 główne warstwy odpowiadające za:
 \end{itemize}
 
 \subsection*{BioWeb}
-\todo{todo - bioweb, rysunek - model aplikacji trójwarstwowej}
+
+BioWeb jest środowiskiem aplikacyjnym, w którym zostało stworzonych wiele aplikacji przetwarzających dane genetyczne \cite{article:bioweb}.
+Programy operujące na obszernych zbiorach genetycznych wymagają architektury zapewniającej m.in. przenośność, elastyczność i wysoką wydajność nie rezygnując jednocześnie z interaktywnego interfejsu użytkownika.
+Zaspokojenie ww. wymagań możliwe jest dzięki połączeniu ze sobą w jednym projekcie języków kompilowanych i interpretowanych.
+Zastosowanie architektury BioWeb przyspiesza sam proces wytwarzania oprogramowania poprzez podejście zalecające implementację jedynie modułów obliczeniowych w językach niskiego poziomu (C++), natomiast część serwerową i kliencką, które nie są wąskimi gardłami, w językach interpretowanych takich jak Python i Javascript.
+Innymi słowy - moduły nie wymagające ponad przeciętnej wydajności, które można stworzyć szybciej, implementowane są w językach wyższego poziomu a moduły zasobożerne są w językach niskiego poziomu. Odpowiedni dobór konkretnych technologii dał możliwość wygodnego połączenia ww. technik.
+Na rysunku \todo{[link]} zamieszony został schemat struktury aplikacji.
+\\
+\todo{[rysunek schematu - trójwarstwowa aplikacja ze schematem technologii.]}
+
 
 \subsection*{Klient, warstwa prezentacji}
 Moduł klienta znajdujący się w warstwie prezentacji możemy zaliczyć do grupy klientów cienkich.
@@ -23,7 +32,10 @@ Realizując projekt, zastosowano podejście, w którym odpowiedzialność za ope
 Tym samym, odciążony zostaje serwer, przez co podwyższamy jego możliwości wydajnościowe co sprowadza się do zwiększenia potencjalnej liczby jednocześnie obsługiwanych użytkowników.
 
 Do implementacji warstwy prezentacji zostały użyte technologie webowe, wykorzystujące jako środowisko uruchomieniowe przeglądarkę internetową. Użytkownikowi wystarczy jedynie maszyna z dostępem do internetu i nowoczesną przeglądarką internetową wpierająca HTML5. 
-Klient może być uruchomiony na dowolnym popularnym systemie operacyjnym \mbox{(Linux/Mac/Windows)} i zwolniony jest potrzeby aktualizowania aplikacji - wszystkie moduły ładowane są podczas inicjacji przeglądarki genomu.
+Klient może być uruchomiony na dowolnym popularnym systemie operacyjnym \mbox{(Linux/Mac/Windows)} i zwolniony jest z potrzeby aktualizowania aplikacji - wszystkie moduły ładowane są podczas inicjacji przeglądarki genomu.
+
+\subsection*{Serwer, warstwa trwałości i przetwarzania}
+todo
 
 \section{Wykorzystane technologie}
 
