@@ -34,8 +34,12 @@ Tym samym, odciążony zostaje serwer, przez co podwyższamy jego możliwości w
 Do implementacji warstwy prezentacji zostały użyte technologie webowe, wykorzystujące jako środowisko uruchomieniowe przeglądarkę internetową. Użytkownikowi wystarczy jedynie maszyna z dostępem do internetu i nowoczesną przeglądarką internetową wpierająca HTML5. 
 Klient może być uruchomiony na dowolnym popularnym systemie operacyjnym \mbox{(Linux/Mac/Windows)} i zwolniony jest z potrzeby aktualizowania aplikacji - wszystkie moduły ładowane są podczas inicjacji przeglądarki genomu.
 
-\subsection*{Serwer, warstwa trwałości i przetwarzania}
-todo
+\subsection*{Serwer - warstwa trwałości i przetwarzania}
+Serwer jest przenośny, wykorzystuje technologie dające się uruchomić na najpopularniejszych platformach komputerowych - Unix, Windows.
+System pozwala na równoległą obsługę wielu użytkowników jednocześnie.
+W celu zwiększenia wydajności aplikacja daje się stosunkowo łatwo skalować horyzontalnie i wertykalnie.
+Wpływ na szybkość przetwarzania żądań, głównie ma klasa zastosowanego sprzętu komputerowego.
+Jego główne zadania to gromadzenie danych, udostępnienie ich dla aplikacji klienckiej poprzez API, przechowywanie stanu przeglądarki, wykonywanie zadań przeszukiwania genomu.
 
 \section{Wykorzystane technologie}
 
