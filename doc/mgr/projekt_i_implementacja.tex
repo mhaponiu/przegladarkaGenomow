@@ -42,6 +42,28 @@ Wpływ na szybkość przetwarzania żądań, głównie ma klasa zastosowanego sp
 Jego główne zadania to gromadzenie danych, udostępnienie ich dla aplikacji klienckiej poprzez API, przechowywanie stanu przeglądarki, wykonywanie zadań przeszukiwania genomu.
 
 \section{Wykorzystane technologie}
+Python jest głównym językiem programowania używanym w przeglądarce.
+Jest interpretowany, wspiera wiele paradygmatów programowania, uważany jest jako prosty do nauki, posiada rozbudowaną bibliotekę standardową i jest mocno wspierany przez społeczność. 
+Aplikacje pisane w nim są przenośne i szybkie zarazem, ponieważ wiele bibliotek pod spodem jest zaimplementowanych w C/C++.
+
+\todo{todo: algorytmy w C++, boost - python}
+
+Aby uprościć standardowe czynności związane z pisaniem aplikacji webowej wykorzystany został popularny framework pythonowy - Django. 
+Automatyzuje wiele zadań związanych z obsługą żądań HTTP (Django REST Framework), dostarcza panel administracyjny, system cache'owania, serwer do testowania aplikacji i wiele innych.
+Kluczową dostarczoną funkcjonalnością jest maper obiektowo relacyjny ORM\footnote{ang. Object Relational Mapping.}, który w wygodny sposób daje nam dostęp do danych zgromadzonych w bazie danych bez potrzeby pisania niekiedy skomplikowanych zapytań SQL.
+Jako system bazodanowy użyty został PostgreSQL - jeden z najpopularniejszych systemów relacyjnych o otwartym kodzie źródłowym.
+
+Jako serwer WWW wykorzystany został Nginx, który z Django łączy się za pośrednictwem serwera HTTP Gunicorn implementującego interfejs WSGI\footnote{ang. Web Server Gateway Interface.}.
+
+\todo{todo: frontend, budowanie aplikacji}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{img/loga.png}
+	\caption{Technologie wykorzystane w projekcie.}
+	\vspace{-0.5cm}
+	\label{img:technologie}
+\end{figure}
 
 \section{Struktura projektu}
 
