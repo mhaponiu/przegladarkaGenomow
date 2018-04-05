@@ -46,7 +46,9 @@ Python jest głównym językiem programowania używanym w przeglądarce.
 Jest interpretowany, wspiera wiele paradygmatów programowania, uważany jest jako prosty do nauki, posiada rozbudowaną bibliotekę standardową i jest mocno wspierany przez społeczność. 
 Aplikacje pisane w nim są przenośne i szybkie zarazem, ponieważ wiele bibliotek pod spodem jest zaimplementowanych w C/C++.
 
-\todo{todo: algorytmy w C++, boost - python}
+Algorytmy do wyszukiwania sekwencji, zostały zaimplementowane w języku C++ i zintegrowane z częścią serwerową za pomocą biblioteki \textit{BoostPython}.
+Biblioteka ta stworzona została aby szybko i łatwo eksportować C++ do Pythona.
+Jest tak zaprojektowana, aby była minimalnie inwazyjna dla kodu C++ - w większości przypadków nie ma konieczności w żaden sposób zmieniać klas C++ aby używać ich z \textit{BoostPython}.
 
 Aby uprościć standardowe czynności związane z pisaniem aplikacji webowej wykorzystany został popularny framework pythonowy - Django. 
 Automatyzuje wiele zadań związanych z obsługą żądań HTTP (Django REST Framework), dostarcza panel administracyjny, system cache'owania, serwer do testowania aplikacji i wiele innych.
