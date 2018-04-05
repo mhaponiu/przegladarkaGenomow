@@ -57,7 +57,12 @@ Jako system bazodanowy użyty został PostgreSQL - jeden z najpopularniejszych s
 
 Jako serwer WWW wykorzystany został Nginx, który z Django łączy się za pośrednictwem serwera HTTP Gunicorn implementującego interfejs WSGI\footnote{ang. Web Server Gateway Interface.}.
 
-\todo{todo: frontend, budowanie aplikacji}
+Podstawą części wizualizacyjnej, dostarczającej graficzny interfejs użytkownika (GUI\footnote{ang. Graphical User Interface}) jest język HTML5 wraz z JavaScriptem.
+Element ,,canvas'' pozwala na dynamiczne, skryptowe renderowanie kształtów i obrazów bitmapowych bez dodatkowych wtyczek - został użyty do odrysowywania głównego widoku mapy genomu.
+Aby ułatwić zadania towarzyszące tworzeniu aplikacji w modelu SPA\footnote{ang. Single Page Application}, wykorzystany został framework \textit{AngularJS} oparty o wzorzec projektowy MVC\footnote{ang. Model View Controller}.
+Angular jest otwartoźródłowym projektem wydanym i rozwijanym przez firmę \textit{Google}.
+
+\todo{todo:budowanie aplikacji}
 
 \begin{figure}[h]
 	\centering
