@@ -51,7 +51,7 @@ Biblioteka ta stworzona została aby szybko i łatwo eksportować C++ do Pythona
 Jest tak zaprojektowana, aby była minimalnie inwazyjna dla kodu C++ - w większości przypadków nie ma konieczności w żaden sposób zmieniać klas C++ aby używać ich z \textit{BoostPython}.
 
 Aby uprościć standardowe czynności związane z pisaniem aplikacji webowej wykorzystany został popularny framework pythonowy - Django. 
-Automatyzuje wiele zadań związanych z obsługą żądań HTTP (Django REST Framework), dostarcza panel administracyjny, system cache'owania, serwer do testowania aplikacji i wiele innych.
+Automatyzuje on wiele zadań związanych z obsługą żądań HTTP (Django REST Framework), dostarcza panel administracyjny, system cache'owania, serwer do testowania aplikacji i wiele innych.
 Kluczową dostarczoną funkcjonalnością jest maper obiektowo relacyjny ORM\footnote{ang. Object Relational Mapping.}, który w wygodny sposób daje nam dostęp do danych zgromadzonych w bazie danych bez potrzeby pisania niekiedy skomplikowanych zapytań SQL.
 Jako system bazodanowy użyty został PostgreSQL - jeden z najpopularniejszych systemów relacyjnych o otwartym kodzie źródłowym.
 
@@ -61,8 +61,10 @@ Podstawą części wizualizacyjnej, dostarczającej graficzny interfejs użytkow
 Element ,,canvas'' pozwala na dynamiczne, skryptowe renderowanie kształtów i obrazów bitmapowych bez dodatkowych wtyczek - został użyty do odrysowywania głównego widoku mapy genomu.
 Aby ułatwić zadania towarzyszące tworzeniu aplikacji w modelu SPA\footnote{ang. Single Page Application}, wykorzystany został framework \textit{AngularJS} oparty o wzorzec projektowy MVC\footnote{ang. Model View Controller}.
 Angular jest otwartoźródłowym projektem wydanym i rozwijanym przez firmę \textit{Google}.
+Bardzo pomocny przy implementacji wartwy prezentacji okazał się również framework CSS\footnote{ang. Cascading Style Sheets} \textit{Bootstrap}, który ułatwił stylizację komponentów wyświetlanych na stronie.
 
-\todo{todo:budowanie aplikacji}
+Fragmenty kodu odpowiedzialne za budowanie aplikacji, uruchamianie jej w różnych konfiguracjach, kompilację modułów obliczeniowych itp. wykorzystują narzędzie \textit{SCons}.
+Pliki konfiguracyjne mają formę skryptów pythonowych, natomiast sama funkcjonalność narzędzia pod wieloma względami przypomina tradycyjny program powłoki systemowej, automatyzujący np. proces kompilacji programów - \textit{GNU make}.
 
 \begin{figure}[h]
 	\centering
