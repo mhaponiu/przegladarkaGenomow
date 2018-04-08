@@ -96,6 +96,22 @@ Zawiera klasy wykorzystywane do budowania aplikacji, pliki konfiguracyjne:
 	\item \textit{deploy.Deployer} - klasa pozwalająca renderować plik konfiguracyjny serwera www \textit{nginx}, generować sekretny klucz \textit{Django}, konfigurować ustawienie \textit{Django ALLOWED\_HOSTS} niezbędne do prawidłowego działania serwera.
 \end{itemize}
 
+\subsection*{functional\_tests}
+Zawiera sterownik do silnika przeglądarki \textit{Chrome} oraz testy funkcjonalne wykorzystujące bibliotekę do testowania webowych aplikacji - \textit{Selenium}.
+
+\subsection*{zpr}
+Zawiera główne ustawienia \textit{Django} (settings.py) oraz korzeń API HTTP aplikacji (urls.py).
+
+\subsection*{zpr/database}
+Zawiera skrypty służące do parsowania danych biologicznych pozyskanych od SGGW, narzędzia do obrabiania tych danych, tj. ekstrahowania informacji, przygotowywania struktur pomocniczych, grupowania, filtrowania, zliczania, sortowania oraz finalnie - generowania ciągów chromosomów po odrzuceniu błędnych, niespójnych danych.
+
+\subsection*{zprapp}
+Główny folder aplikacji, zawiera moduły logiki i prezentacji.
+Bezpośrednio w folderze znajdują się m.in. pliki widoków API, serializerów, trasowania url, panelu administracyjnego, schematu bazy danych, testów jednostkowych.
+
+\subsection*{zprapp/calc}
+Zawiera algorytmy wyszukiwania podciągów zaimplementowane w języku \textit{C++}: \textit{Knutha-Morrisa-Pratta}, \textit{Boyera-Moore'a}, \textit{Smitha-Watermana}, \textit{BLAST} oraz ich interfejsy pozwalające na wywołanie kodu bezpośrednio z poziomu \textit{Pythona}. Algorytmy zostały zaimplementowane przez \textit{Piotra Róża}.
+
 \section{Baza danych}
 
 \section{Algorytmy}
