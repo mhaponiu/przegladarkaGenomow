@@ -74,7 +74,27 @@ Pliki konfiguracyjne mają formę skryptów pythonowych, natomiast sama funkcjon
 	\label{img:technologie}
 \end{figure}
 
+
 \section{Struktura projektu}
+\todo{todo: obrazek z drzewem projektu\\}
+W niniejszym rozdziale przybliżę strukturę plików i folderów w projekcie oraz wyszczególnię ważniejsze fragmenty kodu.
+Zaimplementowana aplikacja została podzielona na następujące moduły:
+
+\subsection*{build\_tools}
+Zawiera klasy wykorzystywane do budowania aplikacji, pliki konfiguracyjne:
+
+
+\begin{itemize}
+	\item \textit{requirements.txt} - spis bibliotek pythonowych, które zostaną zainstalowane w wyizolowanym środowisku \textit{virtualenv}.
+	\todo{todo: dodać link do opisu pliku SCons}
+	
+	\item \textit{deploy\_conf\_files} - folder zawierający szablon pliku konfiguracyjnego serwera www \textit{nginx}, wykorzystywany przy produkcyjnym budowaniu aplikacji.
+	\todo{todo: dodać link do opisu pliku SCons}
+	
+	\item \textit{build.AppBuilder} - klasa umożliwiająca zarządzanie plikiem konfigurującym proces budowania, tworzenie struktury folderów projektu, utworzenie środowiska \textit{virtualenv} wraz z pobraniem i zainstalowaniem niezbędnych bibliotek pythonowych, pobranie i wypakowanie plików zawierających dane dotyczące genomu ogórka, które wykorzystywane są podczas inicjacji bazy danych.
+	
+	\item \textit{deploy.Deployer} - klasa pozwalająca renderować plik konfiguracyjny serwera www \textit{nginx}, generować sekretny klucz \textit{Django}, konfigurować ustawienie \textit{Django ALLOWED\_HOSTS} niezbędne do prawidłowego działania serwera.
+\end{itemize}
 
 \section{Baza danych}
 
