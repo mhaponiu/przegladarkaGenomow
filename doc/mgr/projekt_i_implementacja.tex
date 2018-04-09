@@ -112,6 +112,19 @@ Bezpośrednio w folderze znajdują się m.in. pliki widoków API, serializerów,
 \subsection*{zprapp/calc}
 Zawiera algorytmy wyszukiwania podciągów zaimplementowane w języku \textit{C++}: \textit{Knutha-Morrisa-Pratta}, \textit{Boyera-Moore'a}, \textit{Smitha-Watermana}, \textit{BLAST} oraz ich interfejsy pozwalające na wywołanie kodu bezpośrednio z poziomu \textit{Pythona}. Algorytmy zostały zaimplementowane przez \textit{Piotra Róża}.
 
+\subsection*{zprapp/templates/zprapp}
+Zawiera pliki HTML dynamicznie renderowane w przeglądarce internetowej podczas użytkowania aplikacji.
+
+\subsection*{zprapp/static/zprapp}
+Zawiera biblioteki Javascriptowe wraz ze stylami CSS wykorzystywane po stronie frontendu.
+Tutaj została zaimplementowana większość kodu kontrolerów Angularowych.
+W folderze \textit{lang} obecne są również pliki zawierające tłumaczenia słów w dwóch językach - angielskim i polskim.
+Aplikację w prosty, nieinwazyjny sposób można rozszerzyć o więcej języków.
+
+\subsection*{zprapp/contrib}
+Lokalizacja zawierają funkcje i klasy wykorzystywane m.in. do pomiarów i porównania szybkości algorytmów oraz łączenia ciągów podsekwencji w dłuższe fragmenty.
+
+
 \section{Baza danych}
 
 \section{Algorytmy}
@@ -121,4 +134,35 @@ Zawiera algorytmy wyszukiwania podciągów zaimplementowane w języku \textit{C+
 \section{Interfejs użytkownika}
 
 \section{Instrukcja uruchomienia aplikacji}
+W celu zautomatyzowania budowy, kompilacji oraz konfiguracji aplikacji zostało wykorzystane narzędzie \textit{Scons}.
+Aby zbudować i uruchomić część serwerową przeglądarki genomów w środowisku linux, zaleca się wykonać następujące czynności:
+\begin{enumerate}
+	\item zainstalować bazę danych \textit{PostgreSQL} w wersji 9.5
+	\item zainstalować język Python w wersji 2.7 wraz menadżerem paczek \textit{pip} i środowiskiem virtualenv
+	\item zainstalować bibliotekę \textit{Boost} w wersji 1.64
+\end{enumerate}
+Powyższe zadania można wykonać poleceniami:
+
+\begin{spverbatim}
+	apt-get install libpq-dev python-dev python-pip scons postgresql nginx
+	pip2 install virtualenv
+	tar --bzip2 -xf /path/to/boost_1_64_0.tar.bz2 ./bootstrap.sh --with-python=python ./b2 install
+\end{spverbatim}
+
+\begin{enumerate}[resume]
+	\item utworzyć użytkownika \textit{zpr} o haśle \textit{zpr}
+	\item utworzyć bazy danych \textit{zpr} oraz \textit{ogorek\_roboczy}
+\end{enumerate}
+Powyższe zadania można wykonać poleceniami:
+
+\begin{spverbatim}
+	sudo -u postgres createuser --superuser --createdb --createrole zpr 
+	sudo -u postgres psql -c "alter user zpr with encrypted password 'zpr';"
+	sudo -u postgres createdb -O zpr zpr 
+	sudo -u postgres createdb -O zpr ogorek_roboczy
+\end{spverbatim}
+
+
+
+
 
