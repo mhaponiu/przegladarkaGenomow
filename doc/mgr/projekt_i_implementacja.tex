@@ -135,7 +135,7 @@ Lokalizacja zawierają funkcje i klasy wykorzystywane m.in. do pomiarów i poró
 
 \section{Instrukcja uruchomienia aplikacji}
 W celu zautomatyzowania budowy, kompilacji oraz konfiguracji aplikacji zostało wykorzystane narzędzie \textit{Scons}.
-Aby zbudować i uruchomić część serwerową przeglądarki genomów w środowisku linux, zaleca się wykonać następujące czynności:
+Aby zbudować i uruchomić część serwerową przeglądarki genomów w środowisku Linux z rodziny \textit{Debian}, zaleca się wykonać następujące czynności:
 \begin{enumerate}
 	\item zainstalować bazę danych \textit{PostgreSQL} w wersji 9.5
 	\item zainstalować język Python w wersji 2.7 wraz menadżerem paczek \textit{pip} i środowiskiem virtualenv
@@ -161,6 +161,35 @@ Powyższe zadania można wykonać poleceniami:
 	sudo -u postgres createdb -O zpr zpr 
 	sudo -u postgres createdb -O zpr ogorek_roboczy
 \end{spverbatim}
+
+\begin{enumerate}[resume]
+	\item przetestować połączenie z bazą danych poleceniem\\
+	\verb|psql zpr -U zpr|\\
+	w przypadku pojawiającego się błędu\\
+	\verb|psql: FATAL: Peer authentication failed for user "zpr""|
+	należy w pliku \textit{/etc/postgresql/9.5/main/pg\_hba.conf} w linijce \textit{local all all peer} zamienić \textit{peer} na \textit{md5}, następnie zrestartuj serwer poleceniem\\
+	\verb|#/etc/init.d/postgresql restart|
+	
+	\item zbudować program wraz ze środowiskiem poleceniem \verb|scons|
+	
+	\item wczytać bazę danych \textit{ogorek\_roboczy} poleceniem\\
+	\verb|scons restore_ogorek_roboczy=1|
+	
+	\item zbudować główną bazę danych poleceniem \verb|scons build_db=1|
+	
+	\item w celu konfiguracji produkcyjnej serwera www \textit{nginx} wykonać:\\
+	\verb|sudo scons build_deploy=1|\\
+	Należy pamiętać aby w pliku \textit{SConstruct} ustawić odpowiednio zmienne, w szczególności \textit{WWW\_SRV\_HOST}.
+	W razie błędu \textit{HTTP 400}, należy sprawdzić czy w pliku \textit{settings.py}, w zmiennej \textit{ALLOWED\_HOSTS} jest prawidłowo wpisana wartość \textit{WWW\_SRV\_HOST}.
+	
+	\item wygenerować nowy klucz zabezpieczeń \textit{Django} poleceniem:
+	\verb|new_secret_key=1|\\
+	Klucz powinien pozostać taki sam w poszczególnych wdrożeniach.
+	
+	\item uruchomić serwer lokalnie bądź produkcyjnie poleceniami odpowiednio:\\
+	\verb|scons run=l| lub \verb|scons run=p|\\
+	Jeśli serwer www nie serwuje prawidłowo plików statycznych należy sprawdzić uprawnienia dostępu do folderu \textit{static}
+\end{enumerate}
 
 
 
