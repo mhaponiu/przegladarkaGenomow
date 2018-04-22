@@ -147,6 +147,62 @@ Algorytmy wyszukiwania sekwencji podobnych dzielą się na:
 \end{itemize}
 
 
+\subsection*{Smith-Waterman}
+Reprezentantem pierwszej grupy algorytmów jest algorytm Smitha-Waterman'a.
+Cechuje się tym, że znajduje dość krótkie, ale za to bardzo podobne odcinki sekwencji.
+Jest metodą badawczą należącą do gromady technik wyczerpujących - analizuje wszystkie potencjalne rozwiązania w celu wybrania tego, które spełnia najlepiej warunki zadania.
+Ze względu na dużą złożoność pamięciową i obliczeniową nie może być stosowany uniwersalnie do każdego zadania, ale ponieważ ma wysoką czułość to jest chętnie wykorzystywany przez biologów w wielu zastosowaniach.
+
+Jego zasada działania polega na jednoczesnym o budowaniu i analizie dwuwymiarowej tablicy przyrównania. Porównuje on reszty sekwencji we wszystkich możliwych kombinacjach podsekwencji zadanych ciągów, oceniając ich dopasowanie według przyjętego wzoru.
+Rozpatrywane ciągi umieszczamy wzdłuż prostopadłych krawędzi macierzy, a sama analiza odbywa się wierszami.
+Każda reszta podciągu pierwszej sekwencji jest oceniana ze wszystkimi resztami podciągów drugiej sekwencji, a ocena jest wpisywana do macierzy.
+Wartość oceny jest ustalana na podstawie dopasowania 3 sąsiadujących, ocenionych już komórek - lewej, górnej i skośnej.
+W stworzonej przeglądarce, ocena komórki $H(i,j)$ określona jest wzorem \ref{wzor:ocena_komorki_smith_waterman}.
+\begin{equation}
+\label{wzor:ocena_komorki_smith_waterman}
+H(i,j) = max \left\{ 
+	\begin{array}{ll}
+		H(i-1,j-1) + s(a_i, b_j) & \textrm{po skosie}\\
+		H(i-1,j) - W(l) & \textrm{nad}\\
+		H(i, j-1) -W(l)& \textrm{po lewej}\\
+		0 &
+	\end{array}
+	\right.
+\end{equation}
+gdzie $W(l)$ to funkcja kary od długości przerwy, $s(a_i, b_j)$ to funkcja dopasowania komórek na współrzędnych $a_j, b_j$.
+
+Gdy macierz będzie już cała uzupełniona, odnajdujemy komórkę o największej wartości i cofając się po ścieżce wyznaczamy wynikowy ciąg.
+
+Przy założeniach \ref{wzor:zalozenia_smith_waterman}, ciągach \verb|TGTTACGG| oraz \verb|GGTTGACTA|, wyznaczona macierz wyglądałaby jak na ilustracji \ref{img:Smith-Waterman-kroki-2-3}
+\begin{equation}
+\label{wzor:zalozenia_smith_waterman}
+s(a_i,a_j) =\left\{ 
+	\begin{array}{ll}
+	3 & \textrm{$a_i = a_j$}\\
+	-3 & \textrm{$a_i \ne a_j$}\\
+\end{array}\\
+\right.\\
+{\phantom{1}}
+W(l) = 2l, W_1 = 2
+\end{equation}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=1\textwidth]{img/Smith-Waterman-Algorithm-Example-Step2-and-3.png}
+	\caption{Macierz oceny Smitha-Watermana przykładowych ciągów.}
+	\label{img:Smith-Waterman-kroki-2-3}
+	\vspace{-0.5cm}
+	\caption*{\scriptsize Źródło: 
+		\url{https://en.wikipedia.org/wiki/Smith-Waterman\_algorithm}
+	}
+\end{figure}
+
+
+
+
+
+
+
 
 \section{Sekwencje ogórka}
 
