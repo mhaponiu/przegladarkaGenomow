@@ -5,7 +5,7 @@ import re
 
 
 class Gff(FormatInterface):
-    GffRecord = namedtuple('GffRecord', ['seq_id', 'start', 'length', 'order', 'master_seq_id'])
+    GffRecord = namedtuple('GffRecord', ['seq_id', 'start', 'length', 'order', 'main_seq_id'])
 
     def import_records_from_file_to_db(self, filename):
         for record in self._gen_record_from_file(filename):

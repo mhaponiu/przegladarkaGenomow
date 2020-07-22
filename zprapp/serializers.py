@@ -51,12 +51,12 @@ class ChromosomeAnnotationSerializer(serializers.ModelSerializer):
 class AnnotationSerializer(serializers.ModelSerializer):
     # type = AnnotationTypeSerializer()
     type = serializers.ReadOnlyField(source='type.name')
-    annotation_master = serializers.ReadOnlyField(source='aggregated_by.annotation_master.id')
+    annotation_main = serializers.ReadOnlyField(source='aggregated_by.annotation_main.id')
 
     class Meta:
         model = Annotation
         fields = ("start_chr", "length", "name",
-                  "chromosome", "id", "type", "annotation_master")
+                  "chromosome", "id", "type", "annotation_main")
 
 
 class AnnotationDetailSerializer(AnnotationSerializer):
@@ -79,4 +79,4 @@ class AnnotationAggregationDetailSerializer(AnnotationDetailSerializer, Annotati
 class AggregationSerializer(serializers.ModelSerializer):
     class Meta:
         model= Aggregation
-        fields = ("id", "start_local", "annotation_master", "annotation_slave")
+        fields = ("id", "start_local", "annotation_main", "annotation_subordinate")

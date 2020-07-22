@@ -10,7 +10,7 @@ class Gff(FormatInterface):
                                          'type_name', 'type_short_name',
                                          'annotation_start_chr', 'annotation_length',
                                          'annotation_name', 'annotation_id',
-                                         'annotation_master', 'start_on_master'])
+                                         'annotation_main', 'start_on_main'])
 
     def __init__(self, org):
         self.org = org
@@ -43,7 +43,7 @@ class Gff(FormatInterface):
 
     def export_records_from_db_to_stream(self):
         stream = io.StringIO()
-        stream.write(unicode("# org_name\tchr_number\tchr_length\tchr_ordered\ttype_name\ttype_short_name\tannotation_start_chr\tannotation_length\tannotation_name\tannotation_id\tannotation_master\tstart_on_master\n"))
+        stream.write(unicode("# org_name\tchr_number\tchr_length\tchr_ordered\ttype_name\ttype_short_name\tannotation_start_chr\tannotation_length\tannotation_name\tannotation_id\tannotation_main\tstart_on_main\n"))
         for record in self._gen_record_from_db():
             for r in record:
                 stream.write(unicode(r))
@@ -60,15 +60,15 @@ class Gff(FormatInterface):
             for a in annotations.iterator():
                 try:
                     aggregation = a.aggregated_by
-                    master = aggregation.annotation_master.id
-                    start_on_master = aggregation.start_local
+                    main = aggregation.annotation_main.id
+                    start_on_main = aggregation.start_local
                 except:
-                    master = None
-                    start_on_master = None
+                    main = None
+                    start_on_main = None
                 yield self.GffRecord(self.org.name,
                                      chromosome.number, chromosome.length, chromosome.ordered,
                                      a.type.name, a.type.short_name,
                                      a.start_chr, a.length,
                                      a.name, a.id,
-                                     master, start_on_master)
+                                     main, start_on_main)
                 # yield self.GffRecord(s.id, int(scfld.start), int(scfld.length), scfld.order, scfld.chromosome_id)
