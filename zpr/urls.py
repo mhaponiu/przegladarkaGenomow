@@ -24,7 +24,7 @@ base_chromosomes_routes.register(r'annotation_types', AnnotationTypeSeqSectionVi
 
 router.register(r'annotations', PaginatedAnnotationViewSet)\
       .register(r'aggregations', PaginatedAnnotationAggregationViewSet, base_name='chromosome-annotation_types-seqsection',
-                                                    parents_query_lookups=['aggregated_by__annotation_master'])
+                                                    parents_query_lookups=['aggregated_by__annotation_main'])
 
 
 ###### posrednie api od organizmu ######
@@ -36,12 +36,12 @@ chromosome_routes = router.register(r'organisms', OrganismViewSet, base_name='or
 chromosome_routes.register(r'annotations', AnnotationViewSet, base_name='organism-chromosome-annotations',
                                                parents_query_lookups=['chromosome__organism', 'chromosome'])\
                  .register(r'aggregations', AnnotationAggregationViewSet, base_name='organism-chromosome-annotation-aggreations',
-                                                    parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_master'])
+                                                    parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_main'])
 
 chromosome_routes.register(r'paginated_annotations', PaginatedAnnotationViewSet, base_name='organism-chromosome-paginated_annotations',
                                                parents_query_lookups=['chromosome__organism', 'chromosome'])\
                  .register(r'aggregations', PaginatedAnnotationAggregationViewSet, base_name='organism-chromosome-paginated_annotations-paginated_aggregations',
-                                                    parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_master'])
+                                                    parents_query_lookups=['chromosome__organism', 'chromosome', 'aggregated_by__annotation_main'])
 
 chromosome_routes.register(r'annotation_types', AnnotationTypeSeqSectionViewSet, base_name='organism-chromosome-annotation_types',
                                                parents_query_lookups=['annotations__chromosome__organism', 'annotations__chromosome'])\

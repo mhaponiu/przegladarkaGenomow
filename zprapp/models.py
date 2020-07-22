@@ -20,7 +20,7 @@ class Chromosome(models.Model):
 class AnnotationType(models.Model):
     name = models.TextField(unique=True)
     short_name = models.TextField(null=True)
-    # type_master = models.ForeignKey("AnnotationType", related_name='type_slaves', null=True)
+    # type_main = models.ForeignKey("AnnotationType", related_name='type_subordinates', null=True)
 
     def __unicode__(self):
         return self.name
@@ -38,5 +38,5 @@ class Annotation(models.Model):
 
 class Aggregation(models.Model):
     start_local = models.IntegerField(null=True)
-    annotation_slave = models.OneToOneField(Annotation, related_name='aggregated_by')
-    annotation_master = models.ForeignKey(Annotation, related_name='aggregation_slaves')
+    annotation_subordinate = models.OneToOneField(Annotation, related_name='aggregated_by')
+    annotation_main = models.ForeignKey(Annotation, related_name='aggregation_subordinates')
